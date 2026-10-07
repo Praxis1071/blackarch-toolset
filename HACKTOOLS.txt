@@ -49,6 +49,9 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 * theharvester
   Alan adlarıyla ilişkili e-posta, isim, host ve diğer açık kaynak bilgilerini toplamaya yardımcı olur.
 
+* trape
+  Web tabanlı sosyal mühendislik ve OSINT senaryolarında kullanılan bir takip/istihbarat framework'üdür.
+
 ================================================================================
 2. WEB RECON / SUBDOMAIN / URL KEŞFİ
 ================================================================================
