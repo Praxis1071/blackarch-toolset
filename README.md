@@ -1,56 +1,127 @@
 # BlackArch Toolset Commands
 
-A personal command reference for the BlackArch tools used in my own security-learning workflow.
+A curated **80-package BlackArch security toolset** for Linux security learning, research, and authorized testing.
 
-This repository collects practical command examples, short explanations, and notes for the tools in my current toolset. It is intended to make frequently used commands easier to find and review.
+This repository is a personal command and tool reference. It focuses on a selected set of tools rather than trying to reproduce the complete BlackArch repository.
 
-## Contents
+## ✨ What is included?
 
-- `HACKKOMUT.txt` — birleşik, düzenlenmiş ve güncel komut referansı.
-- `HACKTOOLS.txt` — tool-oriented notes and descriptions.
-- `blackarch.txt` — mevcut toolset'in düzenlenmiş BlackArch paket listesi.
-- `install.sh` — `blackarch.txt` içindeki mevcut paketleri topluca kuran installer.
-- `ARŞİV/` — older or historical notes that are kept for reference.
+- **80 selected packages** from the current personal toolset
+- Organized command examples in `HACKKOMUT.txt`
+- Short tool descriptions and categories in `HACKTOOLS.txt`
+- Package inventory in `blackarch.txt`
+- One-shot installer in `install.sh`
+- Historical notes in `ARŞİV/`
+- Sanitized example domains, addresses, and credentials
+- MIT licensed documentation
 
-## Installation
+## 📁 Repository structure
 
-This repository does not add new tools to the toolset. `install.sh` only attempts to install the packages already listed in `blackarch.txt`.
+```text
+blackarch-toolset-commands/
+├── README.md
+├── LICENSE
+├── HACKKOMUT.txt
+├── HACKTOOLS.txt
+├── blackarch.txt
+├── install.sh
+└── ARŞİV/
+    ├── metasploit.txt
+    └── win7sızma.txt
+```
 
-The script is intended for Arch Linux systems with the BlackArch repository already configured:
+### File guide
+
+| File | Purpose |
+|---|---|
+| `HACKKOMUT.txt` | Detailed command reference and practical examples |
+| `HACKTOOLS.txt` | Tool descriptions, categories, and quick orientation |
+| `blackarch.txt` | The exact package list used by this toolset |
+| `install.sh` | Installs the packages listed in `blackarch.txt` |
+| `ARŞİV/` | Older material kept for historical/reference purposes |
+
+## 🚀 Installation
+
+`install.sh` is designed for **Arch Linux systems where the BlackArch repository is already configured**.
+
+Clone the repository, enter it, and run:
 
 ```bash
 chmod +x install.sh
 sudo ./install.sh
 ```
 
-If a package is unavailable in your configured repositories, pacman will report it and the installation may require checking your BlackArch repository configuration or current package availability.
+The installer uses `pacman` and installs only the packages belonging to this repository's existing toolset.
 
-## Scope
+If a package cannot be found, check the BlackArch repository configuration and current package availability before troubleshooting the individual package.
 
-This repository is intentionally based on **my own toolset**. The project is not intended to become a complete list of every BlackArch package or security tool.
+## 🧭 Recommended workflow
 
-I will document and improve the tools already included in the repository rather than continuously adding unrelated tools.
+If you are learning a tool for the first time:
 
-## How to use
+1. Find the tool in `HACKTOOLS.txt`.
+2. Read its short description and category.
+3. Open its section in `HACKKOMUT.txt`.
+4. Start with the tool's own help output:
+   ```bash
+   tool --help
+   ```
+5. Test it in your own lab or another explicitly authorized environment.
 
-Search the repository for the tool you need, read its notes, and adapt the example to your own authorized lab or test environment.
+This separation keeps the repository easy to navigate:
 
-Commands can change between tool versions, so always check the installed tool's own help output when something behaves differently:
+```text
+HACKTOOLS.txt
+      ↓
+What is this tool?
+      ↓
+HACKKOMUT.txt
+      ↓
+How do I use it?
+      ↓
+install.sh
+      ↓
+How do I install the toolset?
+```
+
+## 🎯 Scope
+
+This is intentionally a **curated personal toolset**, not a complete BlackArch package catalogue.
+
+BlackArch itself contains a much larger collection of security tools. This repository deliberately stays limited to the tools already selected for this project.
+
+The goal is quality and usability of the existing toolset rather than continuously adding unrelated packages.
+
+## 🔐 Safety and authorization
+
+The tools documented here can perform active security testing and can affect systems or networks.
+
+Use them only on:
+
+- systems you own,
+- your own laboratory environments, or
+- systems for which you have explicit authorization.
+
+Never use the examples as permission to test third-party infrastructure.
+
+Examples in the repository are sanitized and use documentation/example values where possible. Never commit real passwords, API keys, session cookies, access tokens, private addresses, or other credentials.
+
+## 🔄 Tool versions
+
+BlackArch packages and upstream tools change over time.
+
+A command that worked with one version may behave differently with another. When something does not work as expected:
 
 ```bash
 tool --help
 ```
 
-## ⚠️ Disclaimer
+Then consult the tool's current upstream documentation.
 
-The commands and tools documented in this repository are provided for educational purposes, security research, and authorized testing.
+## 📚 Official BlackArch resources
 
-Only use these tools against systems, networks, accounts, or data that you own or have explicit permission to test.
+For BlackArch installation guidance, package information, and the complete tool catalogue, use the official BlackArch documentation and website.
 
-The author is not responsible for damage, data loss, service disruption, unauthorized access, or misuse resulting from the information provided in this repository.
+## 📄 License
 
-Always comply with applicable laws and obtain proper authorization before performing security testing.
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
