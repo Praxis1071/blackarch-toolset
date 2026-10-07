@@ -280,6 +280,9 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 * hyde
   Ağ ve servis stres testi amaçlı kullanılan bir araçtır.
 
+* cloudflared
+  Cloudflare Tunnel üzerinden yerel servisleri tünellemek için kullanılan komut satırı aracıdır.
+
 * ngrok
   Yerel servisleri tünel/reverse-proxy mekanizması üzerinden erişilebilir hale getirmeye yarayan bir araçtır.
 
