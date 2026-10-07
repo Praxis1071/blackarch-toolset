@@ -106,6 +106,14 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
+for komut in curl sha1sum awk; do
+  if ! command -v "$komut" >/dev/null 2>&1; then
+    echo "Hata: Gerekli komut bulunamadı: $komut"
+    echo "Eksik bağımlılığı kurduktan sonra scripti tekrar çalıştır."
+    exit 1
+  fi
+done
+
 blackarch_repo_var_mi() {
   if command -v pacman-conf >/dev/null 2>&1; then
     pacman-conf --repo-list 2>/dev/null | grep -Fxq "blackarch"
