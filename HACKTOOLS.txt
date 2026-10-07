@@ -1,6 +1,6 @@
 # BlackArch Toolset — HACKTOOLS
 
-Bu dosya, repository'deki **mevcut 80 paket** için kısa açıklama ve kullanım amacı referansıdır.
+Bu dosya, repository'deki **mevcut 87 paket** için kısa açıklama ve kullanım amacı referansıdır.
 
 Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **ne işe yaradığını ve hangi çalışma alanına ait olduğunu** hızlıca anlamayı sağlamaktır.
 
@@ -42,6 +42,9 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 
 * sooty
   URL, DNS, itibar ve e-posta analizi gibi SOC/OSINT yardımcı işlevlerini bir araya getirir.
+
+* shodan
+  İnternete açık cihazlar ve servisler hakkında Shodan üzerinden arama ve host bilgisi sorgulamaya yarayan bir OSINT aracıdır.
 
 * spiderfoot
   Çok sayıda modül ve açık kaynaktan otomatik OSINT/footprinting verisi toplar.
@@ -129,6 +132,12 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 * linkfinder
   JavaScript dosyalarından endpoint ve URL desenleri çıkarmaya yardımcı olur.
 
+* nikto
+  Web sunucularında bilinen yapılandırma sorunlarını ve yaygın güvenlik problemlerini kontrol eden bir scanner'dır.
+
+* nomore403
+  403/40X yanıtları veren web kaynaklarını farklı istek biçimleriyle test etmeye yardımcı olur.
+
 * nuclei
   Şablon tabanlı güvenlik kontrolleri ve zafiyet taramaları yapan ProjectDiscovery aracıdır.
 
@@ -157,11 +166,17 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 * maketh
   Özelleştirilebilir ağ paketleri oluşturma ve gönderme amacıyla kullanılan bir araçtır.
 
+* metasploit
+  Yetkili güvenlik laboratuvarlarında exploit geliştirme ve güvenlik testi için kullanılan kapsamlı bir framework'tür.
+
 * mitm
   Yerel ağlarda MITM/ARP tabanlı güvenlik testleri için kullanılan bir araçtır.
 
 * monocle
   Yerel ağ cihazlarını pasif ve aktif yöntemlerle keşfetmeye yönelik bir araçtır.
+
+* nmap
+  Ağ keşfi, port taraması ve servis/işletim sistemi tespiti için kullanılan temel network security scanner'ıdır.
 
 * netdiscover
   Yerel ağdaki cihazları ve IP/MAC ilişkilerini keşfetmeye yardımcı olur.
@@ -190,6 +205,9 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 
 * spooftooph
   Bluetooth cihaz kimliği, isim ve MAC bilgileri üzerinde güvenlik testi yapmaya yardımcı olur.
+
+* sparrow-wifi
+  Wi-Fi ve Bluetooth ortamlarını analiz etmek için kullanılan grafik arayüzlü bir kablosuz ağ analiz aracıdır.
 
 * wifijammer
   Wi-Fi ortamlarında deauthentication/jamming davranışlarını test etmek için kullanılan bir araçtır.
@@ -265,7 +283,7 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 * ngrok
   Yerel servisleri tünel/reverse-proxy mekanizması üzerinden erişilebilir hale getirmeye yarayan bir araçtır.
 
-* python2-shodan
+* python-shodan
   Shodan API ve arama işlevlerine komut satırından erişim sağlayan Python tabanlı bir istemcidir.
 
 * secure-delete
@@ -295,7 +313,7 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 ================================================================================
 
 Toolset kapsamı:
-- 80 paket
+- 87 paket
 - Arch Linux / BlackArch odaklı
 - Komut referansı: HACKKOMUT.txt
 - Paket listesi: blackarch.txt
