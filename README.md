@@ -8,8 +8,22 @@ This repository collects practical command examples, short explanations, and not
 
 - `HACKKOMUT.txt` — birleşik, düzenlenmiş ve güncel komut referansı.
 - `HACKTOOLS.txt` — tool-oriented notes and descriptions.
-- `blackarch.txt` — BlackArch tool/group information captured from my environment.
+- `blackarch.txt` — mevcut toolset'in düzenlenmiş BlackArch paket listesi.
+- `install.sh` — `blackarch.txt` içindeki mevcut paketleri topluca kuran installer.
 - `ARŞİV/` — older or historical notes that are kept for reference.
+
+## Installation
+
+This repository does not add new tools to the toolset. `install.sh` only attempts to install the packages already listed in `blackarch.txt`.
+
+The script is intended for Arch Linux systems with the BlackArch repository already configured:
+
+```bash
+chmod +x install.sh
+sudo ./install.sh
+```
+
+If a package is unavailable in your configured repositories, pacman will report it and the installation may require checking your BlackArch repository configuration or current package availability.
 
 ## Scope
 
