@@ -1,76 +1,95 @@
+BLACKARCH TOOLSET — PACKAGE LIST
 
-~/HACK
-❯ pacman -Qg blackarch
-blackarch aimap
-blackarch airgeddon
-blackarch amass
-blackarch arjun
-blackarch armitage
-blackarch arpon
-blackarch arpspoof-smikims
-blackarch arptools
-blackarch backfuzz
-blackarch bbot
-blackarch beef
-blackarch berate_ap
-blackarch blackarch-mirrorlist
-blackarch burpsuite
-blackarch caido-desktop
-blackarch cariddi
-blackarch chiron
-blackarch clairvoyance
-blackarch cmseek
-blackarch commix
-blackarch corsy
-blackarch credsniper
-blackarch crunch
-blackarch crypthook
-blackarch cupp
-blackarch dalfox
-blackarch ddosify
-blackarch dontgo403
-blackarch exiflooter
-blackarch feroxbuster
-blackarch ffuf
-blackarch gau
-blackarch gloom
-blackarch gophish
-blackarch h8mail
-blackarch hakrawler
-blackarch holehe                                                                blackarch httpx
-blackarch hyde
-blackarch infoga                                                                blackarch interactsh-client
-blackarch katana-pd
-blackarch kickthemout
-blackarch linkfinder                                                            blackarch maigret
-blackarch maketh
-blackarch mdbtools                                                              blackarch mdk3
-blackarch mitm
-blackarch monocle                                                               blackarch netdiscover
-blackarch nexfil
-blackarch ngrok                                                                 blackarch nuclei
-blackarch nuclei-templates
-blackarch omnibus
-blackarch phoneinfoga
-blackarch photon
-blackarch pyinstaller
-blackarch pyinstaller-hooks-contrib
-blackarch python2-shodan
-blackarch responder
-blackarch roguehostapd
-blackarch secretfinder                                                          blackarch secure-delete
-blackarch seeker
-blackarch set
-blackarch sherlock
-blackarch social-mapper                                                         blackarch socialscan
-blackarch sooty
-blackarch spiderfoot
-blackarch spooftooph
-blackarch subfinder                                                             blackarch theharvester
-blackarch torctl
-blackarch trape
-blackarch websploit
-blackarch wifijammer
-blackarch wifiphisher
-~/HACK
-❯
+Bu dosya, repository'deki kişisel toolset için kullanılan BlackArch paketlerinin listesidir.
+Yeni araç eklemez; mevcut toolset'in paket adlarını düzenli biçimde gösterir.
+
+Kurulum:
+  sudo ./install.sh
+
+Kurulum scripti yalnızca aşağıdaki paketleri pacman ile kurmayı dener.
+
+[01] aimap
+[02] airgeddon
+[03] amass
+[04] arjun
+[05] armitage
+[06] arpon
+[07] arpspoof-smikims
+[08] arptools
+[09] backfuzz
+[10] bbot
+[11] beef
+[12] berate_ap
+[13] blackarch-mirrorlist
+[14] burpsuite
+[15] caido-desktop
+[16] cariddi
+[17] chiron
+[18] clairvoyance
+[19] cmseek
+[20] commix
+[21] corsy
+[22] credsniper
+[23] crunch
+[24] crypthook
+[25] cupp
+[26] dalfox
+[27] ddosify
+[28] dontgo403
+[29] exiflooter
+[30] feroxbuster
+[31] ffuf
+[32] gau
+[33] gloom
+[34] gophish
+[35] h8mail
+[36] hakrawler
+[37] holehe
+[38] httpx
+[39] hyde
+[40] infoga
+[41] interactsh-client
+[42] katana-pd
+[43] kickthemout
+[44] linkfinder
+[45] maigret
+[46] maketh
+[47] mdbtools
+[48] mdk3
+[49] mitm
+[50] monocle
+[51] netdiscover
+[52] nexfil
+[53] ngrok
+[54] nuclei
+[55] nuclei-templates
+[56] omnibus
+[57] phoneinfoga
+[58] photon
+[59] pyinstaller
+[60] pyinstaller-hooks-contrib
+[61] python2-shodan
+[62] responder
+[63] roguehostapd
+[64] secretfinder
+[65] secure-delete
+[66] seeker
+[67] set
+[68] sherlock
+[69] social-mapper
+[70] socialscan
+[71] sooty
+[72] spiderfoot
+[73] spooftooph
+[74] subfinder
+[75] theharvester
+[76] torctl
+[77] trape
+[78] websploit
+[79] wifijammer
+[80] wifiphisher
+
+Not:
+- Bu liste, repository'deki mevcut toolset'in paket adlarını düzenler.
+- install.sh bu listedeki paketleri topluca kurar.
+- Paketlerin kullanılabilirliği ve isimleri, sistemdeki BlackArch repository durumuna ve paket güncellemelerine bağlıdır.
