@@ -156,6 +156,35 @@ katana -u https://example.com -jc -kf all -d 3 -o example.txt
 ```
 
 
+[ GÜNCEL CLI NOTLARI ]
+Katana'nın güncel CLI'sında `-u`/`-list` yanında JavaScript endpoint parsing için
+`-jc`, JSluice için `-jsl`, known files için `-kf`, kapsam için `-cs/-cos/-ns`,
+hız kontrolü için `-c/-p/-rl` ve JSONL çıktı için `-j` bulunur.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+katana -u https://example.com -d 3 -jc -kf robotstxt,sitemapxml
+katana -list urls.txt -silent -o endpoints.txt
+katana -u https://example.com -j -o endpoints.jsonl
+katana -u https://example.com -d 5 -rl 50
+```
+
+[ KAPSAM KONTROLÜ ]
+```bash
+katana -u https://example.com -cs 'https://example.com/.*'
+katana -u https://example.com -cos 'logout'
+```
+
+[ ÖNEMLİ SEÇENEKLER ]
+- `-d` : Maksimum crawl derinliği.
+- `-jc` : JavaScript içinden endpoint parsing/crawling.
+- `-jsl` : JSluice tabanlı JS parsing; daha fazla bellek kullanabilir.
+- `-kf` : robots.txt/sitemap.xml gibi bilinen dosyaları tarama.
+- `-rl` : Saniyedeki global istek sayısını sınırlar.
+- `-c` : Aynı hedef için eşzamanlı istek sayısı.
+- `-j` : JSON Lines çıktı.
+- `-o` : Dosyaya çıktı.
+
 ================================================================================
 04. SEEKER
 ================================================================================
@@ -249,6 +278,29 @@ subfinder -d hedefsite.com -all -o detayli_sonuc.txt
 ```
 
 
+[ GÜNCEL CLI NOTLARI ]
+Subfinder'ın güncel upstream yardımında `-d` tek/çoklu domain, `-dL` liste girdisi,
+`-all` tüm kaynaklar, `-recursive` destekleyen kaynaklarla recursive keşif,
+`-ls` kaynak listesi ve `-mr` kaynak başına sonuç sınırı için kullanılır.
+`-silent` pipeline için yalnızca subdomain çıktısını bırakır.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+subfinder -d example.com -silent
+subfinder -dL domains.txt -silent -o subdomains.txt
+subfinder -d example.com -all -recursive
+subfinder -d example.com -ls
+```
+
+[ PIPELINE ]
+```bash
+subfinder -d example.com -silent | httpx -silent -sc -title
+```
+
+[ NOT ]
+Tüm kaynakları açmak daha fazla dış servis sorgusu oluşturabilir ve daha yavaş çalışabilir.
+API anahtarı gereken kaynaklar için provider ayarlarını kurulu sürümün dokümantasyonuna göre yapılandır.
+
 ================================================================================
 08. NUCLEI
 ================================================================================
@@ -263,6 +315,34 @@ subfinder -d hedefsite.com -all -o detayli_sonuc.txt
 nuclei -u https://example.com -tags tech,fingerprint,cve
 ```
 
+
+[ GÜNCEL CLI NOTLARI ]
+Güncel Nuclei CLI; URL/liste girdisi yanında template, severity, tag, protocol type
+ve output filtrelerini destekler. Severity değerleri info, low, medium, high,
+critical ve unknown olarak tanımlanır. Güncel yardım için `nuclei -h` kullan.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+nuclei -u https://example.com -severity low,medium,high
+nuclei -l targets.txt -severity high,critical -o nuclei.txt
+nuclei -u https://example.com -tags cve
+nuclei -u https://example.com -type http
+nuclei -u https://example.com -silent
+```
+
+[ ÖNEMLİ SEÇENEKLER ]
+- `-u, -target` : Tek veya birden fazla hedef.
+- `-l, -list` : Hedef listesini dosyadan okur.
+- `-t` : Kullanılacak template/template dizini.
+- `-tags` : Template tag'lerine göre filtreler.
+- `-severity` : Severity seviyelerine göre filtreler.
+- `-type` : Protocol türüne göre filtreler.
+- `-o` : Sonuç dosyası.
+- `-silent` : Yalnızca bulguları gösterir.
+
+[ DİKKAT ]
+Bazı Nuclei template'leri hedefe aktif istekler gönderebilir. Template kapsamını
+incele ve yalnızca yetkili hedeflerde çalıştır.
 
 ================================================================================
 09. HOLEHE
@@ -360,6 +440,28 @@ sherlock kullanici_adi --browse
 ```
 
 
+[ GÜNCEL CLI NOTLARI ]
+Güncel Sherlock CLI; kullanıcı adı, site filtresi, CSV/XLSX/TXT çıktı, proxy,
+timeout ve exclusion davranışları için seçenekler sunar.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+sherlock kullanici_adi
+sherlock user1 user2 --csv
+sherlock kullanici_adi --site GitHub --site Reddit
+sherlock kullanici_adi --print-found
+sherlock kullanici_adi --proxy socks5://127.0.0.1:1080
+```
+
+[ ÖNEMLİ SEÇENEKLER ]
+- `--site` : Yalnızca belirtilen sitelerde arama.
+- `--csv` / `--xlsx` : Rapor çıktısı.
+- `--proxy` / `-p` : HTTP/SOCKS proxy.
+- `--print-found` : Bulunan hesapları gösterir.
+- `--print-all` : Bulunamayanları da gösterir.
+- `--timeout` : İstek zaman aşımı.
+- `--ignore-exclusions` : Upstream exclusions'ı yok sayar; false positive artabilir.
+
 ================================================================================
 11. MAIGRET
 ================================================================================
@@ -376,6 +478,23 @@ maigret kullaniciadi --tor-proxy socks5://127.0.0.1:9050
 maigret kullaniciadi -a -T
 ```
 
+
+[ GÜNCEL CLI NOTLARI ]
+Maigret'in güncel upstream kullanımında kullanıcı adı temel girdidir ve HTML, PDF,
+JSON/NDJSON, CSV, TXT, graph ve Neo4j gibi raporlama seçenekleri bulunur.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+maigret kullanici_adi
+maigret kullanici_adi --html
+maigret kullanici_adi --json ndjson
+maigret kullanici_adi --csv
+maigret kullanici_adi --txt
+```
+
+[ RAPORLAMA ]
+HTML insan tarafından okunabilir rapor için, CSV/JSON otomasyon ve sonraki analiz
+için daha uygundur. PDF çıktısı için Maigret'in PDF ek bağımlılıkları gerekebilir.
 
 ================================================================================
 12. H8MAIL VE HOLEHE
@@ -604,6 +723,36 @@ ffuf -w wordlist.txt -u https://example.com/FUZZ -c
 ```
 
 
+[ GÜNCEL CLI NOTLARI ]
+Güncel ffuf v2 CLI'da `FUZZ` anahtar kelimesi URL, header veya POST verisi içinde
+kullanılabilir. Wordlist `-w` ile, hedef `-u` ile belirtilir.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+ffuf -w wordlist.txt -u https://example.com/FUZZ
+ffuf -w wordlist.txt -u https://example.com/FUZZ -mc 200,204,301,302,307,401,403
+ffuf -w wordlist.txt -u https://example.com/FUZZ -fc 404
+ffuf -w wordlist.txt -u https://example.com/FUZZ -o ffuf.json -of json
+```
+
+[ PARAMETRE FUZZING ]
+```bash
+ffuf -w values.txt -u 'https://example.com/search?q=FUZZ'
+```
+
+[ ÖNEMLİ SEÇENEKLER ]
+- `-w` : Wordlist.
+- `-u` : Hedef URL.
+- `-mc` : HTTP status matcher.
+- `-fc` : HTTP status filter.
+- `-o` : Çıktı dosyası.
+- `-of` : Çıktı formatı.
+- `-r` : Redirect takip etme.
+- `-recursion` : Uygun URL yapısında recursive keşif.
+
+[ DİKKAT ]
+Fuzzing çok sayıda istek oluşturabilir. Rate limit, kapsam ve test ortamını önceden belirle.
+
 ================================================================================
 25. GAU
 ================================================================================
@@ -693,6 +842,40 @@ cat örnek.txt | httpx -sc
 
 [ DİKKAT ] Genel amaçlı HTTP istemcisi biçimindeki eski örnekler bu araca ait olmadığı için kullanılmaz.
 
+
+[ GÜNCEL CLI NOTLARI ]
+Bu bölümdeki httpx ProjectDiscovery'nin HTTP toolkit'idir. Güncel upstream CLI;
+URL/list/stdin girdileri ve status code, title, technology detection, IP, CDN,
+server ve response time gibi probe seçeneklerini destekler.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+httpx -u https://example.com -sc -title -td
+httpx -l urls.txt -sc -title -server -ip -cdn
+cat urls.txt | httpx -silent -sc -title
+httpx -l urls.txt -json -o httpx.json
+```
+
+[ EŞLEŞTİRME VE FİLTRELEME ]
+```bash
+httpx -l urls.txt -mc 200,301,302
+httpx -l urls.txt -fc 404
+```
+
+[ ÖNEMLİ SEÇENEKLER ]
+- `-u, -target` : Hedef URL/host.
+- `-l, -list` : Hedef dosyası.
+- `-sc, -status-code` : HTTP durum kodu.
+- `-title` : Sayfa başlığını gösterir.
+- `-td, -tech-detect` : Teknoloji tespiti.
+- `-ip` : IP adresini gösterir.
+- `-cdn` : CDN tespiti.
+- `-mc` : Belirli durum kodlarını eşleştirir.
+- `-fc` : Belirli durum kodlarını filtreler.
+
+[ DİKKAT ]
+ProjectDiscovery httpx aktif geliştirmededir ve release'lerde breaking değişiklikler
+olabilir. Güncelleme sonrası `httpx -h` ile kurulu sürümün flag'lerini kontrol et.
 
 ================================================================================
 30. NIKTO
@@ -1641,6 +1824,30 @@ amass enum -h
 [ NE ZAMAN KULLANILIR ]
 Yetkili domainlerin DNS, alt alan adı ve attack-surface keşfi için kullanılır.
 
+[ GÜNCEL CLI NOTLARI ]
+OWASP Amass'ın güncel 5.x sürümleri asset database/engine tarafında gelişmeler
+içeriyor. Temel keşif `enum` alt komutu ile yapılır; ayrıntılı seçenekler için
+`amass enum -h` kullan.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+amass enum -passive -d example.com
+amass enum -d example.com -o amass.txt
+amass enum -h
+amass -version
+```
+
+[ ALT KOMUTLAR ]
+- `intel` : Organizasyon hakkında pasif istihbarat toplama.
+- `enum` : DNS enumeration ve internet-facing asset keşfi.
+- `viz` : Enumeration verisini görselleştirme.
+- `track` : Enumeration sonuçlarını karşılaştırma.
+- `db` : Amass veritabanını yönetme.
+
+[ DİKKAT ]
+Amass 5.x ile eski 4.x/3.x örnekleri arasında farklar olabilir. Eski bloglardaki
+flag'leri kullanmadan önce `amass enum -h` ile kurulu sürümü kontrol et.
+
 ================================================================================
 62. ARJUN
 ================================================================================
@@ -1706,6 +1913,37 @@ bbot --help
 [ NE ZAMAN KULLANILIR ]
 OSINT ve reconnaissance işlemlerini modüler biçimde otomatikleştirerek yetkili hedeflerin varlıklarını haritalamaya yardımcı olur.
 
+[ GÜNCEL CLI NOTLARI ]
+BBOT 3.x ile CLI, preset, module ve event tarafında önemli değişiklikler geldi.
+Güncel upstream dokümanda hedefler `-t`, preset'ler `-p` ile verilir; `--strict-scope`,
+`-o`, `--json`, `--dry-run` ve `--fast-mode` gibi seçenekler bulunur.
+
+[ GÜNCEL ÖRNEKLER ]
+```bash
+bbot -t example.com -p subdomain-enum
+bbot -t example.com -p subdomain-enum -o ./bbot-output
+bbot -t example.com --dry-run
+bbot -t example.com --json
+```
+
+[ ÇOKLU HEDEF ]
+```bash
+bbot -t example.com example.org 192.0.2.10 -p subdomain-enum
+```
+
+[ ÖNEMLİ SEÇENEKLER ]
+- `-t, --targets` : Bir veya daha fazla hedef.
+- `-p, --preset` : Hazır tarama/preset seçimi.
+- `-m, --module` : Belirli modülleri kullanma.
+- `-o` : Çıktı klasörü.
+- `--json` : JSON çıktı.
+- `--dry-run` : Çalıştırmadan önce tarama planını kontrol etme.
+- `--strict-scope` : Kapsamı sıkı biçimde uygular.
+
+[ DİKKAT ]
+BBOT 3.0, 2.x'e göre breaking CLI değişiklikleri içerir. Eski bir rehberdeki
+komutu taşımak yerine kurulu sürümün `bbot --help` çıktısını esas al.
+
 ================================================================================
 67. BEEF
 ================================================================================
@@ -1756,6 +1994,31 @@ burpsuite
 [ NE ZAMAN KULLANILIR ]
 Web uygulamalarında HTTP trafiğini yakalama, inceleme ve yetkili güvenlik testi için kullanılır.
 
+[ GÜNCEL CLI / GUI NOTLARI ]
+PortSwigger'ın 7 Ekim 2026 tarihli dokümantasyonuna göre Burp Suite native platform
+installer ile veya bağımsız JAR olarak çalıştırılabilir. Native installer kendi
+Java runtime'ını içerir; JAR çalıştırırken Java kurulumu kullanıcı tarafından yönetilir.
+
+[ KOMUT SATIRI ]
+```bash
+burpsuite
+java -jar burpsuite.jar
+```
+
+JAR dosyasına özel başlangıç/bellek parametreleri gerektiğinde Java seçenekleri
+kullanılabilir. BlackArch paketinin launcher davranışı değişebileceğinden kurulu
+sürümün yardımını da kontrol et.
+
+[ TEMEL İŞ AKIŞI ]
+1. Proxy listener'ı kontrol et.
+2. Test tarayıcısını Burp proxy'sine yönlendir.
+3. HTTP isteğini Proxy/HTTP history üzerinden incele.
+4. Yetkili hedefte Repeater ile kontrollü değişiklikler yap.
+5. Sonuçları kaydet ve hassas verileri rapordan çıkar.
+
+[ DİKKAT ]
+Burp Suite aktif güvenlik testleri yapabildiği için yalnızca yetkili sistemlerde kullan.
+
 ================================================================================
 71. CAIDO
 ================================================================================
@@ -1768,6 +2031,27 @@ caido
 
 [ NE ZAMAN KULLANILIR ]
 HTTP uygulamalarını incelemek ve web güvenlik testleri yapmak için kullanılan modern bir proxy/platformdur.
+
+[ GÜNCEL KULLANIM NOTLARI ]
+Caido modern web güvenlik testlerinde HTTP trafiğini yakalama, inceleme ve replay/
+analysis akışları için kullanılan bir platformdur. BlackArch paketinin launcher adı
+veya başlatma biçimi sürüme göre değişebileceği için kurulu paketin launcher'ını kullan.
+
+[ BAŞLATMA ]
+```bash
+caido
+```
+
+[ TEMEL İŞ AKIŞI ]
+1. Caido'yu başlat.
+2. Browser/proxy bağlantısını Caido listener'ına yönlendir.
+3. HTTP isteklerini History üzerinden incele.
+4. Yetkili bir isteği Replay/Request editor akışında tekrar gönder.
+5. Findings ve notları raporlama amacıyla düzenle.
+
+[ DİKKAT ]
+Caido ile gönderilen istekler gerçek hedefe ulaşır. Test kapsamını ve rate limitlerini
+uygulamadan önce belirle.
 
 ================================================================================
 72. CARIDDI
