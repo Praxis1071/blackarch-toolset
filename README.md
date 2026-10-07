@@ -1,40 +1,127 @@
 # BlackArch Toolset Commands
 
-BlackArch ve Arch Linux için seçilmiş güvenlik araçları ve Türkçe komut referansı.
+BlackArch ve Arch Linux için seçilmiş güvenlik araçlarını öğrenmek, kurmak ve kullanmak amacıyla hazırlanmış Türkçe bir komut referansıdır.
 
-## İçerik
+## 📦 İçerik
 
-- `HACKKOMUT.txt` — Komutlar ve kullanım örnekleri
-- `HACKTOOLS.txt` — Araç açıklamaları ve kategoriler
-- `blackarch.txt` — Kurulacak paket listesi
-- `install.sh` — Otomatik kurulum betiği
-- `LICENSE` — MIT lisansı
+| Dosya | Açıklama |
+|---|---|
+| `HACKKOMUT.txt` | Araçların kullanım komutları, örnekleri ve önemli notları |
+| `HACKTOOLS.txt` | Araçların kısa açıklamaları ve kategorileri |
+| `blackarch.txt` | Kurulumda kullanılacak paket listesi |
+| `install.sh` | Araç setini otomatik olarak kuran kurulum betiği |
+| `LICENSE` | MIT lisansı |
 
-## Kurulum
+## 🚀 Kurulum
 
-Arch Linux veya BlackArch üzerinde:
+Proje Arch Linux / BlackArch tabanlı sistemler için hazırlanmıştır.
+
+### 1. Repoyu klonla
+
+```bash
+git clone https://github.com/Praxis1071/blackarch-toolset.git
+cd blackarch-toolset
+```
+
+### 2. Araçları kur
 
 ```bash
 chmod +x install.sh
 sudo ./install.sh
 ```
 
-Betik BlackArch deposunu kontrol eder; gerekirse resmi BlackArch `strap.sh` betiğini doğrulayarak depoyu yapılandırır ve listedeki paketleri kurar.
+`install.sh` şunları yapar:
 
-## Kullanım
+- `pacman` ve gerekli yardımcı komutları kontrol eder.
+- BlackArch deposunun sistemde bulunup bulunmadığını kontrol eder.
+- BlackArch deposu yoksa resmi `strap.sh` betiğini doğrulayarak kurulumu başlatır ve senden onay ister.
+- Paket listesindeki araçları `pacman` ile kurar.
+- Zaten kurulu paketleri gereksiz yere yeniden kurmaz.
 
-Önce `HACKTOOLS.txt` içinden aracı bul, ardından `HACKKOMUT.txt` içindeki örneklere bak.
+> **Not:** BlackArch deposu eklenmeden önce sistemdeki mevcut paket ve depo yapılandırmalarını kontrol et.
 
-Komutlar yalnızca kendi sistemlerinde veya açıkça yetkilendirildiğin test/lab ortamlarında kullanılmalıdır.
+## 🛠️ Nasıl kullanılır?
 
-Örneklerde gerçek parola, API anahtarı, token veya başka gizli bilgiler kullanma.
+Bir aracı öğrenmek için önerilen sıra:
 
-## Not
+1. **`HACKTOOLS.txt`** dosyasından aracın ne işe yaradığını öğren.
+2. **`HACKKOMUT.txt`** dosyasında aracın kullanım örneklerine bak.
+3. Aracın kendi yardım ekranını kontrol et:
+   ```bash
+   arac --help
+   ```
+4. Önce kendi sisteminde veya izole bir laboratuvarda güvenli bir test yap.
 
-BlackArch paketleri ve araçların komutları zamanla değişebilir. Gerekirse:
+Örneğin Nmap için:
 
 ```bash
-araç --help
+nmap --help
 ```
 
-Bu proje tam BlackArch kataloğu değildir; seçilmiş bir araç setidir.
+Komut seçenekleri araç sürümüne göre değişebileceği için, kurulu sürümün yardım çıktısı her zaman önceliklidir.
+
+## 🔎 Araç kapsamı
+
+Toolset; aşağıdaki alanlardan seçilmiş araçları içerir:
+
+- 🌐 Ağ keşfi ve güvenliği
+- 🕸️ Web uygulama güvenliği
+- 🔍 OSINT ve reconnaissance
+- 📡 Kablosuz ağ güvenliği
+- 🧪 Fuzzing ve güvenlik testleri
+- 🗂️ Metadata ve bilgi toplama
+- 🔐 Kimlik doğrulama ve güvenlik denetimleri
+- 🛠️ Yardımcı ve analiz araçları
+
+Bu proje **tam BlackArch araç kataloğu değildir**. Amaç, seçilmiş araçları anlaşılır komut örnekleriyle tek bir yerde toplamaktır.
+
+## 📚 Dosyaları nasıl kullanmalısın?
+
+**Yeni başlıyorsan:**
+
+`HACKTOOLS.txt` → aracın ne olduğunu öğren  
+↓  
+`HACKKOMUT.txt` → temel komutları incele  
+↓  
+`arac --help` → seçenekleri öğren  
+↓  
+Kendi laboratuvarında güvenli şekilde çalış
+
+**Kurulum yapmak istiyorsan:**
+
+`blackarch.txt` → kurulacak paketleri gör  
+↓  
+`install.sh` → otomatik kurulumu çalıştır
+
+## 🔐 Yetkili kullanım
+
+Bu projedeki bazı araçlar aktif tarama, trafik manipülasyonu, yük/stres testi, kablosuz saldırı simülasyonu veya kimlik doğrulama testleri yapabilir.
+
+Araçları yalnızca:
+
+- kendi sistemlerinde,
+- kendi laboratuvarlarında,
+- CTF ve eğitim ortamlarında,
+- veya açıkça izin verilmiş sistemlerde
+
+kullan.
+
+Yetkisiz sistemleri veya ağları tarama, test etme ya da trafiğini değiştirme.
+
+Örneklerde gerçek parola, API anahtarı, token, cookie veya başka gizli bilgiler kullanma.
+
+## ⚠️ Güncellik
+
+BlackArch paketleri ve upstream projeler zaman içinde değişebilir. Bu nedenle bir komut beklediğin gibi çalışmazsa önce:
+
+```bash
+arac --help
+```
+
+çıktısını kontrol et.
+
+Ayrıca aracın güncel upstream belgelerine bakmak, sürüme bağlı CLI değişikliklerini tespit etmenin en güvenilir yoludur.
+
+## 📄 Lisans
+
+Bu proje MIT License ile lisanslanmıştır. Ayrıntılar için `LICENSE` dosyasına bak.
