@@ -71,6 +71,7 @@ Bu dosya, repodaki mevcut araç seti için hazırlanmış Türkçe komut başvur
 55. [Trape](#55-trape)
 56. [Websploit](#56-websploit)
 57. [WiFiJammer](#57-wifijammer)
+58. [Nmap](#58-nmap)
 
 ---
 
@@ -1310,6 +1311,35 @@ sudo wifijammer -s 11:22:33:44:55:66
 ```
 
 **Not:** Bağlantı kesme ve benzeri kablosuz testler yalnızca sana ait veya açıkça yetkilendirildiğin ağlarda yapılmalıdır.
+
+---
+
+# 58. Nmap
+
+## Amaç
+Ağ keşfi, port taraması ve servis tespiti için kullanılan temel bir network security scanner'ıdır.
+
+## Temel kullanım
+```bash
+nmap 192.0.2.1
+```
+
+## Servis ve sürüm tespiti
+```bash
+nmap -sV 192.0.2.1
+```
+
+## Belirli portları tarama
+```bash
+nmap -p 22,80,443 192.0.2.1
+```
+
+## İşletim sistemi tespiti
+```bash
+sudo nmap -O 192.0.2.1
+```
+
+**Not:** Nmap taramalarını yalnızca sana ait veya açıkça yetkilendirildiğin sistemlerde gerçekleştir.
 
 ---
 
