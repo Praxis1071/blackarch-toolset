@@ -1,113 +1,305 @@
+# BlackArch Toolset — HACKTOOLS
+
+Bu dosya, repository'deki **mevcut 80 paket** için kısa açıklama ve kullanım amacı referansıdır.
+
+Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **ne işe yaradığını ve hangi çalışma alanına ait olduğunu** hızlıca anlamayı sağlamaktır.
+
+> Bu liste seçilmiş bir kişisel toolset'tir. BlackArch'ın tamamını temsil etmez ve yeni araç ekleme listesi değildir.
+
 ================================================================================
-                       BLACKARCH SISTEM ARAC KATEGORI LISTESI
+1. OSINT / KİMLİK VE İSTİHBARAT
 ================================================================================
 
-[1] OSINT VE HEDEF ARASTIRMASI (PASIF BILGI TOPLAMA)
---------------------------------------------------------------------------------
-* spiderfoot    : Hedef hakkinda yuzlerce kaynaktan otomatik ayak izi cikarir.
-* theharvester  : E-posta adreslerini, calisan isimlerini ve subdomain'leri toplar.
-* phoneinfoga   : Telefon numaralari uzerinden uluslararası istihbarat toplar.
-* sherlock      : Kullanici adini yuzlerce sosyal medya ve web sitesinde tarar.
-* maigret       : Kullanici adini genis platform aginda tarar ve dosyalastirir.
-* nexfil        : Kullanici adi arama surecini otomatize eden hızlı OSINT araci.
-* holehe        : E-posta adresinin hangi sitelere kayitli oldugunu tespit eder.
-* social-mapper : Yuz tanima ile hedef kisiyi sosyal medyada eslestirir.
-* h8mail        : E-postalarin geçmiş veri sizintilarinda olup olmadigini arar.
-* socialscan    : E-posta ve kullanici adlarinin uygunluk durumunu kontrol eder.
-* exiflooter    : Resimlerin metadata (Exif) verilerinden GPS konumu cikarir.
-* trape         : Hedefin internetteki izini surup konum/oturum verisi toplar.
-* omnibus       : OSINT verilerini tek merkezde toplar ve yonetir.
-* sooty         : SOC analistleri icin tehdit istihbarati ve analiz yardimcisi.
+* h8mail
+  E-posta adresleri hakkında açık kaynak ve veri sızıntısı odaklı bilgi toplama aracıdır.
 
+* holehe
+  Bir e-posta adresinin çeşitli çevrimiçi servislerde kayıtlı olup olmadığını kontrol eder.
 
-[2] BUG BOUNTY: SUBDOMAIN VE URL KESFI
---------------------------------------------------------------------------------
-* subfinder     : Hızlı ve moduler alt alan adi (subdomain) kesif araci.
-* amass         : Derinlemesine subdomain ve varlik kesif framework'u.
-* bbot          : Recon ve Bug Bounty sureclerini otomatize eden tarayici.
-* httpx         : Subdomain'lerin hangilerinin aktif (HTTP/S) oldugunu test eder.
-* gau           : AlienVault, Wayback ve CommonCrawl'dan bilinen URL'leri ceker.
-* hakrawler     : Web sitelerindeki endpoint ve baglantilari hizlica tarar.
-* photon        : URL, e-posta ve gizli dosyalari cikaran hizli web tarayici.
-* katana-pd     : Modern web uygulamalarini derinlemesine tarayan spider araci.
-* cariddi       : URL listesini tarayip gizli anahtar, API key ve token arar.
+* infoga
+  E-posta ve domain tabanlı açık kaynak bilgi toplamaya yönelik bir OSINT aracıdır.
 
+* maigret
+  Kullanıcı adlarını çok sayıda web platformunda arayan OSINT aracıdır.
 
-[3] WEB ZAFIYET TARAMA VE FUZZING
---------------------------------------------------------------------------------
-* burpsuite     : HTTP isteklerini araya girip okuma/manipule etme platformu.
-* caido-desktop : Modern HTTP interception proxy ve fuzzing araci.
-* nuclei        : Sablon tabanli, yuksek hizli zafiyet tarama motoru.
-* ffuf          : Go ile yazilmis cok hizli web fuzzing/dizin tarama araci.
-* feroxbuster   : Rust ile yazilmis rekursif web dizin ve dosya tarayici.
-* arjun         : Web uygulamalarindaki gizli HTTP parametrelerini bulur.
-* dalfox        : Parametre tabanli otomatize XSS zafiyet tarayicisi.
-* commix        : OS komut enjeksiyonu (Command Injection) sömürü araci.
-* cmseek        : CMS (WordPress, Joomla vb.) surum ve zafiyet tespit araci.
-* linkfinder    : JavaScript dosyalarindaki endpoint ve parametreleri bulur.
-* secretfinder  : JS dosyalarindaki API anahtari ve token gibi hassas verileri arar.
-* dontgo403     : 403 Forbidden kısıtlamalarini atlatmayi dener.
-* corsy         : CORS yanlis yapilandirma zafiyetlerini tarar.
-* clairvoyance  : GraphQL API veritabani semalarini sızdirir.
-* interactsh    : Out-of-band (OOB) etkilesimleri yakalayarak kor zafiyetleri kanitlar.
+* nexfil
+  Kullanıcı adı tabanlı hesap ve profil araştırmasını otomatikleştirir.
 
+* omnibus
+  Birden fazla OSINT ve tehdit istihbaratı kaynağını tek arayüz altında kullanmaya yardımcı olur.
 
-[4] YEREL AG (NETWORK) VE MITM SALDIRILARI
---------------------------------------------------------------------------------
-* netdiscover   : Agdaki aktif IP ve MAC adreslerini sessiz/aktif kesfeder.
-* monocle       : Pasif ve aktif modda yerel ag cihaz keşif araci.
-* responder     : LLMNR/NBT-NS zehirlemesi ile NTLM hash'lerini calar.
-* arpspoof-smikims : Linux raw socket kullanarak ARP spoofing saldırisi yapar.
-* arptools      : ARP yayin, ARP saldirisi ve veri iletim araç seti.
-* mitm          : ARP poisoning ile DNS spoofing yapan Python betigi.
-* kickthemout   : Agdaki diger cihazlarin internet baglantisini keser.
-* maketh        : Ozel ARP, IP, TCP, UDP paketleri olusturma araci.
-* backfuzz      : Ag protokollerine fuzzing uygulayan araç seti.
-* chiron        : IPv6 aglarina ozel sızma testi framework'u.
+* phoneinfoga
+  Telefon numaraları hakkında OSINT ve numara istihbaratı toplamaya yönelik bir araçtır.
 
+* sherlock
+  Bir kullanıcı adını çok sayıda sosyal medya ve web platformunda arar.
 
-[5] KABLOSUZ ILETISIM (WI-FI VE BLUETOOTH)
---------------------------------------------------------------------------------
-* airgeddon     : Kablosuz ag testi ve saldirilari icin menulu bash betigi.
-* wifijammer    : Menzildeki Wi-Fi cihazlarina sürekli Deauth paketi gonderir.
-* mdk3          : WLAN sızma testi ve paket enjeksiyon araci.
-* berate_ap     : Sahte (Rogue) Wi-Fi erisim noktalari (Evil Twin) olusturur.
-* roguehostapd  : Hostapd altyapisi ile sahte AP saldirilari duzenler.
-* wifiphisher   : WPA aglarina karsi otomatize oltalama saldirilari yapar.
-* spooftooph    : Bluetooth cihaz adı, sınıfı ve MAC adresini klonlar/değistirir.
+* social-mapper
+  İsim, fotoğraf ve sosyal profil bilgileri üzerinden sosyal medya araştırmasına yardımcı olur.
 
+* socialscan
+  Kullanıcı adı ve e-posta adreslerinin çeşitli platformlardaki kullanılabilirliğini kontrol eder.
 
-[6] SOSYAL MUHENDISLIK VE OLTALAMA (PHISHING)
---------------------------------------------------------------------------------
-* set           : Social-Engineer Toolkit; sosyal muhendislik ana framework'u.
-* gophish       : Kurumsal duzeyde phishing kampanyasi yonetim platformu.
-* credsniper    : 2FA kodlarini yakalayabilen gelişmis phishing araci.
-* seeker        : Sosyal muhendislik ile cihazın hassas GPS konumunu çeker.
-* websploit     : Web analizi ve sosyal muhendislik saldirilari iceren araç.
+* sooty
+  URL, DNS, itibar ve e-posta analizi gibi SOC/OSINT yardımcı işlevlerini bir araya getirir.
 
+* spiderfoot
+  Çok sayıda modül ve açık kaynaktan otomatik OSINT/footprinting verisi toplar.
 
-[7] SOMURU (EXPLOITATION) VE SISTEM FRAMEWORK'LERI
---------------------------------------------------------------------------------
-* beef          : Browser Exploitation Framework; web tarayicilarini ele gecirir.
-* armitage      : Metasploit altyapisi icin grafiksel (GUI) yonetim araci.
-* gloom         : Linux sızma testi ve sömürü framework'u.
-* aimap         : Yapay zeka (AI/ML) ve LLM altyapilarina ozel tarayici.
+* theharvester
+  Alan adlarıyla ilişkili e-posta, isim, host ve diğer açık kaynak bilgilerini toplamaya yardımcı olur.
 
+================================================================================
+2. WEB RECON / SUBDOMAIN / URL KEŞFİ
+================================================================================
 
-[8] SIFRE KIRMA (CRACKING) VE WORDLIST ARAÇLARI
---------------------------------------------------------------------------------
-* seclists      : Sızma testleri icin devasa kategorize kelime listesi arşivi.
-* crunch        : Belirlenen kurallara gore ozel wordlist/sifre listesi uretir.
-* cupp          : Hedef kisinin bilgilerine dayali ozel sifre listesi uretir.
+* amass
+  Alan adı ve varlık keşfi için kapsamlı subdomain enumeration ve attack-surface mapping aracıdır.
 
+* bbot
+  Recon, asset discovery ve OSINT süreçlerini modüler biçimde otomatikleştiren bir framework'tür.
 
-[9] GIZLILIK, TUNELLEME VE SAVUNMA (YARDIMCI ARAÇLAR)
---------------------------------------------------------------------------------
-* python2-shodan : Shodan arama motoru komut satırı aracı.
-* ngrok         : Localhost servislerini internete acan tunelleme araci.
-* torctl        : Tum sistem grafigini Tor agina yonlendirir.
-* crypthook     : TCP/UDP simetrik sifreli tunel araci.
-* ddosify       : Golang ile yazilmis yuksek performansli stres testi araci.
-* hyde          : C ile yazilmis DDoS test araci.
-* arpon         : ARP zehirlenmesi (MITM) saldirilarina karsi koruma saglar.
-* secure-delete : Dosya ve verileri geri getirilemeyecek sekilde guvenle siler.
+* cariddi
+  URL'leri analiz ederek endpoint, anahtar ve hassas bilgi göstergelerini araştırmaya yardımcı olur.
+
+* exiflooter
+  Görsellerdeki EXIF metadata bilgilerini analiz ederek GPS ve benzeri konum/cihaz verilerini çıkarmaya yardımcı olur.
+
+* gau
+  Açık web arşivlerinden ve indekslerden bilinen URL'leri toplamaya yardımcı olur.
+
+* hakrawler
+  Web sayfalarından bağlantı ve endpoint keşfi yapan hızlı bir crawler'dır.
+
+* katana-pd
+  ProjectDiscovery ekosistemindeki modern web crawling ve endpoint keşif aracıdır.
+
+* photon
+  Web sitelerinden URL, dosya, e-posta ve benzeri bilgileri çıkarmaya yönelik crawler'dır.
+
+* subfinder
+  Pasif kaynaklardan subdomain keşfi yapan ProjectDiscovery aracıdır.
+
+================================================================================
+3. WEB TEST / FUZZING / ZAFİYET ANALİZİ
+================================================================================
+
+* arjun
+  Web uygulamalarındaki HTTP parametrelerini keşfetmeye yönelik bir araçtır.
+
+* burpsuite
+  HTTP/HTTPS trafiğini yakalama, inceleme, değiştirme ve web güvenlik testi için kullanılan kapsamlı bir platformdur.
+
+* caido-desktop
+  HTTP trafiği inceleme, interception ve web güvenlik testleri için modern bir proxy aracıdır.
+
+* clairvoyance
+  GraphQL endpoint'lerinin şema ve yapılarını keşfetmeye yardımcı olan bir araçtır.
+
+* cmseek
+  Web uygulamalarındaki CMS türü ve sürümü hakkında bilgi toplamaya yardımcı olur.
+
+* commix
+  Web uygulamalarında OS command injection güvenlik testlerini otomatikleştirmeye yönelik bir araçtır.
+
+* corsy
+  CORS yanlış yapılandırmalarını tespit etmeye yönelik bir tarayıcıdır.
+
+* dalfox
+  Parametre odaklı XSS güvenlik testlerini otomatikleştiren bir araçtır.
+
+* dontgo403
+  403 yanıtı veren web kaynaklarını farklı istek biçimleriyle test etmeye yönelik bir araçtır.
+
+* feroxbuster
+  Web sunucularında içerik, dizin ve dosya keşfi için kullanılan hızlı bir scanner'dır.
+
+* ffuf
+  Web uygulamalarında directory, file, parameter ve virtual-host fuzzing yapabilen hızlı bir araçtır.
+
+* httpx
+  ProjectDiscovery'nin URL/host probing aracıdır; HTTP durum kodu, başlık ve benzeri özellikleri hızlıca kontrol eder.
+
+* interactsh-client
+  DNS ve HTTP gibi dış etkileşimleri yakalamaya yarayan ProjectDiscovery OOB istemcisidir.
+
+* linkfinder
+  JavaScript dosyalarından endpoint ve URL desenleri çıkarmaya yardımcı olur.
+
+* nuclei
+  Şablon tabanlı güvenlik kontrolleri ve zafiyet taramaları yapan ProjectDiscovery aracıdır.
+
+* nuclei-templates
+  Nuclei tarafından kullanılan güvenlik testi şablonları koleksiyonudur.
+
+* secretfinder
+  JavaScript dosyalarında API anahtarı, token ve benzeri hassas bilgi göstergelerini arar.
+
+================================================================================
+4. NETWORK / PROTOKOL / TRAFİK ANALİZİ
+================================================================================
+
+* arpspoof-smikims
+  ARP paketleri ve ARP spoofing tabanlı ağ güvenliği testleri için kullanılan bir araçtır.
+
+* arptools
+  ARP broadcast, ARP paketleri ve ağ trafiğiyle ilgili düşük seviyeli işlemler sunar.
+
+* backfuzz
+  Ağ protokollerini fuzzing ile test etmeye yönelik bir toolkit'tir.
+
+* chiron
+  IPv6 güvenlik testleri ve ağ keşfi için kullanılan bir framework'tür.
+
+* maketh
+  Özelleştirilebilir ağ paketleri oluşturma ve gönderme amacıyla kullanılan bir araçtır.
+
+* mitm
+  Yerel ağlarda MITM/ARP tabanlı güvenlik testleri için kullanılan bir araçtır.
+
+* monocle
+  Yerel ağ cihazlarını pasif ve aktif yöntemlerle keşfetmeye yönelik bir araçtır.
+
+* netdiscover
+  Yerel ağdaki cihazları ve IP/MAC ilişkilerini keşfetmeye yardımcı olur.
+
+* responder
+  LLMNR, NBT-NS ve WPAD gibi protokoller üzerinden kimlik doğrulama akışlarını güvenlik testlerinde incelemeye yarayan bir toolkit'tir.
+
+================================================================================
+5. WIRELESS / WI-FI / BLUETOOTH
+================================================================================
+
+* airgeddon
+  Linux üzerinde kablosuz ağ güvenlik denetimlerini çeşitli araçları bir araya getirerek kolaylaştıran menü tabanlı bir script'tir.
+
+* berate_ap
+  Kablosuz güvenlik testlerinde rogue access point senaryolarını yönetmeye yardımcı olur.
+
+* kickthemout
+  Yerel ağ bağlantılarını ARP tabanlı yöntemlerle test etmeye yönelik bir araçtır.
+
+* mdk3
+  802.11 kablosuz ağlarında paket üretimi ve çeşitli Wi-Fi güvenlik testleri için kullanılan bir araçtır.
+
+* roguehostapd
+  Hostapd tabanlı özel/rogue access point test ortamları oluşturmak için kullanılır.
+
+* spooftooph
+  Bluetooth cihaz kimliği, isim ve MAC bilgileri üzerinde güvenlik testi yapmaya yardımcı olur.
+
+* wifijammer
+  Wi-Fi ortamlarında deauthentication/jamming davranışlarını test etmek için kullanılan bir araçtır.
+
+* wifiphisher
+  Kablosuz ağlara yönelik phishing ve rogue AP tabanlı güvenlik farkındalığı/test senaryolarında kullanılan bir framework'tür.
+
+================================================================================
+6. SOSYAL MÜHENDİSLİK / PHISHING TESTLERİ
+================================================================================
+
+* credsniper
+  Kimlik bilgisi toplama amaçlı phishing sayfalarının güvenlik testi ve farkındalık çalışmalarında kullanılan bir framework'tür.
+
+* gophish
+  Yetkili phishing simülasyonları ve güvenlik farkındalığı kampanyalarını yönetmek için kullanılan bir platformdur.
+
+* seeker
+  Sosyal mühendislik temelli konum/cihaz bilgisi toplama senaryolarını test etmeye yönelik bir framework'tür.
+
+* set
+  Social-Engineer Toolkit; phishing, sosyal mühendislik ve güvenlik farkındalığı testleri için kapsamlı bir framework'tür.
+
+* websploit
+  Web ve ağ güvenlik testi için farklı modüller sunan bir framework'tür.
+
+================================================================================
+7. EXPLOITATION / SECURITY FRAMEWORKS
+================================================================================
+
+* armitage
+  Metasploit Framework için grafiksel yönetim ve işbirliği arayüzüdür.
+
+* beef
+  Browser Exploitation Framework; tarayıcı güvenliği ve browser tabanlı saldırı senaryolarını laboratuvarda test etmek için kullanılır.
+
+* gloom
+  Birden fazla güvenlik testi ve operasyonel işlevi tek komut satırı arayüzünde birleştiren bir framework'tür.
+
+================================================================================
+8. AI / SECURITY RESEARCH
+================================================================================
+
+* aimap
+  AI/ML altyapılarını ve servislerini keşfetmeye ve güvenlik açısından fingerprint etmeye yönelik bir scanner'dır.
+
+================================================================================
+9. WORDLIST / PASSWORD / CRYPTO
+================================================================================
+
+* crunch
+  Belirlenen karakter ve uzunluk kurallarına göre özel wordlist üretir.
+
+* cupp
+  Girilen profil bilgilerine göre parola tahmin testlerinde kullanılabilecek özel wordlistler oluşturur.
+
+* crypthook
+  TCP/UDP trafiği için simetrik şifreleme tüneli sağlayan bir yardımcı araçtır.
+
+================================================================================
+10. TUNNEL / PRIVACY / STRESS / DEFENSIVE
+================================================================================
+
+* arpon
+  ARP spoofing ve cache poisoning saldırılarına karşı koruma sağlamaya yönelik bir savunma aracıdır.
+
+* ddosify
+  Web uygulamaları ve servisler için yüksek performanslı load/stress testing aracıdır.
+
+* hyde
+  Ağ ve servis stres testi amaçlı kullanılan bir araçtır.
+
+* ngrok
+  Yerel servisleri tünel/reverse-proxy mekanizması üzerinden erişilebilir hale getirmeye yarayan bir araçtır.
+
+* python2-shodan
+  Shodan API ve arama işlevlerine komut satırından erişim sağlayan Python tabanlı bir istemcidir.
+
+* secure-delete
+  Dosya, boş alan ve swap gibi verilerin güvenli biçimde temizlenmesine yönelik yardımcı araçlar içerir.
+
+* torctl
+  Sistem trafiğini Tor üzerinden yönlendirmeye ve Tor bağlantısını yönetmeye yardımcı olur.
+
+================================================================================
+11. SYSTEM / DATABASE / DEVELOPMENT HELPERS
+================================================================================
+
+* blackarch-mirrorlist
+  BlackArch paket depoları için mirror listesini sağlayan pakettir; doğrudan bir güvenlik aracı değildir.
+
+* mdbtools
+  Microsoft Access MDB veritabanlarını Linux ortamında incelemek ve dönüştürmek için kullanılan araçlar sağlar.
+
+* pyinstaller
+  Python uygulamalarını bağımsız çalıştırılabilir paketlere dönüştürmeye yarayan bir araçtır.
+
+* pyinstaller-hooks-contrib
+  PyInstaller için ek paket/uygulama hook'ları sağlayan yardımcı hook koleksiyonudur.
+
+================================================================================
+12. KAPSAM VE KULLANIM
+================================================================================
+
+Toolset kapsamı:
+- 80 paket
+- Arch Linux / BlackArch odaklı
+- Komut referansı: HACKKOMUT.txt
+- Paket listesi: blackarch.txt
+- Kurulum: install.sh
+
+Not:
+- Paket sürümleri zaman içinde değişebilir.
+- Bir aracın komut satırı seçenekleri kurulu sürüme göre farklılaşabilir.
+- Kullanımdan önce '<araç> --help' ve aracın kendi dokümantasyonu kontrol edilmelidir.
+- Tüm araçlar yalnızca sahibi olduğun veya açıkça test iznin bulunan sistemlerde kullanılmalıdır.
