@@ -1,10 +1,37 @@
-# 🛡️ BlackArch Toolset — HACKKOMUT
+================================================================================
+BLACKARCH TOOLSET — HACKKOMUT
+================================================================================
 
-BlackArch / Arch Linux üzerinde bulunan güvenlik araçları için hazırlanmış Türkçe, hızlı başvuru ve kullanım kılavuzudur.
+Bu dosya BlackArch / Arch Linux güvenlik araçlarını öğrenmek ve kullanmak
+için hazırlanmış terminal dostu bir başvuru rehberidir.
 
-> **Amaç:** Komutları ezberletmek yerine, doğru aracı hızlıca bulmanı ve kurulu sürümün yardım ekranıyla güvenli şekilde ilerlemeni sağlamak.
+HER ARAÇ İÇİN:
+  • Ne işe yarar?
+  • Ne zaman kullanılır?
+  • Temel kullanım
+  • Örnek komutlar
+  • Önemli seçenekler
+  • Dikkat edilmesi gerekenler
 
-### KULLANIM KURALLARI
+KULLANIM SIRASI:
+  1. HACKTOOLS.txt ile aracı tanı.
+  2. Burada ilgili bölümü bul.
+  3. Açıklamaları oku ve örneği anla.
+  4. Kurulu sürümün güncel seçenekleri için: <araç> --help
+  5. Yalnızca yetkili olduğun sistemlerde/laboratuvarlarda test yap.
+
+TERMINALDE OKUMA:
+  cat HACKKOMUT.txt
+  less HACKKOMUT.txt
+  grep -n "NMAP" HACKKOMUT.txt
+
+UYARI:
+  Bu rehber eğitim ve yetkili güvenlik testleri içindir. Yetkisiz
+  tarama, trafik manipülasyonu, kimlik bilgisi toplama veya saldırı
+  gerçekleştirme.
+
+================================================================================
+[ KULLANIM KURALLARI ]
 
 - Bu dosyadaki komutları yalnızca kendi sistemlerinde veya açıkça yetkilendirildiğin laboratuvar/test ortamlarında kullan.
 - Bir aracın davranışı sürüme göre değişebileceğinden, sorun yaşarsan önce `<araç> --help` çıktısını kontrol et.
@@ -12,22 +39,12 @@ BlackArch / Arch Linux üzerinde bulunan güvenlik araçları için hazırlanmı
 - `example.com`, `192.0.2.x` ve benzeri örnek değerler gerçek hedef yerine güvenli yer tutucu olarak kullanılır.
 - Komut satırındaki seçenek ve araç adları çalışabilirliğin korunması için özgün hâliyle bırakılmıştır.
 
----
 
-## 🧭 Hızlı gezinme
+[ 🧭 HIZLI GEZINME ]
 
-| Alan | Bölümler |
-|---|---|
-| 🌐 Web / Recon | 1–3, 7–8, 15–17, 21–25, 28–30, 39, 42, 56, 58, 61–62, 66, 70–74 |
-| 🔎 OSINT | 9–12, 31–32, 37, 40–43, 48–53, 59, 61, 66, 77 |
-| 📡 Ağ / Wi‑Fi | 6, 14, 33–36, 44–45, 52, 54, 57–58, 60, 63–65, 68, 73, 80, 83–84 |
-| 🎭 Sosyal mühendislik | 4, 18, 27, 47, 55, 67, 83 |
-| 🔥 Framework / Test | 13, 16, 26, 29–30, 34–35, 38–39, 46, 50–51, 56, 65, 67, 76, 78 |
-| 🔐 Sistem / Kripto / Yardımcı | 19–20, 46, 69, 75, 79, 81–82 |
 
 **İpucu:** Büyük dosyada aradığın aracı bulmak için `Ctrl+F` kullan. Önce **HACKTOOLS.txt** ile aracın ne yaptığını öğren, sonra burada komutuna geç.
 
----
 
 # İÇİNDEKİLER
 
@@ -116,147 +133,180 @@ BlackArch / Arch Linux üzerinde bulunan güvenlik araçları için hazırlanmı
 83. [Wifiphisher](#83-wifiphisher)
 84. [Arpspoof-Smikims](#84-arpspoof-smikims)
 
----
 
-## 1. LinkFinder
+================================================================================
+01. LINKFINDER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 JavaScript dosyaları içerisindeki bağlantıları ve uç noktaları incelemek için kullanılır.
 
-### Komut
+
+[ KOMUT ]
 ```bash
 linkfinder -i file://$PWD/index-BhYj0Brp.js -o cli
 ```
 
----
 
-## 2. SecretFinder
+================================================================================
+02. SECRETFINDER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 JavaScript dosyaları veya web sayfaları içerisinde bulunabilecek hassas verileri,
 API anahtarlarını, parolaları ve gizli uç noktaları aramak için kullanılır.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 secretfinder -i file://$PWD/index-BhYj0Brp.js -o cli
 ```
 
-### Örnekler
 
-### Bir URL'deki JavaScript dosyalarını tarama
+[ ÖRNEKLER ]
+
+
+[ BIR URL'DEKI JAVASCRIPT DOSYALARINI TARAMA ]
 ```bash
 secretfinder -i https://example.com -e
 ```
 
-### Sonucu HTML dosyasına kaydetme
+
+[ SONUCU HTML DOSYASINA KAYDETME ]
 ```bash
 secretfinder -i https://example.com/dosya.js -o rapor.html
 ```
 
-### Burp Suite çıktısını analiz etme
+
+[ BURP SUITE ÇIKTISINI ANALIZ ETME ]
 ```bash
 secretfinder -i burp_raporu.xml -b
 ```
 
-### Oturum çerezi ile yetkili sayfayı tarama
+
+[ OTURUM ÇEREZI ILE YETKILI SAYFAYI TARAMA ]
 ```bash
 secretfinder -i https://example.com/panel -e -c "session=EXAMPLE_SESSION_TOKEN"
 ```
 
-### Özel HTTP başlıkları ekleme
+
+[ ÖZEL HTTP BAŞLIKLARI EKLEME ]
 ```bash
 secretfinder -i https://example.com -e -H "Authorization: Bearer EXAMPLE_TOKEN\nUser-Agent: Mozilla/5.0"
 ```
 
-### Yalnızca belirli API yollarını arama
+
+[ YALNIZCA BELIRLI API YOLLARINI ARAMA ]
 ```bash
 secretfinder -i https://example.com -e -r "^/api/"
 ```
 
-### Yerel JavaScript dosyasını inceleme
+
+[ YEREL JAVASCRIPT DOSYASINI INCELEME ]
 ```bash
 secretfinder -i /yol/dosya.js -o sonuc.html
 ```
 
-### Yerel klasördeki dosyaları inceleme
+
+[ YEREL KLASÖRDEKI DOSYALARI INCELEME ]
 ```bash
 secretfinder -i /yol/klasor/ -o cikti.html
 ```
 
-### İstekleri yerel vekil sunucu üzerinden yönlendirme
+
+[ İSTEKLERI YEREL VEKIL SUNUCU ÜZERINDEN YÖNLENDIRME ]
 ```bash
 secretfinder -i https://example.com -e -p 127.0.0.1:8080
 ```
 
-### Belirli kütüphaneleri hariç tutma
+
+[ BELIRLI KÜTÜPHANELERI HARIÇ TUTMA ]
 ```bash
 secretfinder -i https://example.com -e -g "jquery;bootstrap;analytics"
 ```
 
-### Belirli adlara sahip dosyalara odaklanma
+
+[ BELIRLI ADLARA SAHIP DOSYALARA ODAKLANMA ]
 ```bash
 secretfinder -i https://example.com -e -n "app;main;bundle"
 ```
 
----
 
-## 3. Katana
+================================================================================
+03. KATANA
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web uygulamalarını taramak, bağlantıları ve uç noktaları keşfetmek için kullanılan hızlı bir tarayıcıdır.
 JavaScript içeriğinden uç nokta çıkarma ve bilinen dosyaları tarama gibi özellikleri destekler.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 katana -u https://example.com -jc -kf all -d 3 -o example.txt
 ```
 
----
 
-## 4. Seeker
+================================================================================
+04. SEEKER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik farkındalığı ve laboratuvar çalışmalarında kullanılabilen bir araçtır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo seeker
 ```
 
----
 
-## 5. Cloudflared Tüneli
+================================================================================
+05. CLOUDFLARED TÜNELI
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yerel bir hizmeti tünel üzerinden erişilebilir hâle getirmek için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 cloudflared tunnel --url http://localhost:8080
 ```
 
----
 
-## 6. Sparrow-WiFi
+================================================================================
+06. SPARROW-WIFI
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kablosuz ağları incelemek için kullanılan aracı başlatır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo /tmp/sparrow_env/bin/python /usr/share/sparrow-wifi/sparrow-wifi.py
 ```
 
----
 
-## 7. Subfinder
+================================================================================
+07. SUBFINDER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Bir alan adının alt alan adlarını pasif kaynaklar üzerinden keşfetmek için kullanılır.
 Arama motorları, sertifika şeffaflığı kayıtları ve diğer OSINT kaynaklarından yararlanabilir.
 Pasif kaynak kullanımı hedefe doğrudan tarama yapılmadığı anlamına gelir; ancak kullanılan dış kaynaklara sorgu gönderilir.
 
-### Önemli seçenekler
+
+[ ÖNEMLI SEÇENEKLER ]
 
 - `-d, -domain` : Alan adını belirtir.
 - `-dL, -list` : Birden fazla alan adını içeren dosyayı kullanır.
@@ -265,60 +315,74 @@ Pasif kaynak kullanımı hedefe doğrudan tarama yapılmadığı anlamına gelir
 - `-o, -output` : Sonuçları dosyaya kaydeder.
 - `-silent` : Çıktıyı yalnızca bulunan alt alan adlarına indirger.
 
-### Örnekler
 
-### Tek alan adı
+[ ÖRNEKLER ]
+
+
+[ TEK ALAN ADI ]
 ```bash
 subfinder -d hedefsite.com
 ```
 
-### Sonuçları dosyaya kaydetme
+
+[ SONUÇLARI DOSYAYA KAYDETME ]
 ```bash
 subfinder -d hedefsite.com -silent -o subdomains.txt
 ```
 
-### Toplu alan adı listesi
+
+[ TOPLU ALAN ADI LISTESI ]
 ```bash
 subfinder -dL hedefler.txt -o toplu_sonuclar.txt
 ```
 
-### Tüm pasif kaynakları kullanma
+
+[ TÜM PASIF KAYNAKLARI KULLANMA ]
 ```bash
 subfinder -d hedefsite.com -all -o detayli_sonuc.txt
 ```
 
----
 
-## 8. Nuclei
+================================================================================
+08. NUCLEI
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Şablon tabanlı güvenlik kontrolleri ve teknoloji/iz tespiti yapmak için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 nuclei -u https://example.com -tags tech,fingerprint,cve
 ```
 
----
 
-## 9. Holehe
+================================================================================
+09. HOLEHE
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Bir e-posta adresinin çeşitli çevrim içi hizmetlerde kullanılıp kullanılmadığını kontrol etmek için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 holehe user@example.com
 ```
 
----
 
-## 10. Sherlock
+================================================================================
+10. SHERLOCK
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Bir kullanıcı adının farklı sosyal ağlarda ve web hizmetlerinde bulunup bulunmadığını araştırır.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 sherlock kullanici_adi
 sherlock kullanici_adi -o sonuc.txt
@@ -326,133 +390,163 @@ sherlock kullanici_adi --site Twitter --site GitHub
 sherlock kullanici_adi --tor
 ```
 
-### Raporlama
 
-### CSV çıktısı
+[ RAPORLAMA ]
+
+
+[ CSV ÇIKTISI ]
 ```bash
 sherlock kullanici_adi --csv
 ```
 
-### Excel çıktısı
+
+[ EXCEL ÇIKTISI ]
 ```bash
 sherlock kullanici_adi --xlsx
 ```
 
-### Birden fazla kullanıcı adını klasöre kaydetme
+
+[ BIRDEN FAZLA KULLANICI ADINI KLASÖRE KAYDETME ]
 ```bash
 sherlock user1 user2 user3 -fo ./sonuclar/
 ```
 
-### Filtreleme
 
-### Yalnızca bulunan sonuçları gösterme
+[ FILTRELEME ]
+
+
+[ YALNIZCA BULUNAN SONUÇLARI GÖSTERME ]
 ```bash
 sherlock kullanici_adi --print-found
 ```
 
-### Bulunamayan sonuçları da gösterme
+
+[ BULUNAMAYAN SONUÇLARI DA GÖSTERME ]
 ```bash
 sherlock kullanici_adi --print-all
 ```
 
-### Yetişkin içerikli siteleri dahil etme
+
+[ YETIŞKIN IÇERIKLI SITELERI DAHIL ETME ]
 ```bash
 sherlock kullanici_adi --nsfw
 ```
 
-### Tor ve vekil sunucu
 
-### Her istek için yeni Tor devresi
+[ TOR VE VEKIL SUNUCU ]
+
+
+[ HER ISTEK IÇIN YENI TOR DEVRESI ]
 ```bash
 sherlock kullanici_adi --unique-tor
 ```
 
-### SOCKS5 vekil sunucusu
+
+[ SOCKS5 VEKIL SUNUCUSU ]
 ```bash
 sherlock kullanici_adi -p socks5://127.0.0.1:9050
 ```
 
-### Bulunan profilleri tarayıcıda açma
+
+[ BULUNAN PROFILLERI TARAYICIDA AÇMA ]
 ```bash
 sherlock kullanici_adi --browse
 ```
 
----
 
-## 11. Maigret
+================================================================================
+11. MAIGRET
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kullanıcı adlarını farklı çevrim içi hizmetlerde araştırmak için kullanılır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 maigret kullanici_adi
 maigret kullaniciadi --tor-proxy socks5://127.0.0.1:9050
 maigret kullaniciadi -a -T
 ```
 
----
 
-## 12. H8mail ve Holehe
+================================================================================
+12. H8MAIL VE HOLEHE
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 E-posta adresleri üzerinden OSINT araştırması yapmak için kullanılır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 h8mail -t user@example.com
 holehe user@example.com
 h8mail -t example@example.com -c h8mail_config.ini
 ```
 
----
 
-## 13. Metasploit ve Armitage
+================================================================================
+13. METASPLOIT VE ARMITAGE
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik laboratuvarlarında Metasploit altyapısını ve Armitage arayüzünü başlatmak için kullanılır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo systemctl start postgresql
 msfdb init
 sudo armitage
 ```
 
----
 
-## 14. KickThemOut
+================================================================================
+14. KICKTHEMOUT
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yerel ağdaki cihazları ve ARP tabanlı bağlantıları test etmek için kullanılan bir araçtır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo kickthemout
 ```
 
 **Not:** ARP tabanlı işlemler yalnızca yetkili olduğun ağlarda uygulanmalıdır.
 
----
 
-## 15. CMSeeK
+================================================================================
+15. CMSEEK
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web uygulamalarının kullandığı içerik yönetim sistemlerini ve ilgili bilgileri keşfetmeye yardımcı olur.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 cmseek
 ```
 
----
 
-## 16. Commix
+================================================================================
+16. COMMIX
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web uygulamalarında komut enjeksiyonu testleri yapmak için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 commix
 commix -u "örnek.com"
@@ -460,26 +554,32 @@ commix -u "örnek.com"
 
 **Not:** Bu tür testleri yalnızca yetkili hedeflerde gerçekleştir.
 
----
 
-## 17. Corsy
+================================================================================
+17. CORSY
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web uygulamalarındaki CORS yapılandırmalarını ve olası sorunları incelemek için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 corsy -u https://example.com -t 10
 ```
 
----
 
-## 18. CredSniper
+================================================================================
+18. CREDSNIPER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik farkındalığı ve oltalama simülasyonlarında kimlik doğrulama sayfalarını test etmek için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 credsniper
 credsniper --module microsoft --hostname login.ornekdomain.com --final https://example.com --ssl --twofactor
@@ -487,14 +587,17 @@ credsniper --module microsoft --hostname login.ornekdomain.com --final https://e
 
 **Not:** Gerçek kullanıcıların kimlik bilgilerini toplamak veya yetkisiz oltalama yapmak için kullanılmamalıdır.
 
----
 
-## 19. Crunch
+================================================================================
+19. CRUNCH
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Belirlenen uzunluk ve karakter kümesine göre sözcük listeleri oluşturur.
 
-### Sözdizimi
+
+[ SÖZDIZIMI ]
 ```text
 crunch <min> <max> [options]
 ```
@@ -502,50 +605,61 @@ crunch <min> <max> [options]
 - `<min>` : Minimum karakter uzunluğu.
 - `<max>` : Maksimum karakter uzunluğu.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 crunch 4 4 0123456789 -o pin_listesi.txt
 ```
 
----
 
-## 20. CUPP
+================================================================================
+20. CUPP
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili parola denetimi ve laboratuvar çalışmaları için kişiselleştirilmiş sözcük listeleri oluşturur.
 
-## Etkileşimli kullanım
+
+[ ETKILEŞIMLI KULLANIM ]
 ```bash
 cupp -i
 ```
 
----
 
-## 21. Dalfox
+================================================================================
+21. DALFOX
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web uygulamalarındaki XSS açıklarını yetkili test ortamlarında araştırmak için kullanılır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 dalfox
 dalfox scan "https://example.com/search.php?q=test"
 dalfox scan "https://example.com/page.php?id=123" --silence
 ```
 
----
 
-## 22. DontGo403 / NoMore403
+================================================================================
+22. DONTGO403 / NOMORE403
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 401 ve 403 gibi erişim kontrolü yanıtlarını farklı istek biçimleriyle test etmeye yardımcı olur.
 
-## DontGo403
+
+[ DONTGO403 ]
 ```bash
 dontgo403
 ```
 
-## NoMore403
+
+[ NOMORE403 ]
 ```bash
 nomore403 -u "https://example.com/§100§/admin" -p "§"
 nomore403 -u "https://example.com/gizli-dizin"
@@ -553,52 +667,64 @@ nomore403 -u "https://example.com/gizli-dizin"
 
 **Not:** Erişim kontrolünü aşmaya yönelik testler yalnızca yetkili sistemlerde yapılmalıdır.
 
----
 
-## 23. Feroxbuster
+================================================================================
+23. FEROXBUSTER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web sunucularında dizin, dosya ve uç nokta keşfi yapmak için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 feroxbuster -u https://example.com -x php js html txt
 ```
 
----
 
-## 24. FFUF
+================================================================================
+24. FFUF
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Dizin, dosya, sanal ana bilgisayar, parametre ve API uç noktası keşfi için kullanılan bir bulanıklaştırma aracıdır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 ffuf -w wordlist.txt -u https://example.com/FUZZ -c
 ```
 
----
 
-## 25. GAU
+================================================================================
+25. GAU
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Açık web arşivlerinden ve diğer kaynaklardan geçmişte keşfedilmiş URL'leri toplamak için kullanılır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 gau example.com --subs
 gau example.com -o urls.txt
 gau example.com --blacklist png,jpg,gif,css,svg,woff
 ```
 
----
 
-## 26. Gloom
+================================================================================
+26. GLOOM
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Birden fazla güvenlik aracını tek bir komut satırı arayüzünden yönetmeye yardımcı olan bir güvenlik çerçevesidir.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 gloom
 ```
@@ -608,26 +734,32 @@ gloom
 gloom --help
 ```
 
----
 
-## 27. Gophish
+================================================================================
+27. GOPHISH
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik farkındalığı çalışmalarında oltalama senaryolarını ve sahte giriş sayfalarını test etmek için kullanılır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo gophish
 ```
 
----
 
-## 28. Hakrawler
+================================================================================
+28. HAKRAWLER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web sitelerinde hızlı bağlantı ve uç nokta keşfi yapmak için kullanılan bir tarayıcıdır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 echo "https://example.com" | hakrawler
 echo "https://example.com" | hakrawler -d 3 -subs
@@ -636,105 +768,127 @@ echo "https://example.com" | hakrawler -proxy http://127.0.0.1:8080 -insecure
 gau example.com --subs | hakrawler -d 2
 ```
 
----
 
-## 29. HTTPX
+================================================================================
+29. HTTPX
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Buradaki `httpx`, Python'daki `httpx` kütüphanesi değildir.
 Bu bölümde ProjectDiscovery'nin HTTP yoklama aracından söz edilmektedir.
 URL veya ana bilgisayar listelerini kontrol ederek durum kodu ve benzeri bilgileri çıkarmaya yardımcı olur.
 
-## Mevcut toolset komutu
+
+[ MEVCUT TOOLSET KOMUTU ]
 ```bash
 cat örnek.txt | httpx -sc
 ```
 
 **Not:** Genel amaçlı HTTP istemcisi biçimindeki eski örnekler bu araca ait olmadığı için kullanılmaz.
 
----
 
-## 30. Nikto
+================================================================================
+30. NIKTO
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web sunucularında bilinen yapılandırma sorunlarını ve yaygın güvenlik problemlerini kontrol etmek için kullanılır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 nikto -h https://example.com -port 443
 nikto -h http://example.com
 nikto -h http://example.com -output sonuc.html -Format htm
 ```
 
----
 
-## 31. Infoga
+================================================================================
+31. INFOGA
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Alan adları ve e-posta adresleri hakkında OSINT bilgisi toplamaya yardımcı olur.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 infoga --domain example.com -v 3
 infoga --info admin@example.com -v 3
 ```
 
----
 
-## 32. Interactsh İstemcisi
+================================================================================
+32. INTERACTSH İSTEMCISI
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik testlerinde dışarıdan gelen DNS, HTTP ve benzeri etkileşimleri gözlemlemek için kullanılır.
 Blind XSS, SSRF, Blind SQL Injection ve benzeri testlerde kullanılabilir.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 interactsh-client
 ```
 
-## Yalnızca HTTP isteklerini dinleme
+
+[ YALNIZCA HTTP ISTEKLERINI DINLEME ]
 ```bash
 interactsh-client -http-only
 ```
 
-## Üretilen yükleri dosyaya kaydetme
+
+[ ÜRETILEN YÜKLERI DOSYAYA KAYDETME ]
 ```bash
 interactsh-client -psf payloads.txt
 ```
 
-## JSON çıktı alma
+
+[ JSON ÇIKTI ALMA ]
 ```bash
 interactsh-client -json -o sonuclar.json
 ```
 
----
 
-## 33. Maketh
+================================================================================
+33. MAKETH
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Paket başlıklarını özelleştirerek ağ paketleri oluşturup göndermeye yardımcı olur.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 sudo maketh hedef_ip -p tcp -s kaynak_ip --psrc 12345 --pdst 80 -S
 sudo maketh hedef_ip -p icmp -c 5
 ```
 
----
 
-## 34. MDK3
+================================================================================
+34. MDK3
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kablosuz ağ güvenliği testlerinde kullanılan bir araçtır.
 
-## Temel modlar
+
+[ TEMEL MODLAR ]
 
 - `b` : Çok sayıda sahte erişim noktası yayımlama.
 - `d` : Kimlik doğrulama iptali ile istemcilerin bağlantısını kesmeye yönelik test.
 - `p` : ESSID/probing tabanlı testler.
 - `a` : Kimlik doğrulama hizmet reddi testi.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 sudo mdk3 wlan0mon b
 sudo mdk3 wlan0mon d -c 6
@@ -742,88 +896,108 @@ sudo mdk3 wlan0mon d -c 6
 
 **Not:** Kablosuz bağlantı kesme ve hizmet reddi testleri yalnızca kendi laboratuvarında uygulanmalıdır.
 
----
 
-## 35. MITM
+================================================================================
+35. MITM
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Araç tarafından sağlanan ortadaki adam testi işlevlerini başlatmak için kullanılır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo mitm
 ```
 
----
 
-## 36. Netdiscover
+================================================================================
+36. NETDISCOVER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yerel ağdaki cihazları keşfetmek için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 sudo netdiscover -i wlan1
 ```
 
----
 
-## 37. Nexfil
+================================================================================
+37. NEXFIL
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kullanıcı adları üzerinden çevrim içi varlık araştırması yapmaya yardımcı olur.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 nexfil -u kullanıcı.adı
 ```
 
----
 
-## 38. Ngrok
+================================================================================
+38. NGROK
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yerel bir hizmeti tünel üzerinden dışarıya açmak için kullanılır.
 
-### Örnek
+
+[ ÖRNEK ]
 ```bash
 ngrok http 8080
 ```
 
----
 
-## 39. Nuclei — Ek Örnekler
+================================================================================
+39. NUCLEI — EK ÖRNEKLER
+================================================================================
 
-### Temel tarama
+
+[ TEMEL TARAMA ]
 ```bash
 nuclei -u https://example.com
 ```
 
-### Yüksek ve kritik önem düzeylerine odaklanma
+
+[ YÜKSEK VE KRITIK ÖNEM DÜZEYLERINE ODAKLANMA ]
 ```bash
 nuclei -u https://example.com -s critical,high
 ```
 
----
 
-## 40. Omnibus
+================================================================================
+40. OMNIBUS
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Birden fazla OSINT, tehdit istihbaratı ve ağ sorgusunu tek bir arayüz üzerinden çalıştırmaya yardımcı olur.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 omnibus
 omnibus -o
 ```
 
-## Temel oturum komutları
+
+[ TEMEL OTURUM KOMUTLARI ]
 ```text
 omnibus >> session new
 omnibus >> set target 192.0.2.1
 ```
 
-## Tehdit istihbaratı ve OSINT
+
+[ TEHDIT ISTIHBARATI VE OSINT ]
 ```text
 omnibus >> shodan ip 192.0.2.2
 omnibus >> virustotal domain hedefsite.com
@@ -832,7 +1006,8 @@ omnibus >> censys search hedefsite.com
 omnibus >> hibp test@example.com
 ```
 
-## Ağ analizi
+
+[ AĞ ANALIZI ]
 ```text
 omnibus >> nmap -p 80,443 hedefsite.com
 omnibus >> dnsresolve sub.hedefsite.com
@@ -842,14 +1017,17 @@ omnibus >> geoip 192.0.2.3
 **Harici servis notu:** Shodan, VirusTotal, Censys ve HIBP sorguları ilgili dış servislerin altyapılarına bağlıdır.
 Kimlik doğrulama ve API ayarları kullanılan hizmete göre değişebilir.
 
----
 
-## 41. PhoneInfoga
+================================================================================
+41. PHONEINFOGA
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Telefon numaraları hakkında OSINT araştırması yapmak için kullanılır.
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 phoneinfoga scan -n "+1 555-444-3333"
 phoneinfoga serve
@@ -858,76 +1036,92 @@ phoneinfoga serve
 **Harici servis notu:** Bazı tarama işlevleri dış servis veya API sağlayıcıları kullanabilir.
 Gerekli API anahtarlarını dosyaya sabit olarak yazma.
 
----
 
-## 42. Photon
+================================================================================
+42. PHOTON
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Web sitelerindeki bağlantıları, alan adlarını, dosyaları ve belirli içerikleri keşfetmeye yardımcı olur.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 photon -u https://example.com
 photon -u https://example.com --keys --dns
 ```
 
-### Örnekler
 
-### Web sitesini yerel bilgisayara klonlama
+[ ÖRNEKLER ]
+
+
+[ WEB SITESINI YEREL BILGISAYARA KLONLAMA ]
 ```bash
 photon -u https://example.com --clone
 ```
 
-### Yalnızca URL'leri çıkarma
+
+[ YALNIZCA URL'LERI ÇIKARMA ]
 ```bash
 photon -u https://example.com --only-urls
 ```
 
-### Özel düzenli ifade ile arama
+
+[ ÖZEL DÜZENLI IFADE ILE ARAMA ]
 ```bash
 photon -u https://example.com -r "\.pdf$"
 ```
 
-### İstek sayısını ve derinliği ayarlama
+
+[ İSTEK SAYISINI VE DERINLIĞI AYARLAMA ]
 ```bash
 photon -u https://example.com -t 10 -d 2
 ```
 
-### Sonuçları JSON veya CSV olarak kaydetme
+
+[ SONUÇLARI JSON VEYA CSV OLARAK KAYDETME ]
 ```bash
 photon -u https://example.com -e json -o /yol/cikti_klasoru
 ```
 
-### Geçmiş arşiv verilerini dahil etme
+
+[ GEÇMIŞ ARŞIV VERILERINI DAHIL ETME ]
 ```bash
 photon -u https://example.com --wayback
 ```
 
----
 
-## 43. Shodan
+================================================================================
+43. SHODAN
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 İnternete açık cihazlar ve servisler hakkında Shodan üzerinden bilgi sorgulamak için kullanılır.
 
-### API anahtarını tanımlama
+
+[ API ANAHTARINI TANIMLAMA ]
 ```bash
 shodan init YOUR_SHODAN_API_KEY
 ```
 
-### Örnekler
+
+[ ÖRNEKLER ]
 ```bash
 shodan host 192.0.2.2
 shodan search apache country:tr
 ```
 
-### Veri indirme ve dönüştürme
+
+[ VERI INDIRME VE DÖNÜŞTÜRME ]
 ```bash
 shodan download --limit 100 webcam country:tr
 shodan parse --fields ip_str,port dosya_adi.json.gz
 ```
 
-### Ek sorgular
+
+[ EK SORGULAR ]
 ```bash
 shodan honeyscore 192.0.2.1
 shodan domain hedefsite.com
@@ -937,38 +1131,45 @@ shodan stream
 **API notu:** Gerçek Shodan API anahtarlarını bu repoya veya kabuk geçmişine yazma.
 Sorgular Shodan'ın dış hizmetine gönderilir.
 
----
 
-## 44. Responder
+================================================================================
+44. RESPONDER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yerel ağlarda kimlik doğrulama ve ad çözümleme protokollerini güvenlik laboratuvarlarında test etmek için kullanılır.
 
-### Temel örnekler
+
+[ TEMEL ÖRNEKLER ]
 ```bash
 responder -I wlan0 -v
 responder -I wlan0 -Av
 responder -I wlan0 -wFv
 ```
 
-### WPAD ve vekil sunucu tabanlı testler
+
+[ WPAD VE VEKIL SUNUCU TABANLI TESTLER ]
 ```bash
 responder -I eth0 -wFv
 responder -I eth0 -Pv
 ```
 
-### DHCP ve IPv6 testleri
+
+[ DHCP VE IPV6 TESTLERI ]
 ```bash
 responder -I eth0 -d -v
 responder -I eth0 --dhcpv6 -vP
 ```
 
-### Trafik yönlendirme testi
+
+[ TRAFIK YÖNLENDIRME TESTI ]
 ```bash
 responder -I eth0 -e 192.0.2.150 -v
 ```
 
-### Kimlik doğrulama düşürme testleri
+
+[ KIMLIK DOĞRULAMA DÜŞÜRME TESTLERI ]
 ```bash
 responder -I eth0 -b -v
 responder -I eth0 -E -v
@@ -976,38 +1177,46 @@ responder -I eth0 -E -v
 
 **Not:** Bu seçenekler ağ kimlik bilgilerini etkileyebileceğinden yalnızca kontrollü laboratuvar ortamında kullanılmalıdır.
 
----
 
-## 45. RogueHostAPD
+================================================================================
+45. ROGUEHOSTAPD
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kablosuz erişim noktası davranışlarını güvenlik laboratuvarlarında test etmek için kullanılır.
 
-### Temel erişim noktası
+
+[ TEMEL ERIŞIM NOKTASI ]
 ```bash
 roguehostapd -ssid "Free-WiFi" -c 6 -i wlan0
 ```
 
-### Şifreli erişim noktası
+
+[ ŞIFRELI ERIŞIM NOKTASI ]
 ```bash
 roguehostapd -ssid "Sirket-Misafir" -pK "GuvenliSifre123" -c 1 -i wlan0
 ```
 
-### KARMA testi
+
+[ KARMA TESTI ]
 ```bash
 roguehostapd -ssid "Public-Net" -c 11 -i wlan0 -kA
 ```
 
-### Ayrıntılı hata ayıklama
+
+[ AYRINTILI HATA AYIKLAMA ]
 ```bash
 roguehostapd -ssid "Test-AP" -c 6 -i wlan0 -dV
 ```
 
----
 
-## 46. Secure Delete
+================================================================================
+46. SECURE DELETE
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Dosya, boş alan, takas alanı ve bellek temizliği için yardımcı araçlar sağlar.
 
 - `srm` : Dosyaları güvenli biçimde silmek için kullanılır.
@@ -1017,19 +1226,23 @@ Dosya, boş alan, takas alanı ve bellek temizliği için yardımcı araçlar sa
 
 **Not:** Güvenli silme yöntemlerinin modern SSD'lerdeki davranışı donanım ve depolama katmanına göre değişebilir.
 
----
 
-## 47. SET
+================================================================================
+47. SET
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik farkındalığı ve sosyal mühendislik simülasyonları için kullanılır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo setoolkit
 ```
 
-### Web sitesi klonlama ve kimlik bilgisi toplama testi
+
+[ WEB SITESI KLONLAMA VE KIMLIK BILGISI TOPLAMA TESTI ]
 
 1. Ana menüden `1` — Sosyal mühendislik saldırıları.
 2. Alt menüden `2` — Web sitesi saldırı vektörleri.
@@ -1037,50 +1250,60 @@ sudo setoolkit
 4. `2` — Site klonlama.
 5. Dinleme adresi ve test amacıyla kullanılacak URL girilir.
 
-### Oltalama e-postası simülasyonu
+
+[ OLTALAMA E-POSTASI SIMÜLASYONU ]
 
 1. Ana menüden `1` — Sosyal mühendislik saldırıları.
 2. `1` — Hedefli oltalama saldırı vektörleri.
 
-### Yük ve dinleyici oluşturma
+
+[ YÜK VE DINLEYICI OLUŞTURMA ]
 
 1. Ana menüden `1` — Sosyal mühendislik saldırıları.
 2. `4` — Yük ve dinleyici oluşturucu.
 
 **Not:** Gerçek kullanıcıların kimlik bilgilerini toplamak veya izinsiz oltalama yapmak yasaktır.
 
----
 
-## 48. Social-Mapper
+================================================================================
+48. SOCIAL-MAPPER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 İsim, soyisim ve görseller üzerinden sosyal ağlarda araştırma yapmaya yardımcı olur.
 
-### Görüntü klasörüyle arama
+
+[ GÖRÜNTÜ KLASÖRÜYLE ARAMA ]
 ```bash
 social-mapper -f image -i /yol/fotograflar/ -t company.com
 ```
 
-### Kuruluş bazlı LinkedIn araştırması
+
+[ KURULUŞ BAZLI LINKEDIN ARAŞTIRMASI ]
 ```bash
 social-mapper -m fast -l company -i "Şirket Adı"
 ```
 
-### HTML çıktı
+
+[ HTML ÇIKTI ]
 ```bash
 social-mapper -f image -i /yol/fotograflar/ -o rapor.html
 ```
 
 **Not:** `face_recognition_models` eksikliğiyle ilgili bir uyarı görürsen gerekli Python model paketinin bulunmadığını kontrol et.
 
----
 
-## 49. Socialscan
+================================================================================
+49. SOCIALSCAN
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kullanıcı adı veya e-posta adreslerinin çeşitli çevrim içi platformlarda bulunup bulunmadığını kontrol etmeye yardımcı olur.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 socialscan user@example.com
 socialscan kullanici_adi --show-urls
@@ -1088,36 +1311,43 @@ socialscan kullanici_adi --available-only
 socialscan -i hedefler.txt --json sonuc.json
 ```
 
-### Platform seçimi
+
+[ PLATFORM SEÇIMI ]
 ```bash
 socialscan kullanici_adi --platforms twitter github
 ```
 
-### Liste ve vekil sunucusu
+
+[ LISTE VE VEKIL SUNUCUSU ]
 ```bash
 socialscan kullanici_adi --proxy-list proxy_dosyasi.txt
 socialscan kullanici_adi --cache-tokens
 ```
 
-### Ayrıntılı çıktı
+
+[ AYRINTILI ÇIKTI ]
 ```bash
 socialscan user1 user2 --view-by platform
 socialscan kullanici_adi --verbose --debug
 ```
 
----
 
-## 50. Sooty
+================================================================================
+50. SOOTY
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 SOC ve OSINT çalışmalarında URL, DNS, itibar, karma ve oltalama analizi gibi yardımcı işlevler sunar.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sooty
 ```
 
-### Menü
+
+[ MENÜ ]
 
 1. URL'leri e-posta için temizleme.
 2. Kod çözücüler.
@@ -1128,14 +1358,17 @@ sooty
 7. URL tarama ve yönlendirme inceleme.
 8. SOC yardımcı araçları.
 
----
 
-## 51. SpiderFoot
+================================================================================
+51. SPIDERFOOT
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 OSINT ve hedef keşfi çalışmalarını modüller üzerinden otomatikleştirmeye yardımcı olur.
 
-### Önemli seçenekler
+
+[ ÖNEMLI SEÇENEKLER ]
 
 - `-s TARGET` : Hedef.
 - `-l IP:port` : Yerel web arayüzünü başlatır.
@@ -1143,36 +1376,44 @@ OSINT ve hedef keşfi çalışmalarını modüller üzerinden otomatikleştirmey
 - `-u` : Kullanım modunu seçer.
 - `-o` : Çıktı biçimini seçer.
 
-### Örnekler
 
-### Yerel web arayüzü
+[ ÖRNEKLER ]
+
+
+[ YEREL WEB ARAYÜZÜ ]
 ```bash
 spiderfoot -l 127.0.0.1:5001
 ```
 
-### JSON çıktısı
+
+[ JSON ÇIKTISI ]
 ```bash
 spiderfoot -s hedefsite.com -o json > sonuc.json
 ```
 
-### Pasif bilgi toplama
+
+[ PASIF BILGI TOPLAMA ]
 ```bash
 spiderfoot -s hedefsite.com -u passive -o csv > pasif_rapor.csv
 ```
 
-### Belirli modüller
+
+[ BELIRLI MODÜLLER ]
 ```bash
 spiderfoot -s hedefsite.com -m sfp_email,sfp_dns
 ```
 
----
 
-## 52. SpoofTooph
+================================================================================
+52. SPOOFTOOPH
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Bluetooth cihazlarının kimlik bilgilerini güvenlik laboratuvarlarında incelemek ve test etmek için kullanılır.
 
-### Parametreler
+
+[ PARAMETRELER ]
 
 - `-i <dev>` : Bluetooth arayüzü.
 - `-s` : Çevredeki cihazları tarar.
@@ -1181,36 +1422,44 @@ Bluetooth cihazlarının kimlik bilgilerini güvenlik laboratuvarlarında incele
 - `-n <name>` : Cihaz adını belirtir.
 - `-t <time>` : Klonlama aralığını belirler.
 
-### Örnekler
 
-### Tarama
+[ ÖRNEKLER ]
+
+
+[ TARAMA ]
 ```bash
 spooftooph -i hci0 -s
 ```
 
-### Rastgele kimlik
+
+[ RASTGELE KIMLIK ]
 ```bash
 spooftooph -i hci0 -R
 ```
 
-### Manuel isim ve MAC
+
+[ MANUEL ISIM VE MAC ]
 ```bash
 spooftooph -i hci0 -n "YeniCihazAdi" -a 00:11:22:33:44:55
 ```
 
-### Belirli aralıklarla klonlama
+
+[ BELIRLI ARALIKLARLA KLONLAMA ]
 ```bash
 spooftooph -i hci0 -s -t 60
 ```
 
----
 
-## 53. theHarvester
+================================================================================
+53. THEHARVESTER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Alan adları hakkında açık kaynaklardan e-posta, alt alan adı ve benzeri bilgileri toplamaya yardımcı olur.
 
-### Önemli seçenekler
+
+[ ÖNEMLI SEÇENEKLER ]
 
 - `-d, --domain` : Hedef alan adı.
 - `-b, --source` : Veri kaynağı.
@@ -1220,31 +1469,38 @@ Alan adları hakkında açık kaynaklardan e-posta, alt alan adı ve benzeri bil
 - `-f, --filename` : Çıktıyı dosyaya kaydeder.
 - `-t, --take-over` : Alt alan adı ele geçirme kontrolü.
 
-### Örnekler
 
-### crt.sh kaynağı
+[ ÖRNEKLER ]
+
+
+[ CRT.SH KAYNAĞI ]
 ```bash
 theHarvester -d hedefsite.com -b crtsh
 ```
 
-### Tüm kaynaklar
+
+[ TÜM KAYNAKLAR ]
 ```bash
 theHarvester -d hedefsite.com -b all -f sonuc_raporu
 ```
 
-### DNS ve Shodan ile birlikte
+
+[ DNS VE SHODAN ILE BIRLIKTE ]
 ```bash
 theHarvester -d hedefsite.com -b google,virustotal -c -s
 ```
 
----
 
-## 54. Torctl
+================================================================================
+54. TORCTL
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Tor yönlendirmesi ve ilgili ağ ayarlarını yönetmeye yardımcı olur.
 
-## Komutlar
+
+[ KOMUTLAR ]
 
 - `start` : Trafiği Tor ağına yönlendirmeyi başlatır.
 - `stop` : Normal yönlendirmeye döner.
@@ -1255,7 +1511,8 @@ Tor yönlendirmesi ve ilgili ağ ayarlarını yönetmeye yardımcı olur.
 - `chngmac` : MAC adresini değiştirir.
 - `rvmac` : Önceki MAC adresine dönmeye çalışır.
 
-### Örnek kullanım
+
+[ ÖRNEK KULLANIM ]
 ```bash
 torctl start
 torctl ip
@@ -1263,26 +1520,32 @@ torctl chngid
 torctl stop
 ```
 
----
 
-## 55. Trape
+================================================================================
+55. TRAPE
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik ve sosyal mühendislik laboratuvarlarında kullanılan bir araçtır.
 
-### Başlatma
+
+[ BAŞLATMA ]
 ```bash
 sudo trape
 ```
 
----
 
-## 56. Websploit
+================================================================================
+56. WEBSPLOIT
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Yetkili güvenlik testlerinde çeşitli modülleri tek bir arayüz üzerinden çalıştırmaya yardımcı olur.
 
-### Temel komutlar
+
+[ TEMEL KOMUTLAR ]
 ```text
 help
 show
@@ -1292,37 +1555,45 @@ update
 exit
 ```
 
-### Adım adım kullanım
 
-### Modülleri listeleme
+[ ADIM ADIM KULLANIM ]
+
+
+[ MODÜLLERI LISTELEME ]
 ```text
 wsf > show modules
 ```
 
-### Modül seçme
+
+[ MODÜL SEÇME ]
 ```text
 wsf > use web/modul_adi
 ```
 
-### Seçenekleri görüntüleme ve ayarlama
+
+[ SEÇENEKLERI GÖRÜNTÜLEME VE AYARLAMA ]
 ```text
 wsf (modul_adi) > show options
 wsf (modul_adi) > set TARGET hedefsite.com
 ```
 
-### Çalıştırma
+
+[ ÇALIŞTIRMA ]
 ```text
 wsf (modul_adi) > run
 ```
 
----
 
-## 57. WiFiJammer
+================================================================================
+57. WIFIJAMMER
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Kablosuz ağ güvenliği laboratuvarlarında bağlantı ve istemci davranışlarını test etmek için kullanılır.
 
-### Parametreler
+
+[ PARAMETRELER ]
 
 - `-i INTERFACE` : Kablosuz ağ arayüzü.
 - `-c CHANNEL` : Kanal.
@@ -1331,64 +1602,75 @@ Kablosuz ağ güvenliği laboratuvarlarında bağlantı ve istemci davranışlar
 - `-d, --directedonly` : Belirli istemci eşleşmelerine odaklanır.
 - `--world` : 13 kanalı taramaya dahil eder.
 
-### Örnekler
 
-### Otomatik başlatma
+[ ÖRNEKLER ]
+
+
+[ OTOMATIK BAŞLATMA ]
 ```bash
 sudo wifijammer
 ```
 
-### Belirli bir erişim noktasını hedefleme
+
+[ BELIRLI BIR ERIŞIM NOKTASINI HEDEFLEME ]
 ```bash
 sudo wifijammer -a AA:BB:CC:DD:EE:FF
 ```
 
-### Belirli kanalda çalışma
+
+[ BELIRLI KANALDA ÇALIŞMA ]
 ```bash
 sudo wifijammer -c 6 --world
 ```
 
-### Kendi cihazını hariç tutma
+
+[ KENDI CIHAZINI HARIÇ TUTMA ]
 ```bash
 sudo wifijammer -s 11:22:33:44:55:66
 ```
 
 **Not:** Bağlantı kesme ve benzeri kablosuz testler yalnızca sana ait veya açıkça yetkilendirildiğin ağlarda yapılmalıdır.
 
----
 
-## 58. Nmap
+================================================================================
+58. NMAP
+================================================================================
 
-### Amaç
+
+[ AMAÇ ]
 Ağ keşfi, port taraması ve servis tespiti için kullanılan temel bir network security scanner'ıdır.
 
-### Temel kullanım
+
+[ TEMEL KULLANIM ]
 ```bash
 nmap 192.0.2.1
 ```
 
-## Servis ve sürüm tespiti
+
+[ SERVIS VE SÜRÜM TESPITI ]
 ```bash
 nmap -sV 192.0.2.1
 ```
 
-## Belirli portları tarama
+
+[ BELIRLI PORTLARI TARAMA ]
 ```bash
 nmap -p 22,80,443 192.0.2.1
 ```
 
-## İşletim sistemi tespiti
+
+[ İŞLETIM SISTEMI TESPITI ]
 ```bash
 sudo nmap -O 192.0.2.1
 ```
 
 **Not:** Nmap taramalarını yalnızca sana ait veya açıkça yetkilendirildiğin sistemlerde gerçekleştir.
 
----
 
-## ⚡ Hızlı kullanım özeti
+[ ⚡ HIZLI KULLANIM ÖZETI ]
 
-### 🧪 Çalıştırmadan önce
+
+[ 🧪 ÇALIŞTIRMADAN ÖNCE ]
 
 1. Aracın kurulu olduğunu kontrol et: `pacman -Q <paket>`
 2. Güncel seçenekleri gör: `<araç> --help`
@@ -1415,31 +1697,47 @@ Bu dosya mevcut toolset içindeki komutların daha okunabilir ve anlaşılır bi
 Yeni bir araç eklemek için kullanılmaz.
 
 
----
-## 59. AIMAP
+================================================================================
+59. AIMAP
+================================================================================
 **Amaç:** AI/ML servislerini keşfetmeye ve fingerprint etmeye yardımcı olur.
 ```bash
 aimap --help
 ```
 
----
-## 60. Airgeddon
+
+[ NE ZAMAN KULLANILIR ]
+AI/ML servislerini keşfetmek ve güvenlik açısından fingerprint etmek için kullanılır.
+
+================================================================================
+60. AIRGEDDON
+================================================================================
 **Amaç:** Kablosuz güvenlik denetimlerinde çeşitli araçları menü tabanlı bir akışta birleştirir.
 ```bash
 sudo airgeddon
 ```
 **Not:** Kablosuz saldırı/DoS özelliklerini yalnızca yetkili laboratuvarlarda kullan.
 
----
-## 61. Amass
+
+[ NE ZAMAN KULLANILIR ]
+Kablosuz güvenlik denetimlerinde farklı araçları tek bir menü altında birleştirir; Wi-Fi laboratuvarlarında test akışını yönetmeye yardımcı olur.
+
+================================================================================
+61. AMASS
+================================================================================
 **Amaç:** Alan adı, DNS ve alt alan adı keşfi için kullanılır.
 ```bash
 amass enum -passive -d example.com
 amass enum -h
 ```
 
----
-## 62. Arjun
+
+[ NE ZAMAN KULLANILIR ]
+Yetkili domainlerin DNS, alt alan adı ve attack-surface keşfi için kullanılır.
+
+================================================================================
+62. ARJUN
+================================================================================
 **Amaç:** Web uygulamalarındaki gizli HTTP parametrelerini keşfetmeye yardımcı olur.
 ```bash
 arjun -u https://example.com/endpoint
@@ -1447,106 +1745,176 @@ arjun -u https://example.com/endpoint -oJ sonuc.json
 ```
 **Not:** Parametre keşfi yalnızca yetkili hedeflerde yapılmalıdır.
 
----
-## 63. Arpon
+
+[ NE ZAMAN KULLANILIR ]
+Yetkili web uygulamalarında dokümante edilmemiş HTTP parametrelerini keşfetmeye yardımcı olur.
+
+================================================================================
+63. ARPON
+================================================================================
 **Amaç:** ARP spoofing/cache poisoning saldırılarına karşı koruma sağlamaya yönelik savunma aracıdır.
 ```bash
 arpon --help
 sudo arpon
 ```
 
----
-## 64. Arptools
+
+[ NE ZAMAN KULLANILIR ]
+ARP spoofing/cache poisoning saldırılarına karşı savunma ve tespit amacıyla kullanılır.
+
+================================================================================
+64. ARPTOOLS
+================================================================================
 **Amaç:** ARP paketleri ve düşük seviyeli ARP işlemleri üzerinde testler yapmaya yardımcı olur.
 ```bash
 arptools --help
 ```
 
----
-## 65. BackFuzz
+
+[ NE ZAMAN KULLANILIR ]
+ARP paketleri ve düşük seviyeli ARP işlemlerini laboratuvarda incelemeye yardımcı olur.
+
+================================================================================
+65. BACKFUZZ
+================================================================================
 **Amaç:** Ağ protokollerini fuzzing yöntemleriyle test etmeye yönelik toolkit'tir.
 ```bash
 backfuzz --help
 ```
 **Not:** Fuzzing yoğun trafik oluşturabilir; yalnızca yetkili ortamlarda kullan.
 
----
-## 66. BBOT
+
+[ NE ZAMAN KULLANILIR ]
+Ağ protokollerini fuzzing ile test ederek beklenmeyen girdilere karşı servis davranışını incelemeye yardımcı olur.
+
+================================================================================
+66. BBOT
+================================================================================
 **Amaç:** OSINT ve reconnaissance işlemlerini modüler biçimde otomatikleştirmeye yardımcı olur.
 ```bash
 bbot -t example.com
 bbot --help
 ```
 
----
-## 67. BeEF
+
+[ NE ZAMAN KULLANILIR ]
+OSINT ve reconnaissance işlemlerini modüler biçimde otomatikleştirerek yetkili hedeflerin varlıklarını haritalamaya yardımcı olur.
+
+================================================================================
+67. BEEF
+================================================================================
 **Amaç:** Tarayıcı güvenliği ve browser tabanlı test senaryolarını laboratuvarda incelemek için kullanılır.
 ```bash
 beef-xss
 ```
 **Not:** Hook ve browser-control özelliklerini yalnızca yetkili laboratuvarda kullan.
 
----
-## 68. Berate AP
+
+[ NE ZAMAN KULLANILIR ]
+Tarayıcı güvenliği ve browser tabanlı test senaryolarını izole laboratuvarlarda incelemek için kullanılır.
+
+================================================================================
+68. BERATE AP
+================================================================================
 **Amaç:** Rogue access point senaryolarını kablosuz güvenlik testlerinde çalıştırmaya yardımcı olur.
 ```bash
 berate_ap --help
 ```
 
----
-## 69. BlackArch Mirrorlist
+
+[ NE ZAMAN KULLANILIR ]
+Rogue access point senaryolarını kablosuz güvenlik laboratuvarlarında test etmeye yardımcı olur.
+
+================================================================================
+69. BLACKARCH MIRRORLIST
+================================================================================
 **Amaç:** BlackArch paket depolarının mirror listesini sağlayan yardımcı pakettir.
 ```bash
 pacman -Q blackarch-mirrorlist
 ```
 **Not:** Bağımsız bir güvenlik aracı değildir.
 
----
-## 70. Burp Suite
+
+[ NE ZAMAN KULLANILIR ]
+BlackArch paket depolarının mirror listesini sağlar; bağımsız bir güvenlik aracı değildir.
+
+================================================================================
+70. BURP SUITE
+================================================================================
 **Amaç:** Web uygulamalarını incelemek, HTTP trafiğini yakalamak ve yetkili güvenlik testleri yapmak için kullanılır.
 ```bash
 burpsuite
 ```
 
----
-## 71. Caido
+
+[ NE ZAMAN KULLANILIR ]
+Web uygulamalarında HTTP trafiğini yakalama, inceleme ve yetkili güvenlik testi için kullanılır.
+
+================================================================================
+71. CAIDO
+================================================================================
 **Amaç:** HTTP uygulamalarını incelemek ve web güvenlik testleri yapmak için kullanılan proxy/platformdur.
 ```bash
 caido
 ```
 **Not:** Paket farklı bir launcher sağlıyorsa kurulu sürümün launcher'ını kullan.
 
----
-## 72. Cariddi
+
+[ NE ZAMAN KULLANILIR ]
+HTTP uygulamalarını incelemek ve web güvenlik testleri yapmak için kullanılan modern bir proxy/platformdur.
+
+================================================================================
+72. CARIDDI
+================================================================================
 **Amaç:** Web sitelerinden endpoint, URL ve içerik göstergeleri çıkarmaya yardımcı olur.
 ```bash
 echo "https://example.com" | cariddi
 cariddi -h
 ```
 
----
-## 73. Chiron
+
+[ NE ZAMAN KULLANILIR ]
+Web sitelerinden endpoint, URL ve içerik göstergeleri çıkarmaya yardımcı olur; recon aşamasında kullanışlıdır.
+
+================================================================================
+73. CHIRON
+================================================================================
 **Amaç:** IPv6 güvenlik testleri, keşif ve ağ davranışlarını incelemek için kullanılır.
 ```bash
 chiron --help
 ```
 
----
-## 74. Clairvoyance
+
+[ NE ZAMAN KULLANILIR ]
+IPv6 güvenlik testleri, keşif ve ağ davranışlarını laboratuvarda incelemek için kullanılır.
+
+================================================================================
+74. CLAIRVOYANCE
+================================================================================
 **Amaç:** GraphQL endpoint'lerinde schema/introspection davranışlarını güvenlik açısından incelemeye yardımcı olur.
 ```bash
 clairvoyance --help
 ```
 
----
-## 75. Crypthook
+
+[ NE ZAMAN KULLANILIR ]
+GraphQL endpoint'lerinde schema/introspection davranışlarını güvenlik açısından incelemeye yardımcı olur.
+
+================================================================================
+75. CRYPTHOOK
+================================================================================
 **Amaç:** TCP/UDP trafiği için şifreli tünel/iletişim sağlamaya yönelik yardımcı araçtır.
 ```bash
 crypthook --help
 ```
 
----
-## 76. Ddosify
+
+[ NE ZAMAN KULLANILIR ]
+TCP/UDP trafiği için şifreli tünel/iletişim akışlarını kontrollü ortamlarda test etmeye yardımcı olur.
+
+================================================================================
+76. DDOSIFY
+================================================================================
 **Amaç:** Web uygulamaları ve servisler için yük/stres testi yapmaya yarar.
 ```bash
 ddosify -t https://example.com
@@ -1554,38 +1922,63 @@ ddosify --help
 ```
 **Not:** Yalnızca test iznin olan sistemlerde kullan.
 
----
-## 77. ExifLooter
+
+[ NE ZAMAN KULLANILIR ]
+Web uygulamaları ve servisler için yük/stres testi yapar; yalnızca test izni olan ortamlarda kullanılmalıdır.
+
+================================================================================
+77. EXIFLOOTER
+================================================================================
 **Amaç:** Görsellerden EXIF ve diğer metadata bilgilerini çıkarmaya yardımcı olur.
 ```bash
 exiflooter --help
 ```
 
----
-## 78. Hyde
+
+[ NE ZAMAN KULLANILIR ]
+Görsellerdeki EXIF ve diğer metadata alanlarını incelemeye yardımcı olur.
+
+================================================================================
+78. HYDE
+================================================================================
 **Amaç:** Ağ/servis stres testi ve performans değerlendirmesine yönelik araçtır.
 ```bash
 hyde --help
 ```
 **Not:** Stres testlerini yalnızca kontrol ettiğin sistemlerde yap.
 
----
-## 79. MDBTools
+
+[ NE ZAMAN KULLANILIR ]
+Ağ/servis stres testi ve performans değerlendirmesi için kullanılır; kontrollü ortamlarda çalıştırılmalıdır.
+
+================================================================================
+79. MDBTOOLS
+================================================================================
 **Amaç:** Microsoft Access MDB veritabanlarını Linux'ta incelemek ve dönüştürmek için kullanılır.
 ```bash
 mdb-tables database.mdb
 mdb-schema database.mdb
 ```
 
----
-## 80. Monocle
+
+[ NE ZAMAN KULLANILIR ]
+Microsoft Access MDB veritabanlarını Linux'ta incelemek ve dönüştürmek için kullanılır.
+
+================================================================================
+80. MONOCLE
+================================================================================
 **Amaç:** Yerel ağ cihazlarını keşfetmeye yardımcı olur.
 ```bash
 monocle --help
 ```
 
----
-## 81. PyInstaller
+
+[ NE ZAMAN KULLANILIR ]
+Yerel ağ cihazlarını keşfetmek ve ağ envanterini doğrulamak için kullanılabilir.
+
+================================================================================
+81. PYINSTALLER
+================================================================================
 **Amaç:** Python uygulamalarını çalıştırılabilir paketlere dönüştürmeye yardımcı olur.
 ```bash
 pyinstaller app.py
@@ -1593,16 +1986,26 @@ pyinstaller --onefile app.py
 pyinstaller --help
 ```
 
----
-## 82. PyInstaller Hooks Contrib
+
+[ NE ZAMAN KULLANILIR ]
+Python uygulamalarını dağıtılabilir çalıştırılabilir paketlere dönüştürmeye yardımcı olur.
+
+================================================================================
+82. PYINSTALLER HOOKS CONTRIB
+================================================================================
 **Amaç:** PyInstaller'ın farklı Python paketlerini paketlemesine yardımcı olan ek hook koleksiyonudur.
 ```bash
 pacman -Q pyinstaller-hooks-contrib
 ```
 **Not:** Ayrı bir güvenlik aracı değildir.
 
----
-## 83. Wifiphisher
+
+[ NE ZAMAN KULLANILIR ]
+PyInstaller'ın Python paketlerini doğru paketlemesine yardımcı olan ek hook koleksiyonudur.
+
+================================================================================
+83. WIFIPHISHER
+================================================================================
 **Amaç:** Rogue AP ve phishing tabanlı kablosuz güvenlik farkındalığı/test senaryolarında kullanılır.
 ```bash
 sudo wifiphisher
@@ -1611,8 +2014,12 @@ sudo wifiphisher -aI wlan0 -jI wlan1
 **Not:** Rogue AP, deauthentication ve phishing özelliklerini yalnızca yetkili laboratuvarda kullan.
 
 
----
-## 84. Arpspoof-Smikims
+[ NE ZAMAN KULLANILIR ]
+Rogue AP ve phishing tabanlı kablosuz güvenlik farkındalığı/test senaryolarında kullanılır; yalnızca izole yetkili laboratuvarda çalıştırılmalıdır.
+
+================================================================================
+84. ARPSPOOF-SMIKIMS
+================================================================================
 **Amaç:** ARP spoofing/ARP tabanlı ağ güvenliği testlerinde kullanılan yardımcı araçtır.
 ```bash
 arpspoof-smikims --help
