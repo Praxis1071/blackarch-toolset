@@ -1,4 +1,4 @@
-# BlackArch Toolset Commands
+# BlackArch Toolset
 
 BlackArch ve Arch Linux için seçilmiş güvenlik araçlarını öğrenmek, kurmak ve kullanmak amacıyla hazırlanmış Türkçe bir komut referansıdır.
 
@@ -10,6 +10,8 @@ BlackArch ve Arch Linux için seçilmiş güvenlik araçlarını öğrenmek, kur
 | `HACKTOOLS.txt` | Araçların kısa açıklamaları ve kategorileri |
 | `blackarch.txt` | Kurulumda kullanılacak paket listesi |
 | `install.sh` | Araç setini otomatik olarak kuran kurulum betiği |
+| `uninstall.sh` | Paketleri ve BlackArch repository yapılandırmasını ayrı ayrı kaldıran betik |
+| `check.sh` | Repository dosyalarını ve temel tutarlılığı kontrol eden kalite betiği |
 | `LICENSE` | MIT lisansı |
 
 ## 🚀 Kurulum
@@ -26,7 +28,7 @@ cd blackarch-toolset
 ### 2. Araçları kur
 
 ```bash
-chmod +x install.sh
+chmod +x install.sh uninstall.sh check.sh
 sudo ./install.sh
 ```
 
@@ -40,6 +42,34 @@ sudo ./install.sh
 
 > **Not:** BlackArch deposu eklenmeden önce sistemdeki mevcut paket ve depo yapılandırmalarını kontrol et.
 
+## 🧹 Kaldırma
+
+Kurulan toolset'i geri kaldırmak için:
+
+```bash
+chmod +x uninstall.sh
+sudo ./uninstall.sh
+```
+
+Script iki işlemi **ayrı ayrı sorar**:
+
+1. Toolset paketlerinin tamamını kaldırmak.
+2. BlackArch repository yapılandırmasını kaldırmak.
+
+Her iki sorunun varsayılan cevabı **Hayır**'dır. Repository kaldırılmadan önce `/etc/pacman.conf` için zaman damgalı bir yedek oluşturulur.
+
+> **Uyarı:** Paket kaldırma seçeneği `pacman -Rns` kullanır; artık gerekmeyen bağımlılıkları da kaldırabilir. İşlemden önce gösterilen paket listesini kontrol et.
+
+## 🔎 Kalite kontrolü
+
+Repository'nin temel bütünlüğünü kontrol etmek için:
+
+```bash
+chmod +x check.sh
+./check.sh
+```
+
+Kontrol; dosyaların varlığını, paket sayısını, script syntax'ını, HACKKOMUT bölüm sayısını ve README referanslarını doğrular.
 ## 🛠️ Nasıl kullanılır?
 
 Bir aracı öğrenmek için önerilen sıra:
