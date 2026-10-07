@@ -76,7 +76,7 @@ secretfinder -i burp_raporu.xml -b
 
 [+] KATANA
 --------------------------------------------------------------------------------
-katana -u https://example.com -jc -kf all -d 3 -o pediatriakademisi.txt
+katana -u https://example.com -jc -kf all -d 3 -o example.txt
 
 
 [+] SEEKER
