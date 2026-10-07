@@ -1,12 +1,12 @@
 # BlackArch Toolset Commands
 
-A curated **80-package BlackArch security toolset** for Linux security learning, research, and authorized testing.
+A curated **87-package BlackArch security toolset** for Linux security learning, research, and authorized testing.
 
 This repository is a personal command and tool reference. It focuses on a selected set of tools rather than trying to reproduce the complete BlackArch repository.
 
 ## ✨ What is included?
 
-- **80 selected packages** from the current personal toolset
+- **87 selected packages** from the current personal toolset
 - Organized command examples in `HACKKOMUT.txt`
 - Short tool descriptions and categories in `HACKTOOLS.txt`
 - Package inventory in `blackarch.txt`
@@ -42,7 +42,7 @@ blackarch-toolset-commands/
 
 ## 🚀 Installation
 
-`install.sh` is designed for **Arch Linux systems where the BlackArch repository is already configured**.
+`install.sh` is designed for **Arch Linux systems** and installs the 87 packages listed in `blackarch.txt`.
 
 Clone the repository, enter it, and run:
 
@@ -51,9 +51,12 @@ chmod +x install.sh
 sudo ./install.sh
 ```
 
-The installer uses `pacman` and installs only the packages belonging to this repository's existing toolset.
+The installer first checks whether the **BlackArch repository is already configured**:
 
-If a package cannot be found, check the BlackArch repository configuration and current package availability before troubleshooting the individual package.
+- If it is configured, the installer skips repository setup and installs the toolset.
+- If it is not configured, the installer asks for permission before downloading the official BlackArch `strap.sh` script, verifies its SHA1 checksum, configures the repository, and then installs the toolset.
+
+The installer uses `pacman` and installs only the packages belonging to this repository's toolset. Some packages, such as Nmap and Cloudflared, are provided by Arch Linux's official repositories and are installed normally through `pacman` as part of the same toolset.
 
 ## 🧭 Recommended workflow
 
@@ -88,7 +91,7 @@ How do I install the toolset?
 
 This is intentionally a **curated personal toolset**, not a complete BlackArch package catalogue.
 
-BlackArch itself contains a much larger collection of security tools. This repository deliberately stays limited to the tools already selected for this project.
+BlackArch itself contains a much larger collection of security tools. This repository deliberately stays limited to the tools already selected for this project. The current toolset contains 87 packages.
 
 The goal is quality and usability of the existing toolset rather than continuously adding unrelated packages.
 
