@@ -26,6 +26,7 @@ TOOLS=(
   chiron
   clairvoyance
   cmseek
+  cloudflared
   commix
   corsy
   credsniper
@@ -55,11 +56,15 @@ TOOLS=(
   maketh
   mdbtools
   mdk3
+  metasploit
   mitm
   monocle
   netdiscover
   nexfil
   ngrok
+  nikto
+  nomore403
+  nmap
   nuclei
   nuclei-templates
   omnibus
@@ -67,7 +72,7 @@ TOOLS=(
   photon
   pyinstaller
   pyinstaller-hooks-contrib
-  python2-shodan
+  python-shodan
   responder
   roguehostapd
   secretfinder
@@ -75,9 +80,11 @@ TOOLS=(
   seeker
   set
   sherlock
+  shodan
   social-mapper
   socialscan
   sooty
+  sparrow-wifi
   spiderfoot
   spooftooph
   subfinder
@@ -88,7 +95,6 @@ TOOLS=(
   wifijammer
   wifiphisher
 )
-
 if [[ $EUID -ne 0 ]]; then
   echo "Hata: Bu script pacman ve depo yapılandırması için root yetkisi gerektirir."
   echo "Şununla çalıştır: sudo ./install.sh"
