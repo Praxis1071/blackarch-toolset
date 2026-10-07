@@ -1,0 +1,113 @@
+================================================================================
+                       BLACKARCH SISTEM ARAC KATEGORI LISTESI
+================================================================================
+
+[1] OSINT VE HEDEF ARASTIRMASI (PASIF BILGI TOPLAMA)
+--------------------------------------------------------------------------------
+* spiderfoot    : Hedef hakkinda yuzlerce kaynaktan otomatik ayak izi cikarir.
+* theharvester  : E-posta adreslerini, calisan isimlerini ve subdomain'leri toplar.
+* phoneinfoga   : Telefon numaralari uzerinden uluslararası istihbarat toplar.
+* sherlock      : Kullanici adini yuzlerce sosyal medya ve web sitesinde tarar.
+* maigret       : Kullanici adini genis platform aginda tarar ve dosyalastirir.
+* nexfil        : Kullanici adi arama surecini otomatize eden hızlı OSINT araci.
+* holehe        : E-posta adresinin hangi sitelere kayitli oldugunu tespit eder.
+* social-mapper : Yuz tanima ile hedef kisiyi sosyal medyada eslestirir.
+* h8mail        : E-postalarin geçmiş veri sizintilarinda olup olmadigini arar.
+* socialscan    : E-posta ve kullanici adlarinin uygunluk durumunu kontrol eder.
+* exiflooter    : Resimlerin metadata (Exif) verilerinden GPS konumu cikarir.
+* trape         : Hedefin internetteki izini surup konum/oturum verisi toplar.
+* omnibus       : OSINT verilerini tek merkezde toplar ve yonetir.
+* sooty         : SOC analistleri icin tehdit istihbarati ve analiz yardimcisi.
+
+
+[2] BUG BOUNTY: SUBDOMAIN VE URL KESFI
+--------------------------------------------------------------------------------
+* subfinder     : Hızlı ve moduler alt alan adi (subdomain) kesif araci.
+* amass         : Derinlemesine subdomain ve varlik kesif framework'u.
+* bbot          : Recon ve Bug Bounty sureclerini otomatize eden tarayici.
+* httpx         : Subdomain'lerin hangilerinin aktif (HTTP/S) oldugunu test eder.
+* gau           : AlienVault, Wayback ve CommonCrawl'dan bilinen URL'leri ceker.
+* hakrawler     : Web sitelerindeki endpoint ve baglantilari hizlica tarar.
+* photon        : URL, e-posta ve gizli dosyalari cikaran hizli web tarayici.
+* katana-pd     : Modern web uygulamalarini derinlemesine tarayan spider araci.
+* cariddi       : URL listesini tarayip gizli anahtar, API key ve token arar.
+
+
+[3] WEB ZAFIYET TARAMA VE FUZZING
+--------------------------------------------------------------------------------
+* burpsuite     : HTTP isteklerini araya girip okuma/manipule etme platformu.
+* caido-desktop : Modern HTTP interception proxy ve fuzzing araci.
+* nuclei        : Sablon tabanli, yuksek hizli zafiyet tarama motoru.
+* ffuf          : Go ile yazilmis cok hizli web fuzzing/dizin tarama araci.
+* feroxbuster   : Rust ile yazilmis rekursif web dizin ve dosya tarayici.
+* arjun         : Web uygulamalarindaki gizli HTTP parametrelerini bulur.
+* dalfox        : Parametre tabanli otomatize XSS zafiyet tarayicisi.
+* commix        : OS komut enjeksiyonu (Command Injection) sömürü araci.
+* cmseek        : CMS (WordPress, Joomla vb.) surum ve zafiyet tespit araci.
+* linkfinder    : JavaScript dosyalarindaki endpoint ve parametreleri bulur.
+* secretfinder  : JS dosyalarindaki API anahtari ve token gibi hassas verileri arar.
+* dontgo403     : 403 Forbidden kısıtlamalarini atlatmayi dener.
+* corsy         : CORS yanlis yapilandirma zafiyetlerini tarar.
+* clairvoyance  : GraphQL API veritabani semalarini sızdirir.
+* interactsh    : Out-of-band (OOB) etkilesimleri yakalayarak kor zafiyetleri kanitlar.
+
+
+[4] YEREL AG (NETWORK) VE MITM SALDIRILARI
+--------------------------------------------------------------------------------
+* netdiscover   : Agdaki aktif IP ve MAC adreslerini sessiz/aktif kesfeder.
+* monocle       : Pasif ve aktif modda yerel ag cihaz keşif araci.
+* responder     : LLMNR/NBT-NS zehirlemesi ile NTLM hash'lerini calar.
+* arpspoof-smikims : Linux raw socket kullanarak ARP spoofing saldırisi yapar.
+* arptools      : ARP yayin, ARP saldirisi ve veri iletim araç seti.
+* mitm          : ARP poisoning ile DNS spoofing yapan Python betigi.
+* kickthemout   : Agdaki diger cihazlarin internet baglantisini keser.
+* maketh        : Ozel ARP, IP, TCP, UDP paketleri olusturma araci.
+* backfuzz      : Ag protokollerine fuzzing uygulayan araç seti.
+* chiron        : IPv6 aglarina ozel sızma testi framework'u.
+
+
+[5] KABLOSUZ ILETISIM (WI-FI VE BLUETOOTH)
+--------------------------------------------------------------------------------
+* airgeddon     : Kablosuz ag testi ve saldirilari icin menulu bash betigi.
+* wifijammer    : Menzildeki Wi-Fi cihazlarina sürekli Deauth paketi gonderir.
+* mdk3          : WLAN sızma testi ve paket enjeksiyon araci.
+* berate_ap     : Sahte (Rogue) Wi-Fi erisim noktalari (Evil Twin) olusturur.
+* roguehostapd  : Hostapd altyapisi ile sahte AP saldirilari duzenler.
+* wifiphisher   : WPA aglarina karsi otomatize oltalama saldirilari yapar.
+* spooftooph    : Bluetooth cihaz adı, sınıfı ve MAC adresini klonlar/değistirir.
+
+
+[6] SOSYAL MUHENDISLIK VE OLTALAMA (PHISHING)
+--------------------------------------------------------------------------------
+* set           : Social-Engineer Toolkit; sosyal muhendislik ana framework'u.
+* gophish       : Kurumsal duzeyde phishing kampanyasi yonetim platformu.
+* credsniper    : 2FA kodlarini yakalayabilen gelişmis phishing araci.
+* seeker        : Sosyal muhendislik ile cihazın hassas GPS konumunu çeker.
+* websploit     : Web analizi ve sosyal muhendislik saldirilari iceren araç.
+
+
+[7] SOMURU (EXPLOITATION) VE SISTEM FRAMEWORK'LERI
+--------------------------------------------------------------------------------
+* beef          : Browser Exploitation Framework; web tarayicilarini ele gecirir.
+* armitage      : Metasploit altyapisi icin grafiksel (GUI) yonetim araci.
+* gloom         : Linux sızma testi ve sömürü framework'u.
+* aimap         : Yapay zeka (AI/ML) ve LLM altyapilarina ozel tarayici.
+
+
+[8] SIFRE KIRMA (CRACKING) VE WORDLIST ARAÇLARI
+--------------------------------------------------------------------------------
+* seclists      : Sızma testleri icin devasa kategorize kelime listesi arşivi.
+* crunch        : Belirlenen kurallara gore ozel wordlist/sifre listesi uretir.
+* cupp          : Hedef kisinin bilgilerine dayali ozel sifre listesi uretir.
+
+
+[9] GIZLILIK, TUNELLEME VE SAVUNMA (YARDIMCI ARAÇLAR)
+--------------------------------------------------------------------------------
+* python2-shodan : Shodan arama motoru komut satırı aracı.
+* ngrok         : Localhost servislerini internete acan tunelleme araci.
+* torctl        : Tum sistem grafigini Tor agina yonlendirir.
+* crypthook     : TCP/UDP simetrik sifreli tunel araci.
+* ddosify       : Golang ile yazilmis yuksek performansli stres testi araci.
+* hyde          : C ile yazilmis DDoS test araci.
+* arpon         : ARP zehirlenmesi (MITM) saldirilarina karsi koruma saglar.
+* secure-delete : Dosya ve verileri geri getirilemeyecek sekilde guvenle siler.

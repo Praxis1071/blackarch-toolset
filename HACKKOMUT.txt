@@ -1,0 +1,725 @@
+BLACKARCH TOOLSET — HACKKOMUT
+==================================
+
+Bu dosya, repodaki mevcut kişisel toolset'in birleştirilmiş ve düzenlenmiş komut referansıdır.
+Yeni araç eklenmemiştir; iki HACKKOMUT dosyasındaki mevcut araç ve komutlar tek dosyada korunmuştur.
+
+Kullanım notu: Komutları yalnızca kendi sistemlerinde veya açıkça yetkilendirildiğin laboratuvar/test ortamlarında kullan.
+Araç sürümleri değişebileceği için farklı davranışlarda önce '<araç> --help' çıktısını kontrol et.
+
+================================================================================
+                        SİBER GÜVENLİK KOMUT KILAVUZU
+================================================================================
+
+[+] LINKFINDER
+--------------------------------------------------------------------------------
+linkfinder -i file://$PWD/index-BhYj0Brp.js -o cli
+
+
+[+] SECRETFINDER
+--------------------------------------------------------------------------------
+Açıklama: JavaScript dosyaları veya web sayfaları içerisindeki gizli hassas verileri,
+API anahtarlarını, şifreleri ve gizli endpoint'leri (bağlantı noktalarını) bulmak için kullanılır.
+
+Komut:
+secretfinder -i file://$PWD/index-BhYj0Brp.js -o cli
+
+Örnek Kullanım Komutları:
+
+* Tek Bir URL Üzerindeki JS Dosyalarını Tarama ve Çıkarma:
+secretfinder -i https://example.com -e
+
+* Sonuçları HTML Formatında Dosyaya Kaydetme:
+secretfinder -i https://example.com/dosya.js -o rapor.html
+
+* Burp Suite ile Dışarı Aktarılan Dosyayı Analiz Etme:
+secretfinder -i burp_raporu.xml -b
+
+1. Kimlik Doğrulama Gerektiren Sayfaları Tarama:
+   - Çerez (Cookie) Kullanarak Tarama (-c):
+     Giriş yapılmış bir oturumun çerezlerini ekleyerek, sadece yetkili kullanıcıların
+     erişebildiği JavaScript dosyalarındaki gizli verileri aramak için:
+     secretfinder -i https://example.com/panel -e -c "session=EXAMPLE_SESSION_TOKEN"
+
+   - Özel Başlıklar (Headers) Ekleme (-H):
+     Özel bir Authorization başlığı veya User-Agent tanımlayarak tarama yapmak için:
+     secretfinder -i https://example.com -e -H "Authorization: Bearer EXAMPLE_TOKEN\nUser-Agent: Mozilla/5.0"
+
+2. Belirli Endpoint'leri Filtreleme ve Daraltma (-r):
+   - Sadece API Rotalarını Listeleme:
+     Bulunan yüzlerce URL arasından sadece /api/ ile başlayan gizli endpoint'leri süzmek için regex filtresi:
+     secretfinder -i https://example.com -e -r "^/api/"
+
+3. Dosya ve Klasör Odaklı Tarama (-i):
+   - Yerel Bir JavaScript Dosyasını Analiz Etme:
+     İnternete çıkmadan, bilgisayarında kayıtlı olan bir .js dosyasını doğrudan incelemek için:
+     secretfinder -i /yol/dosya.js -o sonuc.html
+
+   - Yerel Bir Klasördeki Tüm Dosyaları Tarama:
+     Toplu halde indirdiğin bir web sitesi dizinindeki tüm JS dosyalarını taramak için:
+     secretfinder -i /yol/klasor/ -o cikti.html
+
+4. İstekleri Proxy Üzerinden Yönlendirme (-p):
+   - Burp Suite veya OWASP ZAP'e Trafik Gönderme:
+     Araç üzerinden yapılan istekleri bir proxy aracına yönlendirerek trafiği izlemek için:
+     secretfinder -i https://example.com -e -p 127.0.0.1:8080
+
+5. Belirli Kelimeleri Hariç Tutma veya Odaklanma (-g ve -n):
+   - Belirli Kütüphaneleri (örn. jQuery, Bootstrap) Yoksayma (-g):
+     İçinde belirli bir ifade geçen (örneğin popüler kütüphane isimleri) JS dosyalarını tarama dışı bırakmak için:
+     secretfinder -i https://example.com -e -g "jquery;bootstrap;analytics"
+
+   - Sadece Belirli İçeriklere Sahip Dosyaları İşleme (-n):
+     İsmi veya yolu içinde belirli bir kelime geçen JS dosyalarına odaklanmak için:
+     secretfinder -i https://example.com -e -n "app;main;bundle"
+
+
+[+] KATANA
+--------------------------------------------------------------------------------
+katana -u https://example.com -jc -kf all -d 3 -o pediatriakademisi.txt
+
+
+[+] SEEKER
+--------------------------------------------------------------------------------
+sudo seeker
+
+
+[+] CLOUDFLARED TUNNEL
+--------------------------------------------------------------------------------
+cloudflared tunnel --url http://localhost:8080
+
+
+[+] SPARROW-WIFI
+--------------------------------------------------------------------------------
+sudo /tmp/sparrow_env/bin/python /usr/share/sparrow-wifi/sparrow-wifi.py
+
+
+[+] SUBFINDER
+--------------------------------------------------------------------------------
+Açıklama: ProjectDiscovery tarafından Go dilinde geliştirilmiş güçlü bir subdomain
+keşif (enumeration) aracıdır. Hedef bir alan adının arkasında gizli kalmış alt alan
+adlarını arama motorları, sertifika şeffaflık logları (Certificate Transparency) ve
+çeşitli OSINT kaynakları üzerinden tarayarak listeler. Pasif kaynak modelinde hedefe
+aktif tarama yapmaz; ancak kullanılan dış kaynaklara sorgular gönderebilir. Bu nedenle
+"hiç iz bırakmaz" şeklinde kesin bir ifade kullanılmamalıdır.
+
+Önemli Parametreler:
+-d, -domain : Taranacak hedef alan adını belirtir.
+-dL, -list  : İçerisinde birden fazla hedef olan metin dosyasını toplu taramak için kullanılır.
+-s, -sources: Sadece belirli kaynakları kullanarak arama yapmayı sağlar.
+-all        : Tüm pasif kaynakları devreye sokar.
+-o, -output : Bulunan alt alan adlarını bir dosyaya kaydeder.
+-silent     : Ekranda sadece bulunan subdomain'leri alt alta listeler.
+
+Detaylı Örnek Kullanım Komutları:
+* Temel Bir Alan Adı Taraması Yapma:
+  subfinder -d hedefsite.com
+
+* Sonuçları Bir Dosyaya Kaydetme ve Sessiz Mod (-silent):
+  subfinder -d hedefsite.com -silent -o subdomains.txt
+
+* Toplu Hedef Taraması Yapma (-dL):
+  subfinder -dL hedefler.txt -o toplu_sonuclar.txt
+
+* Tüm Kaynakları Kullanarak Derinlemesine Tarama:
+  subfinder -d hedefsite.com -all -o detayli_sonuc.txt
+
+
+[+] NUCLEI
+--------------------------------------------------------------------------------
+nuclei -u https://example.com -tags tech,fingerprint,cve
+
+
+[+] HOLEHE
+--------------------------------------------------------------------------------
+holehe user@example.com
+
+
+[+] SHERLOCK
+--------------------------------------------------------------------------------
+Açıklama: Belirttiğin bir kullanıcı adını yüzlerce farklı sosyal medya platformunda,
+forumda ve web sitesinde aynı anda arar. Hangi sitelerde o kullanıcı adına ait bir
+profil olduğunu hızlıca raporlar.
+
+sherlock kullanici_adi
+sherlock kullanici_adi -o sonuc.txt
+sherlock kullanici_adi --site Twitter --site GitHub
+sherlock kullanici_adi --tor
+
+1. Raporlama ve Dosya Formatları:
+   - Sonuçları CSV Formatında Kaydetme:
+     sherlock kullanici_adi --csv
+
+   - Sonuçları Modern Excel (.xlsx) Formatına Aktarma:
+     sherlock kullanici_adi --xlsx
+
+   - Birden Fazla Kullanıcı Adı İçin Klasörlü Raporlama (-fo):
+     sherlock user1 user2 user3 -fo ./sonuclar/
+
+2. Filtreleme ve Site Kısıtlamaları:
+   - Yalnızca Bulunan Sonuçları Konsola Yazdırma (--print-found):
+     sherlock kullanici_adi --print-found
+
+   - Bulunamayan (Olumsuz) Sonuçları da Gösterme (--print-all):
+     sherlock kullanici_adi --print-all
+
+   - NSFW (Yetişkin İçerikli) Siteleri Taramaya Dahil Etme (--nsfw):
+     sherlock kullanici_adi --nsfw
+
+3. Gizlilik, Proxy ve Tor Kullanımı:
+   - Her İstek İçin Yeni Tor Devresi Kullanma (--unique-tor):
+     sherlock kullanici_adi --unique-tor
+
+   - Socks5 Proxy Üzerinden Trafiği Yönlendirme (-p):
+     sherlock kullanici_adi -p socks5://127.0.0.1:9050
+
+4. Ekstra Kolaylıklar:
+   - Bulunan Tüm Profilleri Tarayıcıda Otomatik Açma (-b):
+     sherlock kullanici_adi --browse
+
+
+[+] MAIGRET
+--------------------------------------------------------------------------------
+maigret kullanici_adi
+maigret kullaniciadi --tor-proxy socks5://127.0.0.1:9050
+maigret kullaniciadi -a -T
+
+
+[+] H8MAIL & HOLEHE EKSTRA
+--------------------------------------------------------------------------------
+h8mail -t user@example.com
+holehe user@example.com
+h8mail -t example@example.com -c h8mail_config.ini
+
+
+[+] METASPLOIT / ARMITAGE
+--------------------------------------------------------------------------------
+sudo systemctl start postgresql
+msfdb init
+sudo armitage
+
+
+[+] KICKTHEMOUT
+--------------------------------------------------------------------------------
+sudo kickthemout  --> ARP zehirlemesi aracı yerel ağda kullanılır.
+
+
+[+] CMSEEK
+--------------------------------------------------------------------------------
+cmseek   --> Web recon için kullanılır.
+
+
+[+] COMMIX
+--------------------------------------------------------------------------------
+commix   --> Web exploit için kullanılır. Açık aramak...
+commix -u "örnek.com"
+
+
+[+] CORSY
+--------------------------------------------------------------------------------
+corsy -u https://example.com -t 10  --> Web recon ve zafiyet taraması.
+
+
+[+] CREDCSNIPER
+--------------------------------------------------------------------------------
+credsniper  --> Kimlik bilgisi avcılığı yapar örneğin fake bir insta sayfası üzerinden bilgi çalmak.
+credsniper --module microsoft --hostname login.ornekdomain.com --final https://example.com --ssl --twofactor
+
+
+[+] CRUNCH
+--------------------------------------------------------------------------------
+crunch  --> Hedefe özel wordlist hazırlar.
+
+Kullanım: crunch <min> <max> [options]
+<min>: Oluşturulacak kelimelerin minimum uzunluğu (karakter sayısı).
+<max>: Oluşturulacak kelimelerin maksimum uzunluğu.
+
+ crunch 4 4 0123456789 -o pin_listesi.txt
+
+
+[+] CUPP
+--------------------------------------------------------------------------------
+cupp -i --> Hedef hakkında özel wordlist oluşturur.
+
+
+[+] DALFOX
+--------------------------------------------------------------------------------
+dalfox --> Hedef web sitesinde XSS açığı arar.
+dalfox scan "https://example.com/search.php?q=test"
+dalfox scan "https://example.com/page.php?id=123" --silence
+
+
+[+] DONTGO403 / NOMORE403
+--------------------------------------------------------------------------------
+Bu bölümdeki örnek komutlar NOMORE403 içindir; 401/403 gibi erişim kontrolü
+yanıtlarını farklı istek biçimleriyle test etmeye yönelik bir araçtır.
+
+dontgo403 --> 403 yanıtlarını test etmeye yönelik mevcut toolset aracıdır.
+
+nomore403 -u "https://example.com/§100§/admin" -p "§"
+nomore403 -u "https://example.com/gizli-dizin"
+
+
+[+] FEROXBUSTER
+--------------------------------------------------------------------------------
+Açıklama: Bir web sitesinin kök dizininde veya alt klasörlerinde tarama yaparak
+dışarıdan görünmeyen panelleri, yedek dosyalarını, API uç noktalarını bulmaya yarar.
+
+feroxbuster -u https://example.com -x php js html txt
+
+
+[+] FFUF
+--------------------------------------------------------------------------------
+Açıklama: Web sitesindeki gizli dizinleri, dosyaları, sanal hostları (vhost),
+parametreleri veya API uç noktalarını bulmanı sağlar.
+
+ffuf -w wordlist.txt -u https://example.com/FUZZ -c
+
+
+[+] GAU
+--------------------------------------------------------------------------------
+Açıklama: Hedef bir domain için internet üzerindeki büyük açık kaynak arşivlerini
+ve arama motorlarını tarayarak geçmişte indekslenmiş URL'leri çeker.
+
+gau example.com --subs
+gau example.com -o urls.txt
+gau example.com --blacklist png,jpg,gif,css,svg,woff
+
+
+[+] GLOOM
+--------------------------------------------------------------------------------
+gloom --> Çeşitli operasyonel araçları (port tarama, IP bulma, Wi-Fi jammer, payload
+üretme, fuzzer vb.) tek bir komut satırı arayüzünden yönetmeyi sağlayan güvenlik çerçevesidir.
+
+
+[+] GOPHISH
+--------------------------------------------------------------------------------
+sudo gophish ---> Güvenlik ekiplerinin çalışanlarına veya hedef kitlelere yönelik
+gerçekçi oltalama e-postaları ve sahte web siteleri hazırlayıp test düzenlemesini sağlar.
+
+
+[+] HAKRAWLER
+--------------------------------------------------------------------------------
+Açıklama: Hızlı bir web crawler ve endpoint keşif aracıdır.
+
+echo "https://example.com" | hakrawler
+echo "https://example.com" | hakrawler -d 3 -subs
+echo "https://example.com" | hakrawler -s
+echo "https://example.com" | hakrawler -proxy http://127.0.0.1:8080 -insecure
+gau example.com --subs | hakrawler -d 2
+
+
+[+] HTTPX
+--------------------------------------------------------------------------------
+Açıklama: Buradaki httpx, Python'daki httpx kütüphanesi veya genel amaçlı HTTP istemcisi
+değil; ProjectDiscovery'nin HTTP probing/recon aracıdır. URL/host listelerini problar
+ve durum kodu, başlık, teknoloji gibi bilgileri çıkarabilir.
+
+Mevcut toolset komutu:
+cat örnek.txt | httpx -sc
+
+Not: Eski dosyadaki genel HTTP istemcisi biçimindeki örnekler bu araç için uygun
+değildi ve kaldırıldı. Yeni bir HTTP istemcisi komutu eklenmemiştir.
+
+[+] NIKTO
+--------------------------------------------------------------------------------
+nikto -h https://example.com -port 443
+nikto -h http://example.com
+nikto -h http://example.com -output sonuc.html -Format htm
+
+
+[+] INFOGA
+--------------------------------------------------------------------------------
+infoga --domain example.com -v 3
+infoga --info admin@example.com -v 3
+
+
+[+] INTERACTSH-CLIENT
+--------------------------------------------------------------------------------
+Açıklama: Blind XSS, SSRF, Blind SQL Injection, RCE gibi zafiyetlerin dış dünyaya
+yapacağı ağ isteklerini (DNS, HTTP, SMTP vb.) yakalar.
+
+Temel Kullanım:
+interactsh-client
+
+Sadece DNS veya HTTP İsteklerini Dinleme (-dns-only / -http-only):
+interactsh-client -http-only
+
+Üretilen Payload'ı Dosyaya Kaydetme (-psf):
+interactsh-client -psf payloads.txt
+
+Sonuçları JSON Formatında Çıktı Alma (-json):
+interactsh-client -json -o sonuclar.json
+
+
+[+] MAKETH
+--------------------------------------------------------------------------------
+Açıklama: Paket başlıklarını özelleştirerek hedef sisteme göndermeni sağlayan araç.
+
+sudo maketh hedef_ip -p tcp -s kaynak_ip --psrc 12345 --pdst 80 -S
+sudo maketh hedef_ip -p icmp -c 5
+
+
+[+] MDK3
+--------------------------------------------------------------------------------
+Açıklama: Wi-Fi protokolündeki zafiyetleri istismar eden kablosuz ağ test aracı.
+Modlar:
+b (Beacon Flood Mode): Binlerce sahte Wi-Fi ağı yayar.
+d (Deauthentication Amok Mode): Cihazları hedef ağdan koparır.
+p (Probing & ESSID Bruteforce): Gizli SSID'leri kaba kuvvetle arar.
+a (Authentication DoS): Aşırı miktarda kimlik doğrulama isteği gönderir.
+
+sudo mdk3 wlan0mon b
+sudo mdk3 wlan0mon d -c 6
+
+
+[+] MITM
+--------------------------------------------------------------------------------
+sudo mitm
+
+
+[+] NETDISCOVER
+--------------------------------------------------------------------------------
+sudo netdiscover -i wlan1
+
+
+[+] NEXFIL
+--------------------------------------------------------------------------------
+nexfil -u kullanıcı.adı
+
+
+[+] NGROK
+--------------------------------------------------------------------------------
+ngrok http 8080
+
+
+[+] NUCLEI (EKSTRA)
+--------------------------------------------------------------------------------
+nuclei -u https://example.com
+nuclei -u https://example.com -s critical,high
+
+
+[+] OMNIBUS
+--------------------------------------------------------------------------------
+omnibus
+omnibus -o
+
+1. Temel Oturum Komutları:
+   omnibus >> session new
+   omnibus >> set target 192.0.2.1
+
+2. Tehdit İstihbaratı ve OSINT Komutları:
+   omnibus >> shodan ip 192.0.2.2
+   omnibus >> virustotal domain hedefsite.com
+   omnibus >> whois hedefsite.com
+   omnibus >> censys search hedefsite.com
+   omnibus >> hibp test@example.com
+
+3. Ağ Analizi Komutları:
+   omnibus >> nmap -p 80,443 hedefsite.com
+   omnibus >> dnsresolve sub.hedefsite.com
+   omnibus >> geoip 192.0.2.3
+
+
+Harici servis notu — OMNIBUS:
+- Bu bölümdeki Shodan, VirusTotal, Censys ve HIBP sorguları ilgili dış servislerin altyapılarına bağlıdır; kimlik doğrulama/API ayarları araca göre değişebilir.
+[+] PHONEINFOGA
+--------------------------------------------------------------------------------
+phoneinfoga scan -n "+905554443322"
+phoneinfoga serve
+
+
+API / dış servis notu — PHONEINFOGA:
+- PhoneInfoga bazı scanner'larda harici servis/API sağlayıcıları kullanabilir. Gerekli API anahtarlarını dosyaya sabit yazma.
+[+] PHOTON
+--------------------------------------------------------------------------------
+photon -u https://example.com
+photon -u https://example.com --keys --dns
+
+1. Web Sitesini Yerel Bilgisayara Klonlama (--clone):
+   photon -u https://example.com --clone
+
+2. Sadece URL'leri Ayıklama (--only-urls):
+   photon -u https://example.com --only-urls
+
+3. Özel Regex Deseni ile Arama (-r):
+   photon -u https://example.com -r "\.pdf$"
+
+4. İstek Hızını ve Eşzamanlılığı Ayarlama (-t ve -d):
+   photon -u https://example.com -t 10 -d 2
+
+5. Sonuçları JSON veya CSV Olarak Kaydetme (-e ve -o):
+   photon -u https://example.com -e json -o /yol/cikti_klasoru
+
+6. Geçmiş Arşiv Verilerini Dahil Etme (--wayback):
+   photon -u https://example.com --wayback
+
+
+[+] SHODAN
+--------------------------------------------------------------------------------
+shodan init YOUR_SHODAN_API_KEY
+shodan host 192.0.2.2
+shodan search apache country:tr
+
+3. Veri İndirme ve Dönüştürme (download & parse):
+   shodan download --limit 100 webcam country:tr
+   shodan parse --fields ip_str,port dosya_adi.json.gz
+
+4. Ek Güvenlik ve Ağ Araçları:
+   shodan honeyscore 192.0.2.1
+   shodan domain hedefsite.com
+   shodan stream
+
+
+API / dış servis notu — SHODAN:
+- Shodan CLI, hesabındaki Shodan API anahtarını kullanır. Gerçek anahtarları bu repoya veya komut geçmişine yazma.
+- Shodan sorguları ilgili dış servise gönderilir.
+[+] RESPONDER
+--------------------------------------------------------------------------------
+responder -I wlan0 -v
+responder -I wlan0 -Av
+responder -I wlan0 -wFv
+
+1. WPAD ve Proxy Tabanlı Saldırılar:
+   responder -I eth0 -wFv
+   responder -I eth0 -Pv
+
+2. DHCP ve IPv6 Tabanlı Zehirleme:
+   responder -I eth0 -d -v
+   responder -I eth0 --dhcpv6 -vP
+
+3. Trafik Yönlendirme ve Harici IP Kullanımı:
+   responder -I eth0 -e 192.0.2.150 -v
+
+4. Kimlik Doğrulama Derecesini Düşürme (Downgrade):
+   responder -I eth0 -b -v
+   responder -I eth0 -E -v
+
+
+[+] ROGUEHOSTAPD
+--------------------------------------------------------------------------------
+1. Temel Sahte Erişim Noktası (AP) Yayını:
+   roguehostapd -ssid "Free-WiFi" -c 6 -i wlan0
+
+2. Şifreli Sahte Ağ Oluşturma:
+   roguehostapd -ssid "Sirket-Misafir" -pK "GuvenliSifre123" -c 1 -i wlan0
+
+3. KARMA Saldırısı ile Otomatik Bağlantı Yakalama:
+   roguehostapd -ssid "Public-Net" -c 11 -i wlan0 -kA
+
+4. Ayrıntılı Hata Ayıklama (Debug) ile Çalıştırma:
+   roguehostapd -ssid "Test-AP" -c 6 -i wlan0 -dV
+
+
+[+] SECURE-DELETE
+--------------------------------------------------------------------------------
+Açıklama: Verilerin üzerini defalarca yazarak kurtarılamayacak şekilde siler.
+srm   : Dosyaları güvenli ve kalıcı olarak siler.
+sfill : Disk üzerindeki boş alanlardaki silinmiş artıkları temizler.
+sswap : Takas (swap) alanını güvenli temizler.
+smem  : Sistem RAM belleğini güvenli temizler.
+
+
+[+] SET (SOCIAL-ENGINEER TOOLKIT)
+--------------------------------------------------------------------------------
+sudo setoolkit
+
+1. Web Sitesi Klonlama ve Kimlik Bilgisi Toplama (Credential Harvester):
+   - Ana menüden 1 (Social-Engineering Attacks)
+   - Alt menüden 2 (Website Attack Vectors)
+   - 3 (Credential Harvester Attack Method)
+   - 2 (Site Cloner)
+   - Dinleme yapılacak IP ve klonlanacak URL girilir.
+
+2. Oltalama E-postası Gönderme (Spear-Phishing):
+   - Ana menüden 1 (Social-Engineering Attacks)
+   - 1 (Spear-Phishing Attack Vectors)
+
+3. Payload ve Dinleyici (Listener) Oluşturma:
+   - Ana menüden 1 (Social-Engineering Attacks)
+   - 4 (Payload and Listener Generator)
+
+
+[+] SOCIAL-MAPPER
+--------------------------------------------------------------------------------
+Açıklama: İsim-soyisim ve fotoğraf listesiyle sosyal medyada yüz tanıma destekli arama yapar.
+Not: "Please install face_recognition_models..." uyarısı python model paketinin eksik olduğunu gösterir.
+
+* Bir Görüntü Klasörü ve İsim Listesi ile Hedef Arama:
+  social-mapper -f image -i /yol/fotograflar/ -t company.com
+
+* Şirket / Organizasyon Bazlı LinkedIn Taraması:
+  social-mapper -m fast -l company -i "Şirket Adı"
+
+* Sonuçları HTML Formatında Kaydetme:
+  social-mapper -f image -i /yol/fotograflar/ -o rapor.html
+
+
+[+] SOCIALSCAN
+--------------------------------------------------------------------------------
+socialscan user@example.com
+socialscan kullanici_adi --show-urls
+socialscan kullanici_adi --available-only
+socialscan -i hedefler.txt --json sonuc.json
+
+1. Platform Filtreleme ve Özelleştirme:
+   socialscan kullanici_adi --platforms twitter github
+
+2. Liste ve Proxy Kullanımı:
+   socialscan kullanici_adi --proxy-list proxy_dosyasi.txt
+   socialscan kullanici_adi --cache-tokens
+
+3. Görünüm ve Hata Ayıklama (Debug):
+   socialscan user1 user2 --view-by platform
+   socialscan kullanici_adi --verbose --debug
+
+
+[+] SOOTY
+--------------------------------------------------------------------------------
+sooty
+
+Seçenekler:
+1. OPTION 1: Sanitise URL For emails (URL Temizleme - hXXp:// yapma)
+2. OPTION 2: Decoders (PP, URL, SafeLinks Çözücüler)
+3. OPTION 3: Reputation Checker (VirusTotal, AbuseIPDB İtibar Kontrolü)
+4. OPTION 4: DNS Tools (DNS Kayıtları Sorgulama)
+5. OPTION 5: Hashing Function (MD5, SHA256 Hash Hesaplama)
+6. OPTION 6: Phishing Analysis (.eml Oltalama Analizi)
+7. OPTION 7: URL scan (URL Tarama ve Yönlendirme İnceleme)
+8. OPTION 9: Extras (SOC Analiz Yardımcı Araçları)
+
+
+[+] SPIDERFOOT
+--------------------------------------------------------------------------------
+Parametreler:
+-s TARGET : Taranacak hedef.
+-l IP:port: Web arayüzünü yerelde başlatır.
+-m        : Belirli modülleri seçer.
+-u        : Kullanım modunu seçer (all, footprint, investigate, passive).
+-o        : Çıktı formatı (tab, csv, json).
+
+Komutlar:
+* Web Arayüzünü Yerelde Başlatma:
+  spiderfoot -l 127.0.0.1:5001
+
+* Terminalden Tarama ve JSON Çıktısı:
+  spiderfoot -s hedefsite.com -o json > sonuc.json
+
+* Pasif Bilgi Toplama Modu:
+  spiderfoot -s hedefsite.com -u passive -o csv > pasif_rapor.csv
+
+* Belirli Modüller ile Tarama:
+  spiderfoot -s hedefsite.com -m sfp_email,sfp_dns
+
+
+[+] SPOOFTOOPH
+--------------------------------------------------------------------------------
+Parametreler:
+-i <dev>    : Bluetooth arayüzü (hci0).
+-s          : Çevredeki cihazları tarar.
+-R          : Rastgele isim, sınıf ve MAC atar.
+-a <address>: Özel MAC adresi tanımlar.
+-n <name>   : Cihaz adını değiştirir.
+-t <time>   : Belirli sürede cihazları klonlar.
+
+Komutlar:
+* Tarama:
+  spooftooph -i hci0 -s
+
+* Rastgele Kimlik Atama:
+  spooftooph -i hci0 -R
+
+* Manuel İsim ve MAC Değiştirme:
+  spooftooph -i hci0 -n "YeniCihazAdi" -a 00:11:22:33:44:55
+
+* Belirli Aralıklarla Klonlama:
+  spooftooph -i hci0 -s -t 60
+
+
+[+] THEHARVESTER
+--------------------------------------------------------------------------------
+Parametreler:
+-d, --domain   : Hedef alan adı.
+-b, --source   : Veri kaynağı (google, github, crtsh, all vb.).
+-l, --limit    : Sonuç sınırı.
+-s, --shodan   : Shodan entegrasyonu.
+-c, --dns-brute: DNS brute-force taraması.
+-f, --filename : XML/JSON dosyaya kaydetme.
+-t, --take-over: Subdomain takeover kontrolü.
+
+Komutlar:
+* Crt.sh Kaynağından Tarama:
+  theHarvester -d hedefsite.com -b crtsh
+
+* Tüm Kaynaklar ve Dosyaya Kaydetme:
+  theHarvester -d hedefsite.com -b all -f sonuc_raporu
+
+* DNS Brute-Force ve Shodan Entegre Tarama:
+  theHarvester -d hedefsite.com -b google,virustotal -c -s
+
+
+[+] TORCTL
+--------------------------------------------------------------------------------
+Komutlar:
+start   : Tüm trafiği Tor ağına yönlendirir.
+stop    : Normal internete döndürür.
+status  : Mevcut durumu gösterir.
+restart : Servisi ve kuralları yeniden başlatır.
+ip      : Dışarıdan görünen IP adresini sorgular.
+chngid  : Yeni bir Tor IP adresi alır.
+chngmac : MAC adreslerini değiştirir.
+rvmac   : Orijinal MAC adreslerine döndürür.
+
+Kullanım Senaryosu:
+torctl start
+torctl ip
+torctl chngid
+torctl stop
+
+
+[+] TRAPE
+--------------------------------------------------------------------------------
+sudo trape
+
+
+[+] WEBSPLOIT
+--------------------------------------------------------------------------------
+Temel Komutlar: help, show, use, about, update, exit
+
+Adım Adım Kullanım:
+1. Modülleri Listeleme:
+   wsf > show modules
+
+2. Modül Seçme:
+   wsf > use web/modul_adi
+
+3. Parametreleri Ayarlama:
+   wsf (modul_adi) > show options
+   wsf (modul_adi) > set TARGET hedefsite.com
+
+4. Çalıştırma:
+   wsf (modul_adi) > run
+
+
+[+] WIFIJAMMER
+--------------------------------------------------------------------------------
+Parametreler:
+-i INTERFACE      : Ağ kartı (wlan0mon).
+-c CHANNEL        : Belirli kanal.
+-a [ACCESSPOINT]  : Özel hedef MAC/SSID.
+-s [SKIP]         : Saldırı dışı bırakılacak MAC.
+-d, --directedonly: Doğrudan istemci eşleşmelerine odaklanır.
+--world           : 13 kanalı taramaya dahil eder.
+
+Komutlar:
+* Otomatik Modda Başlatma:
+  sudo wifijammer
+
+* Belirli Bir Ağı Hedef Alma:
+  sudo wifijammer -a AA:BB:CC:DD:EE:FF
+
+* Belirli Kanalda Dünya Standardı Tarama:
+  sudo wifijammer -c 6 --world
+
+* Kendi Cihazını Hariç Tutma (--skip):
+  sudo wifijammer -s 11:22:33:44:55:66

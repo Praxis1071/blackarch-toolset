@@ -1,0 +1,76 @@
+
+~/HACK
+❯ pacman -Qg blackarch
+blackarch aimap
+blackarch airgeddon
+blackarch amass
+blackarch arjun
+blackarch armitage
+blackarch arpon
+blackarch arpspoof-smikims
+blackarch arptools
+blackarch backfuzz
+blackarch bbot
+blackarch beef
+blackarch berate_ap
+blackarch blackarch-mirrorlist
+blackarch burpsuite
+blackarch caido-desktop
+blackarch cariddi
+blackarch chiron
+blackarch clairvoyance
+blackarch cmseek
+blackarch commix
+blackarch corsy
+blackarch credsniper
+blackarch crunch
+blackarch crypthook
+blackarch cupp
+blackarch dalfox
+blackarch ddosify
+blackarch dontgo403
+blackarch exiflooter
+blackarch feroxbuster
+blackarch ffuf
+blackarch gau
+blackarch gloom
+blackarch gophish
+blackarch h8mail
+blackarch hakrawler
+blackarch holehe                                                                blackarch httpx
+blackarch hyde
+blackarch infoga                                                                blackarch interactsh-client
+blackarch katana-pd
+blackarch kickthemout
+blackarch linkfinder                                                            blackarch maigret
+blackarch maketh
+blackarch mdbtools                                                              blackarch mdk3
+blackarch mitm
+blackarch monocle                                                               blackarch netdiscover
+blackarch nexfil
+blackarch ngrok                                                                 blackarch nuclei
+blackarch nuclei-templates
+blackarch omnibus
+blackarch phoneinfoga
+blackarch photon
+blackarch pyinstaller
+blackarch pyinstaller-hooks-contrib
+blackarch python2-shodan
+blackarch responder
+blackarch roguehostapd
+blackarch secretfinder                                                          blackarch secure-delete
+blackarch seeker
+blackarch set
+blackarch sherlock
+blackarch social-mapper                                                         blackarch socialscan
+blackarch sooty
+blackarch spiderfoot
+blackarch spooftooph
+blackarch subfinder                                                             blackarch theharvester
+blackarch torctl
+blackarch trape
+blackarch websploit
+blackarch wifijammer
+blackarch wifiphisher
+~/HACK
+❯
