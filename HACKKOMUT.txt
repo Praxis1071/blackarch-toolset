@@ -40,106 +40,12 @@ UYARI:
 - Komut satırındaki seçenek ve araç adları çalışabilirliğin korunması için özgün hâliyle bırakılmıştır.
 
 
-[ 🧭 HIZLI GEZINME ]
-
-
-**İpucu:** Büyük dosyada aradığın aracı bulmak için `Ctrl+F` kullan. Önce **HACKTOOLS.txt** ile aracın ne yaptığını öğren, sonra burada komutuna geç.
-
-
-# İÇİNDEKİLER
-
-1. [LinkFinder](#1-linkfinder)
-2. [SecretFinder](#2-secretfinder)
-3. [Katana](#3-katana)
-4. [Seeker](#4-seeker)
-5. [Cloudflared Tunnel](#5-cloudflared-tunnel)
-6. [Sparrow-WiFi](#6-sparrow-wifi)
-7. [Subfinder](#7-subfinder)
-8. [Nuclei](#8-nuclei)
-9. [Holehe](#9-holehe)
-10. [Sherlock](#10-sherlock)
-11. [Maigret](#11-maigret)
-12. [H8mail ve Holehe](#12-h8mail-ve-holehe)
-13. [Metasploit ve Armitage](#13-metasploit-ve-armitage)
-14. [KickThemOut](#14-kickthemout)
-15. [CMSeeK](#15-cmseek)
-16. [Commix](#16-commix)
-17. [Corsy](#17-corsy)
-18. [CredSniper](#18-credsniper)
-19. [Crunch](#19-crunch)
-20. [CUPP](#20-cupp)
-21. [Dalfox](#21-dalfox)
-22. [DontGo403 / NoMore403](#22-dontgo403--nomore403)
-23. [Feroxbuster](#23-feroxbuster)
-24. [FFUF](#24-ffuf)
-25. [GAU](#25-gau)
-26. [Gloom](#26-gloom)
-27. [Gophish](#27-gophish)
-28. [Hakrawler](#28-hakrawler)
-29. [HTTPX](#29-httpx)
-30. [Nikto](#30-nikto)
-31. [Infoga](#31-infoga)
-32. [Interactsh Client](#32-interactsh-client)
-33. [Maketh](#33-maketh)
-34. [MDK3](#34-mdk3)
-35. [MITM](#35-mitm)
-36. [Netdiscover](#36-netdiscover)
-37. [Nexfil](#37-nexfil)
-38. [Ngrok](#38-ngrok)
-39. [Nuclei — Ek Örnekler](#39-nuclei--ek-örnekler)
-40. [Omnibus](#40-omnibus)
-41. [PhoneInfoga](#41-phoneinfoga)
-42. [Photon](#42-photon)
-43. [Shodan](#43-shodan)
-44. [Responder](#44-responder)
-45. [RogueHostAPD](#45-roguehostapd)
-46. [Secure Delete](#46-secure-delete)
-47. [SET](#47-set)
-48. [Social-Mapper](#48-social-mapper)
-49. [Socialscan](#49-socialscan)
-50. [Sooty](#50-sooty)
-51. [SpiderFoot](#51-spiderfoot)
-52. [SpoofTooph](#52-spooftooph)
-53. [theHarvester](#53-theharvester)
-54. [Torctl](#54-torctl)
-55. [Trape](#55-trape)
-56. [Websploit](#56-websploit)
-57. [WiFiJammer](#57-wifijammer)
-58. [Nmap](#58-nmap)
-59. [AIMAP](#59-aimap)
-60. [Airgeddon](#60-airgeddon)
-61. [Amass](#61-amass)
-62. [Arjun](#62-arjun)
-63. [Arpon](#63-arpon)
-64. [Arptools](#64-arptools)
-65. [BackFuzz](#65-backfuzz)
-66. [BBOT](#66-bbot)
-67. [BeEF](#67-beef)
-68. [Berate AP](#68-berate-ap)
-69. [BlackArch Mirrorlist](#69-blackarch-mirrorlist)
-70. [Burp Suite](#70-burp-suite)
-71. [Caido](#71-caido)
-72. [Cariddi](#72-cariddi)
-73. [Chiron](#73-chiron)
-74. [Clairvoyance](#74-clairvoyance)
-75. [Crypthook](#75-crypthook)
-76. [Ddosify](#76-ddosify)
-77. [ExifLooter](#77-exiflooter)
-78. [Hyde](#78-hyde)
-79. [MDBTools](#79-mdbtools)
-80. [Monocle](#80-monocle)
-81. [PyInstaller](#81-pyinstaller)
-82. [PyInstaller Hooks Contrib](#82-pyinstaller-hooks-contrib)
-83. [Wifiphisher](#83-wifiphisher)
-84. [Arpspoof-Smikims](#84-arpspoof-smikims)
-
-
 ================================================================================
 01. LINKFINDER
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 JavaScript dosyaları içerisindeki bağlantıları ve uç noktaları incelemek için kullanılır.
 
 
@@ -154,7 +60,7 @@ linkfinder -i file://$PWD/index-BhYj0Brp.js -o cli
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 JavaScript dosyaları veya web sayfaları içerisinde bulunabilecek hassas verileri,
 API anahtarlarını, parolaları ve gizli uç noktaları aramak için kullanılır.
 
@@ -239,7 +145,7 @@ secretfinder -i https://example.com -e -n "app;main;bundle"
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web uygulamalarını taramak, bağlantıları ve uç noktaları keşfetmek için kullanılan hızlı bir tarayıcıdır.
 JavaScript içeriğinden uç nokta çıkarma ve bilinen dosyaları tarama gibi özellikleri destekler.
 
@@ -255,7 +161,7 @@ katana -u https://example.com -jc -kf all -d 3 -o example.txt
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik farkındalığı ve laboratuvar çalışmalarında kullanılabilen bir araçtır.
 
 
@@ -270,7 +176,7 @@ sudo seeker
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yerel bir hizmeti tünel üzerinden erişilebilir hâle getirmek için kullanılır.
 
 
@@ -285,7 +191,7 @@ cloudflared tunnel --url http://localhost:8080
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kablosuz ağları incelemek için kullanılan aracı başlatır.
 
 
@@ -300,7 +206,7 @@ sudo /tmp/sparrow_env/bin/python /usr/share/sparrow-wifi/sparrow-wifi.py
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Bir alan adının alt alan adlarını pasif kaynaklar üzerinden keşfetmek için kullanılır.
 Arama motorları, sertifika şeffaflığı kayıtları ve diğer OSINT kaynaklarından yararlanabilir.
 Pasif kaynak kullanımı hedefe doğrudan tarama yapılmadığı anlamına gelir; ancak kullanılan dış kaynaklara sorgu gönderilir.
@@ -348,7 +254,7 @@ subfinder -d hedefsite.com -all -o detayli_sonuc.txt
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Şablon tabanlı güvenlik kontrolleri ve teknoloji/iz tespiti yapmak için kullanılır.
 
 
@@ -363,7 +269,7 @@ nuclei -u https://example.com -tags tech,fingerprint,cve
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Bir e-posta adresinin çeşitli çevrim içi hizmetlerde kullanılıp kullanılmadığını kontrol etmek için kullanılır.
 
 
@@ -378,7 +284,7 @@ holehe user@example.com
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Bir kullanıcı adının farklı sosyal ağlarda ve web hizmetlerinde bulunup bulunmadığını araştırır.
 
 
@@ -459,7 +365,7 @@ sherlock kullanici_adi --browse
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kullanıcı adlarını farklı çevrim içi hizmetlerde araştırmak için kullanılır.
 
 
@@ -476,7 +382,7 @@ maigret kullaniciadi -a -T
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 E-posta adresleri üzerinden OSINT araştırması yapmak için kullanılır.
 
 
@@ -493,7 +399,7 @@ h8mail -t example@example.com -c h8mail_config.ini
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik laboratuvarlarında Metasploit altyapısını ve Armitage arayüzünü başlatmak için kullanılır.
 
 
@@ -510,7 +416,7 @@ sudo armitage
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yerel ağdaki cihazları ve ARP tabanlı bağlantıları test etmek için kullanılan bir araçtır.
 
 
@@ -527,7 +433,7 @@ sudo kickthemout
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web uygulamalarının kullandığı içerik yönetim sistemlerini ve ilgili bilgileri keşfetmeye yardımcı olur.
 
 
@@ -542,7 +448,7 @@ cmseek
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web uygulamalarında komut enjeksiyonu testleri yapmak için kullanılır.
 
 
@@ -560,7 +466,7 @@ commix -u "örnek.com"
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web uygulamalarındaki CORS yapılandırmalarını ve olası sorunları incelemek için kullanılır.
 
 
@@ -575,7 +481,7 @@ corsy -u https://example.com -t 10
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik farkındalığı ve oltalama simülasyonlarında kimlik doğrulama sayfalarını test etmek için kullanılır.
 
 
@@ -593,7 +499,7 @@ credsniper --module microsoft --hostname login.ornekdomain.com --final https://e
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Belirlenen uzunluk ve karakter kümesine göre sözcük listeleri oluşturur.
 
 
@@ -617,7 +523,7 @@ crunch 4 4 0123456789 -o pin_listesi.txt
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili parola denetimi ve laboratuvar çalışmaları için kişiselleştirilmiş sözcük listeleri oluşturur.
 
 
@@ -632,7 +538,7 @@ cupp -i
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web uygulamalarındaki XSS açıklarını yetkili test ortamlarında araştırmak için kullanılır.
 
 
@@ -649,7 +555,7 @@ dalfox scan "https://example.com/page.php?id=123" --silence
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 401 ve 403 gibi erişim kontrolü yanıtlarını farklı istek biçimleriyle test etmeye yardımcı olur.
 
 
@@ -673,7 +579,7 @@ nomore403 -u "https://example.com/gizli-dizin"
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web sunucularında dizin, dosya ve uç nokta keşfi yapmak için kullanılır.
 
 
@@ -688,7 +594,7 @@ feroxbuster -u https://example.com -x php js html txt
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Dizin, dosya, sanal ana bilgisayar, parametre ve API uç noktası keşfi için kullanılan bir bulanıklaştırma aracıdır.
 
 
@@ -703,7 +609,7 @@ ffuf -w wordlist.txt -u https://example.com/FUZZ -c
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Açık web arşivlerinden ve diğer kaynaklardan geçmişte keşfedilmiş URL'leri toplamak için kullanılır.
 
 
@@ -720,7 +626,7 @@ gau example.com --blacklist png,jpg,gif,css,svg,woff
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Birden fazla güvenlik aracını tek bir komut satırı arayüzünden yönetmeye yardımcı olan bir güvenlik çerçevesidir.
 
 
@@ -740,7 +646,7 @@ gloom --help
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik farkındalığı çalışmalarında oltalama senaryolarını ve sahte giriş sayfalarını test etmek için kullanılır.
 
 
@@ -755,7 +661,7 @@ sudo gophish
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web sitelerinde hızlı bağlantı ve uç nokta keşfi yapmak için kullanılan bir tarayıcıdır.
 
 
@@ -774,7 +680,7 @@ gau example.com --subs | hakrawler -d 2
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Buradaki `httpx`, Python'daki `httpx` kütüphanesi değildir.
 Bu bölümde ProjectDiscovery'nin HTTP yoklama aracından söz edilmektedir.
 URL veya ana bilgisayar listelerini kontrol ederek durum kodu ve benzeri bilgileri çıkarmaya yardımcı olur.
@@ -793,7 +699,7 @@ cat örnek.txt | httpx -sc
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web sunucularında bilinen yapılandırma sorunlarını ve yaygın güvenlik problemlerini kontrol etmek için kullanılır.
 
 
@@ -810,7 +716,7 @@ nikto -h http://example.com -output sonuc.html -Format htm
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Alan adları ve e-posta adresleri hakkında OSINT bilgisi toplamaya yardımcı olur.
 
 
@@ -826,7 +732,7 @@ infoga --info admin@example.com -v 3
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik testlerinde dışarıdan gelen DNS, HTTP ve benzeri etkileşimleri gözlemlemek için kullanılır.
 Blind XSS, SSRF, Blind SQL Injection ve benzeri testlerde kullanılabilir.
 
@@ -860,7 +766,7 @@ interactsh-client -json -o sonuclar.json
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Paket başlıklarını özelleştirerek ağ paketleri oluşturup göndermeye yardımcı olur.
 
 
@@ -876,7 +782,7 @@ sudo maketh hedef_ip -p icmp -c 5
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kablosuz ağ güvenliği testlerinde kullanılan bir araçtır.
 
 
@@ -902,7 +808,7 @@ sudo mdk3 wlan0mon d -c 6
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Araç tarafından sağlanan ortadaki adam testi işlevlerini başlatmak için kullanılır.
 
 
@@ -917,7 +823,7 @@ sudo mitm
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yerel ağdaki cihazları keşfetmek için kullanılır.
 
 
@@ -932,7 +838,7 @@ sudo netdiscover -i wlan1
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kullanıcı adları üzerinden çevrim içi varlık araştırması yapmaya yardımcı olur.
 
 
@@ -947,7 +853,7 @@ nexfil -u kullanıcı.adı
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yerel bir hizmeti tünel üzerinden dışarıya açmak için kullanılır.
 
 
@@ -979,7 +885,7 @@ nuclei -u https://example.com -s critical,high
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Birden fazla OSINT, tehdit istihbaratı ve ağ sorgusunu tek bir arayüz üzerinden çalıştırmaya yardımcı olur.
 
 
@@ -1023,7 +929,7 @@ Kimlik doğrulama ve API ayarları kullanılan hizmete göre değişebilir.
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Telefon numaraları hakkında OSINT araştırması yapmak için kullanılır.
 
 
@@ -1042,7 +948,7 @@ Gerekli API anahtarlarını dosyaya sabit olarak yazma.
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Web sitelerindeki bağlantıları, alan adlarını, dosyaları ve belirli içerikleri keşfetmeye yardımcı olur.
 
 
@@ -1097,7 +1003,7 @@ photon -u https://example.com --wayback
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 İnternete açık cihazlar ve servisler hakkında Shodan üzerinden bilgi sorgulamak için kullanılır.
 
 
@@ -1137,7 +1043,7 @@ Sorgular Shodan'ın dış hizmetine gönderilir.
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yerel ağlarda kimlik doğrulama ve ad çözümleme protokollerini güvenlik laboratuvarlarında test etmek için kullanılır.
 
 
@@ -1183,7 +1089,7 @@ responder -I eth0 -E -v
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kablosuz erişim noktası davranışlarını güvenlik laboratuvarlarında test etmek için kullanılır.
 
 
@@ -1216,7 +1122,7 @@ roguehostapd -ssid "Test-AP" -c 6 -i wlan0 -dV
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Dosya, boş alan, takas alanı ve bellek temizliği için yardımcı araçlar sağlar.
 
 - `srm` : Dosyaları güvenli biçimde silmek için kullanılır.
@@ -1232,7 +1138,7 @@ Dosya, boş alan, takas alanı ve bellek temizliği için yardımcı araçlar sa
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik farkındalığı ve sosyal mühendislik simülasyonları için kullanılır.
 
 
@@ -1270,7 +1176,7 @@ sudo setoolkit
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 İsim, soyisim ve görseller üzerinden sosyal ağlarda araştırma yapmaya yardımcı olur.
 
 
@@ -1299,7 +1205,7 @@ social-mapper -f image -i /yol/fotograflar/ -o rapor.html
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kullanıcı adı veya e-posta adreslerinin çeşitli çevrim içi platformlarda bulunup bulunmadığını kontrol etmeye yardımcı olur.
 
 
@@ -1337,7 +1243,7 @@ socialscan kullanici_adi --verbose --debug
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 SOC ve OSINT çalışmalarında URL, DNS, itibar, karma ve oltalama analizi gibi yardımcı işlevler sunar.
 
 
@@ -1364,7 +1270,7 @@ sooty
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 OSINT ve hedef keşfi çalışmalarını modüller üzerinden otomatikleştirmeye yardımcı olur.
 
 
@@ -1409,7 +1315,7 @@ spiderfoot -s hedefsite.com -m sfp_email,sfp_dns
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Bluetooth cihazlarının kimlik bilgilerini güvenlik laboratuvarlarında incelemek ve test etmek için kullanılır.
 
 
@@ -1455,7 +1361,7 @@ spooftooph -i hci0 -s -t 60
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Alan adları hakkında açık kaynaklardan e-posta, alt alan adı ve benzeri bilgileri toplamaya yardımcı olur.
 
 
@@ -1496,7 +1402,7 @@ theHarvester -d hedefsite.com -b google,virustotal -c -s
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Tor yönlendirmesi ve ilgili ağ ayarlarını yönetmeye yardımcı olur.
 
 
@@ -1526,7 +1432,7 @@ torctl stop
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik ve sosyal mühendislik laboratuvarlarında kullanılan bir araçtır.
 
 
@@ -1541,7 +1447,7 @@ sudo trape
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Yetkili güvenlik testlerinde çeşitli modülleri tek bir arayüz üzerinden çalıştırmaya yardımcı olur.
 
 
@@ -1589,7 +1495,7 @@ wsf (modul_adi) > run
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Kablosuz ağ güvenliği laboratuvarlarında bağlantı ve istemci davranışlarını test etmek için kullanılır.
 
 
@@ -1637,7 +1543,7 @@ sudo wifijammer -s 11:22:33:44:55:66
 ================================================================================
 
 
-[ AMAÇ ]
+[ NE İŞE YARAR ]
 Ağ keşfi, port taraması ve servis tespiti için kullanılan temel bir network security scanner'ıdır.
 
 
@@ -2025,3 +1931,29 @@ Rogue AP ve phishing tabanlı kablosuz güvenlik farkındalığı/test senaryola
 arpspoof-smikims --help
 ```
 **Not:** ARP spoofing ağ trafiğini etkileyebilir; yalnızca kendi veya açıkça yetkili olduğun laboratuvar ağlarında kullan.
+
+================================================================================
+HIZLI KULLANIM
+================================================================================
+
+BİR ARACI BUL:
+  grep -n "NMAP" HACKKOMUT.txt
+  less +/NMAP HACKKOMUT.txt
+
+BİR ARACI ÖĞREN:
+  1. HACKTOOLS.txt → ne işe yarıyor?
+  2. HACKKOMUT.txt → nasıl kullanılıyor?
+  3. <araç> --help → kurulu sürümün güncel seçenekleri
+
+ÇALIŞTIRMADAN ÖNCE:
+  [ ] Hedef sistem bana ait veya açıkça yetkilendirildim.
+  [ ] Komutun ne yaptığını anladım.
+  [ ] Gerekliyse root yetkisini kontrol ettim.
+  [ ] Oluşacak trafiği/yükü biliyorum.
+  [ ] Parola, token veya API anahtarını çıktıya/Git'e eklemiyorum.
+
+GENEL YARDIM:
+  <araç> --help
+  man <araç>
+
+Bu dosyadaki komutlar eğitim ve yetkili güvenlik testleri içindir.
