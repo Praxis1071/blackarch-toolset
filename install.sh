@@ -149,7 +149,7 @@ blackarch_repo_ekle() {
   echo "Resmi BlackArch strap.sh indiriliyor..."
   curl -fsSL "https://blackarch.org/strap.sh" -o "$strap_file"
 
-  expected_sha1="00688950aaf5e5804d2abebb8d3d3ea1d28525ed"
+  expected_sha1="d338a4bb95d9e09f97508da68ac9e17d963b85f"
   actual_sha1="$(sha1sum "$strap_file" | awk '{print $1}')"
 
   if [[ "$actual_sha1" != "$expected_sha1" ]]; then
