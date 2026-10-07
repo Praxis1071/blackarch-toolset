@@ -181,7 +181,7 @@ sudo seeker
 
 ---
 
-# 5. Cloudflared Tunnel
+# 5. Cloudflared Tüneli
 
 ## Amaç
 Yerel bir hizmeti tünel üzerinden erişilebilir hâle getirmek için kullanılır.
@@ -637,7 +637,7 @@ infoga --info admin@example.com -v 3
 
 ---
 
-# 32. Interactsh Client
+# 32. Interactsh İstemcisi
 
 ## Amaç
 Yetkili güvenlik testlerinde dışarıdan gelen DNS, HTTP ve benzeri etkileşimleri gözlemlemek için kullanılır.
