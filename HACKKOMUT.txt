@@ -833,7 +833,7 @@ Telefon numaraları hakkında OSINT araştırması yapmak için kullanılır.
 
 ## Örnekler
 ```bash
-phoneinfoga scan -n "+905554443322"
+phoneinfoga scan -n "+1 555-444-3333"
 phoneinfoga serve
 ```
 
@@ -1582,3 +1582,12 @@ sudo wifiphisher
 sudo wifiphisher -aI wlan0 -jI wlan1
 ```
 **Not:** Rogue AP, deauthentication ve phishing özelliklerini yalnızca yetkili laboratuvarda kullan.
+
+
+---
+# 84. Arpspoof-Smikims
+**Amaç:** ARP spoofing/ARP tabanlı ağ güvenliği testlerinde kullanılan yardımcı araçtır.
+```bash
+arpspoof-smikims --help
+```
+**Not:** ARP spoofing ağ trafiğini etkileyebilir; yalnızca kendi veya açıkça yetkili olduğun laboratuvar ağlarında kullan.
