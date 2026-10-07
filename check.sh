@@ -12,6 +12,22 @@ bash -n uninstall.sh && ok 'uninstall.sh syntax OK' || fail 'uninstall.sh syntax
 sections="$(grep -Ec '^[0-9]{2}\. ' HACKKOMUT.txt 2>/dev/null || true)"; [[ "$sections" == 84 ]] && ok 'HACKKOMUT.txt: 84 bölüm' || fail "HACKKOMUT.txt: beklenen 84, bulunan $sections"
 fences="$(grep -c '^```' HACKKOMUT.txt 2>/dev/null || true)"; (( fences % 2 == 0 )) && ok 'HACKKOMUT.txt: code fence dengesi OK' || fail 'HACKKOMUT.txt: code fence dengesi bozuk'
 tools="$(grep -Ec '^\* [[:alnum:]][^ ]*' HACKTOOLS.txt 2>/dev/null || true)"; [[ "$tools" == 87 ]] && ok 'HACKTOOLS.txt: 87 araç' || fail "HACKTOOLS.txt: beklenen 87, bulunan $tools"
-for ref in HACKKOMUT.txt HACKTOOLS.txt blackarch.txt install.sh uninstall.sh LICENSE; do grep -Fq "$ref" README.md && ok "README: $ref" || fail "README: $ref eksik"; done
+for ref in HACKKOMUT.txt HACKTOOLS.txt blackarch.txt install.sh uninstall.sh check.sh LICENSE; do grep -Fq "$ref" README.md && ok "README: $ref" || fail "README: $ref eksik"; done
+
+install_tools="$(sed -n '/^TOOLS=(/,/^)/p' install.sh | grep -E '^[[:space:]]+[A-Za-z0-9._-]+echo
+if (( failed == 0 )); then echo 'Repository check: PASSED'; exit 0; else echo 'Repository check: FAILED'; exit 1; fi | sed 's/^[[:space:]]*//' | sort -u)"
+file_tools="$(grep -E '^\[[0-9]{2}\] ' blackarch.txt | sed 's/^\[[0-9][0-9]\] //' | sort -u)"
+if diff -u <(printf '%s\n' "$file_tools") <(printf '%s\n' "$install_tools") >/dev/null; then
+  ok "install.sh ↔ blackarch.txt paket listesi tutarlı"
+else
+  fail "install.sh ↔ blackarch.txt paket listesi farklı"
+fi
+
+uninstall_tools="$(sed -n 's/^TOOLS=( //; s/ )$//; p' uninstall.sh | tr ' ' '\n' | sed '/^$/d' | sort -u)"
+if diff -u <(printf '%s\n' "$file_tools") <(printf '%s\n' "$uninstall_tools") >/dev/null; then
+  ok "uninstall.sh ↔ blackarch.txt paket listesi tutarlı"
+else
+  fail "uninstall.sh ↔ blackarch.txt paket listesi farklı"
+fi
 echo
 if (( failed == 0 )); then echo 'Repository check: PASSED'; exit 0; else echo 'Repository check: FAILED'; exit 1; fi
