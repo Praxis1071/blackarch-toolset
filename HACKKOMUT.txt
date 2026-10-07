@@ -72,6 +72,31 @@ Bu dosya, repodaki mevcut araç seti için hazırlanmış Türkçe komut başvur
 56. [Websploit](#56-websploit)
 57. [WiFiJammer](#57-wifijammer)
 58. [Nmap](#58-nmap)
+59. [AIMAP](#59-aimap)
+60. [Airgeddon](#60-airgeddon)
+61. [Amass](#61-amass)
+62. [Arjun](#62-arjun)
+63. [Arpon](#63-arpon)
+64. [Arptools](#64-arptools)
+65. [BackFuzz](#65-backfuzz)
+66. [BBOT](#66-bbot)
+67. [BeEF](#67-beef)
+68. [Berate AP](#68-berate-ap)
+69. [BlackArch Mirrorlist](#69-blackarch-mirrorlist)
+70. [Burp Suite](#70-burp-suite)
+71. [Caido](#71-caido)
+72. [Cariddi](#72-cariddi)
+73. [Chiron](#73-chiron)
+74. [Clairvoyance](#74-clairvoyance)
+75. [Crypthook](#75-crypthook)
+76. [Ddosify](#76-ddosify)
+77. [ExifLooter](#77-exiflooter)
+78. [Hyde](#78-hyde)
+79. [MDBTools](#79-mdbtools)
+80. [Monocle](#80-monocle)
+81. [PyInstaller](#81-pyinstaller)
+82. [PyInstaller Hooks Contrib](#82-pyinstaller-hooks-contrib)
+83. [Wifiphisher](#83-wifiphisher)
 
 ---
 
@@ -1361,3 +1386,199 @@ Ardından:
 
 Bu dosya mevcut toolset içindeki komutların daha okunabilir ve anlaşılır bir başvuru düzeninde tutulması amacıyla hazırlanmıştır.
 Yeni bir araç eklemek için kullanılmaz.
+
+
+---
+# 59. AIMAP
+**Amaç:** AI/ML servislerini keşfetmeye ve fingerprint etmeye yardımcı olur.
+```bash
+aimap --help
+```
+
+---
+# 60. Airgeddon
+**Amaç:** Kablosuz güvenlik denetimlerinde çeşitli araçları menü tabanlı bir akışta birleştirir.
+```bash
+sudo airgeddon
+```
+**Not:** Kablosuz saldırı/DoS özelliklerini yalnızca yetkili laboratuvarlarda kullan.
+
+---
+# 61. Amass
+**Amaç:** Alan adı, DNS ve alt alan adı keşfi için kullanılır.
+```bash
+amass enum -passive -d example.com
+amass enum -h
+```
+
+---
+# 62. Arjun
+**Amaç:** Web uygulamalarındaki gizli HTTP parametrelerini keşfetmeye yardımcı olur.
+```bash
+arjun -u https://example.com/endpoint
+arjun -u https://example.com/endpoint -oJ sonuc.json
+```
+**Not:** Parametre keşfi yalnızca yetkili hedeflerde yapılmalıdır.
+
+---
+# 63. Arpon
+**Amaç:** ARP spoofing/cache poisoning saldırılarına karşı koruma sağlamaya yönelik savunma aracıdır.
+```bash
+arpon --help
+sudo arpon
+```
+
+---
+# 64. Arptools
+**Amaç:** ARP paketleri ve düşük seviyeli ARP işlemleri üzerinde testler yapmaya yardımcı olur.
+```bash
+arptools --help
+```
+
+---
+# 65. BackFuzz
+**Amaç:** Ağ protokollerini fuzzing yöntemleriyle test etmeye yönelik toolkit'tir.
+```bash
+backfuzz --help
+```
+**Not:** Fuzzing yoğun trafik oluşturabilir; yalnızca yetkili ortamlarda kullan.
+
+---
+# 66. BBOT
+**Amaç:** OSINT ve reconnaissance işlemlerini modüler biçimde otomatikleştirmeye yardımcı olur.
+```bash
+bbot -t example.com
+bbot --help
+```
+
+---
+# 67. BeEF
+**Amaç:** Tarayıcı güvenliği ve browser tabanlı test senaryolarını laboratuvarda incelemek için kullanılır.
+```bash
+beef-xss
+```
+**Not:** Hook ve browser-control özelliklerini yalnızca yetkili laboratuvarda kullan.
+
+---
+# 68. Berate AP
+**Amaç:** Rogue access point senaryolarını kablosuz güvenlik testlerinde çalıştırmaya yardımcı olur.
+```bash
+berate_ap --help
+```
+
+---
+# 69. BlackArch Mirrorlist
+**Amaç:** BlackArch paket depolarının mirror listesini sağlayan yardımcı pakettir.
+```bash
+pacman -Q blackarch-mirrorlist
+```
+**Not:** Bağımsız bir güvenlik aracı değildir.
+
+---
+# 70. Burp Suite
+**Amaç:** Web uygulamalarını incelemek, HTTP trafiğini yakalamak ve yetkili güvenlik testleri yapmak için kullanılır.
+```bash
+burpsuite
+```
+
+---
+# 71. Caido
+**Amaç:** HTTP uygulamalarını incelemek ve web güvenlik testleri yapmak için kullanılan proxy/platformdur.
+```bash
+caido
+```
+**Not:** Paket farklı bir launcher sağlıyorsa kurulu sürümün launcher'ını kullan.
+
+---
+# 72. Cariddi
+**Amaç:** Web sitelerinden endpoint, URL ve içerik göstergeleri çıkarmaya yardımcı olur.
+```bash
+echo "https://example.com" | cariddi
+cariddi -h
+```
+
+---
+# 73. Chiron
+**Amaç:** IPv6 güvenlik testleri, keşif ve ağ davranışlarını incelemek için kullanılır.
+```bash
+chiron --help
+```
+
+---
+# 74. Clairvoyance
+**Amaç:** GraphQL endpoint'lerinde schema/introspection davranışlarını güvenlik açısından incelemeye yardımcı olur.
+```bash
+clairvoyance --help
+```
+
+---
+# 75. Crypthook
+**Amaç:** TCP/UDP trafiği için şifreli tünel/iletişim sağlamaya yönelik yardımcı araçtır.
+```bash
+crypthook --help
+```
+
+---
+# 76. Ddosify
+**Amaç:** Web uygulamaları ve servisler için yük/stres testi yapmaya yarar.
+```bash
+ddosify -t https://example.com
+ddosify --help
+```
+**Not:** Yalnızca test iznin olan sistemlerde kullan.
+
+---
+# 77. ExifLooter
+**Amaç:** Görsellerden EXIF ve diğer metadata bilgilerini çıkarmaya yardımcı olur.
+```bash
+exiflooter --help
+```
+
+---
+# 78. Hyde
+**Amaç:** Ağ/servis stres testi ve performans değerlendirmesine yönelik araçtır.
+```bash
+hyde --help
+```
+**Not:** Stres testlerini yalnızca kontrol ettiğin sistemlerde yap.
+
+---
+# 79. MDBTools
+**Amaç:** Microsoft Access MDB veritabanlarını Linux'ta incelemek ve dönüştürmek için kullanılır.
+```bash
+mdb-tables database.mdb
+mdb-schema database.mdb
+```
+
+---
+# 80. Monocle
+**Amaç:** Yerel ağ cihazlarını keşfetmeye yardımcı olur.
+```bash
+monocle --help
+```
+
+---
+# 81. PyInstaller
+**Amaç:** Python uygulamalarını çalıştırılabilir paketlere dönüştürmeye yardımcı olur.
+```bash
+pyinstaller app.py
+pyinstaller --onefile app.py
+pyinstaller --help
+```
+
+---
+# 82. PyInstaller Hooks Contrib
+**Amaç:** PyInstaller'ın farklı Python paketlerini paketlemesine yardımcı olan ek hook koleksiyonudur.
+```bash
+pacman -Q pyinstaller-hooks-contrib
+```
+**Not:** Ayrı bir güvenlik aracı değildir.
+
+---
+# 83. Wifiphisher
+**Amaç:** Rogue AP ve phishing tabanlı kablosuz güvenlik farkındalığı/test senaryolarında kullanılır.
+```bash
+sudo wifiphisher
+sudo wifiphisher -aI wlan0 -jI wlan1
+```
+**Not:** Rogue AP, deauthentication ve phishing özelliklerini yalnızca yetkili laboratuvarda kullan.
