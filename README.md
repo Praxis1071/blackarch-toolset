@@ -28,7 +28,7 @@ cd blackarch-toolset
 ### 2. Araçları kur
 
 ```bash
-chmod +x install.sh uninstall.sh check.sh
+chmod +x install.sh uninstall.sh
 sudo ./install.sh
 ```
 
@@ -60,16 +60,6 @@ Her iki sorunun varsayılan cevabı **Hayır**'dır. Repository kaldırılmadan 
 
 > **Uyarı:** Paket kaldırma seçeneği `pacman -Rns` kullanır; artık gerekmeyen bağımlılıkları da kaldırabilir. İşlemden önce gösterilen paket listesini kontrol et.
 
-## 🔎 Kalite kontrolü
-
-Repository'nin temel bütünlüğünü kontrol etmek için:
-
-```bash
-chmod +x check.sh
-./check.sh
-```
-
-Kontrol; dosyaların varlığını, paket sayısını, script syntax'ını, HACKKOMUT bölüm sayısını ve README referanslarını doğrular.
 ## 🛠️ Nasıl kullanılır?
 
 Bir aracı öğrenmek için önerilen sıra:
