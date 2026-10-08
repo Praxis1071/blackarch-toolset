@@ -11,7 +11,6 @@ BlackArch ve Arch Linux için seçilmiş güvenlik araçlarını öğrenmek, kur
 | `blackarch.txt` | Kurulumda kullanılacak paket listesi |
 | `install.sh` | Araç setini otomatik olarak kuran kurulum betiği |
 | `uninstall.sh` | Paketleri ve BlackArch repository yapılandırmasını ayrı ayrı kaldıran betik |
-| `check.sh` | Repository dosyalarını ve temel tutarlılığı kontrol eden kalite betiği |
 | `LICENSE` | MIT lisansı |
 
 ## 🚀 Kurulum
