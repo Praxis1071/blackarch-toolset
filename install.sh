@@ -180,13 +180,10 @@ blackarch_repo_ekle() {
   fi
 
   if (( strap_status != 0 )); then
-    if ! pacman -Q blackarch-keyring >/dev/null 2>&1; then
-      echo "Hata: strap.sh başarısız oldu ve blackarch-keyring kurulu görünmüyor."
-      echo "Paket kurulumuna geçilmeyecek. Yukarıdaki hata mesajlarını düzeltip tekrar dene."
-      exit 1
-    fi
-    echo "Uyarı: strap.sh sıfırdan farklı kod döndürdü ancak depo ve blackarch-keyring mevcut."
-    echo "İşleme devam ediliyor; pacman sonraki adımlarda eksik veya bozuk paket durumunu gösterebilir."
+    echo "Hata: strap.sh sıfırdan farklı kodla sonlandı; kurulum burada durduruldu."
+    echo "Depo bölümü veya keyring kısmen oluşmuş olsa bile yapılandırmanın sağlıklı olduğu varsayılmayacak."
+    echo "Hata mesajlarını düzelt; depo yapılandırması tamamlandıysa scripti yeniden çalıştır."
+    exit 1
   fi
 
   echo "BlackArch deposu yapılandırıldı."
@@ -218,14 +215,24 @@ record_new_packages() {
       [[ -n "$tool" ]] && pacman -Qq "$tool" >/dev/null 2>&1 && previous_state+=("$tool")
     done < "$STATE_FILE"
   fi
-  mkdir -p -- "$STATE_DIR"
-  chmod 700 "$STATE_DIR"
-  STATE_TMP="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")"
-  if (("${#previous_state[@]}" > 0 || "${#newly_installed[@]}" > 0)); then
-    printf '%s\n' "${previous_state[@]}" "${newly_installed[@]}" | sort -u > "$STATE_TMP"
+  if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
+    echo "Hata: durum kayıt dizini hazırlanamadı." >&2
+    return 1
   fi
-  chmod 600 "$STATE_TMP"
-  mv -f -- "$STATE_TMP" "$STATE_FILE"
+  STATE_TMP="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")" || {
+    echo "Hata: geçici durum kaydı oluşturulamadı." >&2
+    return 1
+  }
+  if (("${#previous_state[@]}" > 0 || "${#newly_installed[@]}" > 0)); then
+    if ! printf '%s\n' "${previous_state[@]}" "${newly_installed[@]}" | sort -u > "$STATE_TMP"; then
+      echo "Hata: durum kaydı yazılamadı." >&2
+      return 1
+    fi
+  fi
+  if ! chmod 600 "$STATE_TMP" || ! mv -f -- "$STATE_TMP" "$STATE_FILE"; then
+    echo "Hata: durum kaydı güvenli biçimde kaydedilemedi." >&2
+    return 1
+  fi
   STATE_TMP=""
   echo "Toolset tarafından yeni kurulduğu kaydedilen paket sayısı: $(wc -l < "$STATE_FILE")"
 }
