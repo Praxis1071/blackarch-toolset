@@ -116,7 +116,7 @@ done
 
 blackarch_repo_var_mi() {
   if command -v pacman-conf >/dev/null 2>&1; then
-    pacman-conf --repo-list 2>/dev/null | grep -Fxq "blackarch"
+    pacman-conf --repo-list 2>/dev/null | grep -Fx "blackarch" >/dev/null
     return
   fi
 
