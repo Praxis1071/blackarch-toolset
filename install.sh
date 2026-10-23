@@ -262,7 +262,7 @@ fi
 
 echo
 echo "ÖNEMLİ: Arch Linux'ta kısmi yükseltme desteklenmez."
-echo "pacman -Syyu, toolset dışındaki sistem paketlerini de güncelleyebilir."
+echo "pacman -Syu, toolset dışındaki sistem paketlerini de güncelleyebilir."
 read -r -p "Paket veritabanlarını yenileyip tüm sistemi güncellemeyi onaylıyor musunuz? [e/H]: " update_answer
 if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
   echo "Onay verilmedi; güvenli olmayan kısmi yükseltmeden kaçınmak için kurulum durduruldu."
@@ -287,8 +287,8 @@ fi
 STATE_TMP=""
 
 echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
-if ! pacman -Syyu; then
-  echo "Hata: pacman -Syyu başarısız oldu veya iptal edildi."
+if ! pacman -Syu; then
+  echo "Hata: pacman -Syu başarısız oldu veya iptal edildi."
   echo "Araçlar kurulmadı. Ağ, anahtar/imza ve paket çakışması mesajlarını kontrol et; ardından scripti tekrar çalıştır."
   exit 1
 fi
