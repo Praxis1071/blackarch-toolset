@@ -39,6 +39,8 @@ sudo ./install.sh
 - Paket listesindeki araçları `pacman` ile kurar.
 - Zaten kurulu paketleri gereksiz yere yeniden kurmaz.
 
+**Sistem güncellemesi hakkında:** Kurulum betiği, Arch Linux'ta kısmi yükseltmeden kaçınmak için onay aldıktan sonra `pacman -Syu` çalıştırır. Bu komut yalnızca toolset paketlerini değil, sistemdeki diğer güncellenebilir paketleri de yükseltebilir. Devam etmeden önce önemli verilerini yedekle ve pacman'ın göstereceği işlem özetini dikkatle incele. Betik, tek başına `pacman -Sy` kullanmaz; Arch Linux'ta bu şekilde kısmi yükseltme yapılması desteklenmez.
+
 > **Not:** BlackArch deposu eklenmeden önce sistemdeki mevcut paket ve depo yapılandırmalarını kontrol et.
 
 ## 🧹 Kaldırma
