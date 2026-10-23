@@ -269,17 +269,10 @@ if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
   exit 1
 fi
 
-echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
-if ! pacman -Syyu; then
-  echo "Hata: pacman -Syyu başarısız oldu veya iptal edildi."
-  echo "Araçlar kurulmadı. Ağ, anahtar/imza ve paket çakışması mesajlarını kontrol et; ardından scripti tekrar çalıştır."
-  exit 1
-fi
-
 # Paketleri kurmadan önce durum kaydı için alanın yazılabilir olduğunu doğrula.
-# Böylece kayıt alanı hazırlanamadığı için kurulum sonrası sahiplik bilgisinin kaybolma riski azaltılır.
+# Böylece kayıt alanı hazırlanamadığı için güncelleme öncesinde kayıt alanının hazır olduğu doğrulanır.
 if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
-  echo "Hata: durum kayıt dizini hazırlanamadı; paket kurulumu başlatılmadı." >&2
+  echo "Hata: durum kayıt dizini hazırlanamadı; sistem güncellemesi başlatılmadı." >&2
   exit 1
 fi
 preflight_tmp="$(mktemp "$STATE_DIR/.preflight.XXXXXX")" || {
@@ -288,10 +281,17 @@ preflight_tmp="$(mktemp "$STATE_DIR/.preflight.XXXXXX")" || {
 }
 STATE_TMP="$preflight_tmp"
 if ! rm -f -- "$preflight_tmp"; then
-  echo "Hata: durum kayıt alanı doğrulandıktan sonra geçici dosya temizlenemedi." >&2
+  echo "Hata: durum kayıt alanı kontrolü sonrası geçici dosya temizlenemedi." >&2
   exit 1
 fi
 STATE_TMP=""
+
+echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
+if ! pacman -Syyu; then
+  echo "Hata: pacman -Syyu başarısız oldu veya iptal edildi."
+  echo "Araçlar kurulmadı. Ağ, anahtar/imza ve paket çakışması mesajlarını kontrol et; ardından scripti tekrar çalıştır."
+  exit 1
+fi
 
 # Paket kurulumundan hemen önceki envanter, yalnızca bu toolset işleminin eklediklerini belirlemek için kullanılır.
 BASELINE_FILE="$(mktemp)"
