@@ -200,7 +200,7 @@ blackarch_repo_ekle() {
     echo "Resmî strap.sh paket veritabanını pacman -Syy ile yenilemiş olabilir."
     echo "Daha önce verdiğin tam sistem güncellemesi onayı kapsamında,"
     echo "kısmi yükseltme durumunu bırakmamak için pacman -Syu deneniyor..."
-    if ! pacman -Syu; then
+    if ! pacman -Syu --noconfirm; then
       echo "KRİTİK UYARI: pacman -Syu tamamlanamadı."
       echo "Başka paket işlemi yapmadan önce hatayı çöz ve pacman -Syu komutunu başarıyla tamamla."
     fi
@@ -354,10 +354,12 @@ else
   blackarch_repo_ekle
 fi
 
-echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
-if ! pacman -Syu; then
-  echo "Hata: pacman -Syu başarısız oldu veya iptal edildi."
-  echo "Araçlar kurulmadı. Ağ, anahtar/imza ve paket çakışması mesajlarını kontrol et; ardından scripti tekrar çalıştır."
+echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor (önceden verdiğin onayla)..."
+if ! pacman -Syu --noconfirm; then
+  echo "Hata: pacman -Syu başarısız oldu."
+  echo "Araçlar kurulmadı. Ağ, anahtar/imza ve paket çakışması mesajlarını kontrol et."
+  echo "Paket veritabanı yenilenmiş olabileceğinden, başka pacman kurulum/kaldırma işlemi yapmadan"
+  echo "önce pacman -Syu komutunu başarıyla tamamla."
   exit 1
 fi
 
@@ -375,6 +377,20 @@ if pacman -S --needed "${TOOLS[@]}"; then
 else
   install_status=$?
   echo "Uyarı: paket kurulumu başarısız oldu; kısmen kurulmuş yeni paketler kaydedilecek."
+fi
+
+# Pacman bazı onay reddi senaryolarında sıfır çıkış kodu verebilir. Komut
+# başarılı dönse bile istenen her paketin gerçekten kurulu olduğunu doğrula.
+missing_packages=()
+for tool in "${TOOLS[@]}"; do
+  if ! pacman -Qq "$tool" >/dev/null 2>&1; then
+    missing_packages+=("$tool")
+  fi
+done
+if (("${#missing_packages[@]}" > 0)); then
+  echo "Hata: aşağıdaki istenen paketler kurulu görünmüyor:" >&2
+  printf '  - %s\n' "${missing_packages[@]}" >&2
+  install_status=1
 fi
 
 if ! record_new_packages; then
