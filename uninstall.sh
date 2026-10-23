@@ -126,8 +126,11 @@ echo
 read -r -p 'Toolset tarafından yeni kurulduğu kaydedilen paketleri kaldır? [e/H]: ' answer || answer="H"
 if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
   if [[ -L "$STATE_DIR" || ! -d "$STATE_DIR" || ! -O "$STATE_DIR" ||
-        ! -f "$STATE_FILE" || -L "$STATE_FILE" || ! -O "$STATE_FILE" ]]; then
-    echo 'Paket kaldırma atlandı: kurulum durum kaydı bulunamadı veya normal bir dosya değil.'
+        "$(stat -c '%u:%g:%a' -- "$STATE_DIR" 2>/dev/null)" != "0:0:700" ||
+        ! -f "$STATE_FILE" || -L "$STATE_FILE" || ! -O "$STATE_FILE" ||
+        "$(stat -c '%u:%g:%a' -- "$STATE_FILE" 2>/dev/null)" != "0:0:600" ]]; then
+    echo 'Paket kaldırma atlandı: durum kaydı yok veya sahiplik/tür/izinleri güvenli değil.'
+    echo "Beklenen izinler: root:root ve dizin 700, durum dosyası 600."
     echo "Bu kayıt olmadan paketleri topluca kaldırmak, önceden kurulu paketleri silebileceğinden güvenli değil."
   else
     installed=()
@@ -192,8 +195,8 @@ fi
 echo
 read -r -p 'BlackArch repository yapılandırmasını /etc/pacman.conf dosyasından kaldır? [e/H]: ' repo_answer || repo_answer="H"
 if [[ "${repo_answer:-H}" =~ ^[EeYy]$ ]]; then
-  if [[ ! -f /etc/pacman.conf ]]; then
-    echo 'Hata: /etc/pacman.conf bulunamadı; repository yapılandırması değiştirilmedi.'
+  if [[ -L /etc/pacman.conf || ! -f /etc/pacman.conf ]]; then
+    echo 'Hata: /etc/pacman.conf normal bir dosya değil veya sembolik bağlantı; repository yapılandırması değiştirilmedi.'
     exit 1
   fi
 
