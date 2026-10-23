@@ -321,6 +321,21 @@ fi
 STATE_TMP=""
 
 
+# Önce tüm sistem güncellemesi için onay al. Resmî strap.sh, bu onaydan
+# sonra keyring/depo işlemleri yapar ve kendi içinde ayrıca pacman -Su sorabilir.
+# Kullanıcı bu betikte bir kez onay verdiyse strap.sh bu soruyu reddetse bile
+# aşağıdaki pacman -Syu çalışır; böylece kurulum yarıda "onay verilmedi" diye
+# bırakılıp güncel olmayan depo veritabanıyla devam edilmez.
+echo
+echo "ÖNEMLİ: Arch Linux'ta kısmi yükseltme desteklenmez."
+echo "pacman -Syu, toolset dışındaki sistem paketlerini de güncelleyebilir."
+echo "BlackArch deposu eksikse, resmî strap.sh bu onaydan sonra çalıştırılacaktır."
+read -r -p "Depo kurulumu gerekiyorsa bunu ve ardından tüm sistemin güncellenmesini onaylıyor musunuz? [e/H]: " update_answer
+if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
+  echo "Onay verilmedi; depo kurulumu ve paket işlemleri başlatılmadı."
+  exit 1
+fi
+
 if blackarch_repo_var_mi; then
   echo "BlackArch deposu zaten yapılandırılmış. Depo kurulumu atlanıyor."
 else
@@ -330,15 +345,6 @@ else
     exit 1
   fi
   blackarch_repo_ekle
-fi
-
-echo
-echo "ÖNEMLİ: Arch Linux'ta kısmi yükseltme desteklenmez."
-echo "pacman -Syu, toolset dışındaki sistem paketlerini de güncelleyebilir."
-read -r -p "Paket veritabanlarını yenileyip tüm sistemi güncellemeyi onaylıyor musunuz? [e/H]: " update_answer
-if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
-  echo "Onay verilmedi; güvenli olmayan kısmi yükseltmeden kaçınmak için kurulum durduruldu."
-  exit 1
 fi
 
 echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
