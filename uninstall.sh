@@ -95,6 +95,7 @@ STATE_DIR="/var/lib/blackarch-toolset"
 STATE_FILE="$STATE_DIR/installed-by-toolset"
 TMP_FILE=""
 BACKUP_FILE=""
+REMOVE_MODE=""
 
 cleanup() {
   [[ -z "$TMP_FILE" || ! -e "$TMP_FILE" ]] || rm -f -- "$TMP_FILE"
@@ -119,7 +120,16 @@ is_tool_package() {
 }
 
 echo '=== BlackArch Toolset Kaldırma ==='
-echo 'Paketler ve BlackArch repository ayrı ayrı sorulacaktır.'
+echo '1) Yalnızca toolset tarafından kurulan araçları kaldır'
+echo '2) Araçları ve BlackArch repository yapılandırmasını kaldır'
+echo '0) İptal'
+read -r -p 'Seçimin (0/1/2): ' REMOVE_MODE || REMOVE_MODE="0"
+case "$REMOVE_MODE" in
+  1|2) ;;
+  *) echo 'Kaldırma iptal edildi.'; exit 0 ;;
+esac
+
+echo
 echo 'Güvenlik: yalnızca install.sh tarafından yeni kurulduğu kaydedilen paketler kaldırılabilir.'
 echo
 
@@ -203,54 +213,57 @@ else
   echo 'Paket kaldırma atlandı.'
 fi
 
-echo
-read -r -p 'BlackArch repository yapılandırmasını /etc/pacman.conf dosyasından kaldır? [e/H]: ' repo_answer || repo_answer="H"
-if [[ "${repo_answer:-H}" =~ ^[EeYy]$ ]]; then
-  if [[ -L /etc/pacman.conf || ! -f /etc/pacman.conf ]]; then
-    echo 'Hata: /etc/pacman.conf normal bir dosya değil veya sembolik bağlantı; repository yapılandırması değiştirilmedi.'
-    exit 1
-  fi
 
-  BACKUP_FILE="$(mktemp /etc/pacman.conf.blackarch-toolset-backup.XXXXXX)" || {
-    echo 'Hata: yedek dosyası oluşturulamadı.'
-    exit 1
-  }
-  if ! cp -a -- /etc/pacman.conf "$BACKUP_FILE"; then
-    rm -f -- "$BACKUP_FILE"
-    BACKUP_FILE=""
-    echo 'Hata: /etc/pacman.conf yedeklenemedi; yapılandırma değiştirilmedi.'
-    exit 1
-  fi
+if [[ "$REMOVE_MODE" == "2" ]]; then
+  if [[ "${repo_answer:-H}" =~ ^[EeYy]$ ]]; then
+    if [[ -L /etc/pacman.conf || ! -f /etc/pacman.conf ]]; then
+      echo 'Hata: /etc/pacman.conf normal bir dosya değil veya sembolik bağlantı; repository yapılandırması değiştirilmedi.'
+      exit 1
+    fi
 
-  TMP_FILE="$(mktemp /etc/.pacman.conf.blackarch-toolset.XXXXXX)" || {
-    echo "Hata: geçici dosya oluşturulamadı. Yedek: $BACKUP_FILE"
-    exit 1
-  }
-  if ! awk 'BEGIN{skip=0} /^[[:space:]]*\[blackarch\][[:space:]]*$/{skip=1;next} skip && /^[[:space:]]*\[/{skip=0} skip{next} {print}' /etc/pacman.conf > "$TMP_FILE"; then
-    echo "Hata: pacman.conf işlenemedi. Orijinal dosya korunmuştur. Yedek: $BACKUP_FILE"
-    exit 1
-  fi
+    BACKUP_FILE="$(mktemp /etc/pacman.conf.blackarch-toolset-backup.XXXXXX)" || {
+      echo 'Hata: yedek dosyası oluşturulamadı.'
+      exit 1
+    }
+    if ! cp -a -- /etc/pacman.conf "$BACKUP_FILE"; then
+      rm -f -- "$BACKUP_FILE"
+      BACKUP_FILE=""
+      echo 'Hata: /etc/pacman.conf yedeklenemedi; yapılandırma değiştirilmedi.'
+      exit 1
+    fi
 
-  if grep -Eq '^[[:space:]]*\[blackarch\][[:space:]]*$' "$TMP_FILE"; then
-    echo "Hata: BlackArch bölümü hâlâ mevcut; yapılandırma değiştirilmedi. Yedek: $BACKUP_FILE"
-    exit 1
-  fi
+    TMP_FILE="$(mktemp /etc/.pacman.conf.blackarch-toolset.XXXXXX)" || {
+      echo "Hata: geçici dosya oluşturulamadı. Yedek: $BACKUP_FILE"
+      exit 1
+    }
+    if ! awk 'BEGIN{skip=0} /^[[:space:]]*\[blackarch\][[:space:]]*$/{skip=1;next} skip && /^[[:space:]]*\[/{skip=0} skip{next} {print}' /etc/pacman.conf > "$TMP_FILE"; then
+      echo "Hata: pacman.conf işlenemedi. Orijinal dosya korunmuştur. Yedek: $BACKUP_FILE"
+      exit 1
+    fi
 
-  # Orijinal sahiplik ve izinleri koru, ardından aynı dosya sisteminde atomik değiştir.
-  if ! chmod --reference=/etc/pacman.conf "$TMP_FILE" ||
-     ! chown --reference=/etc/pacman.conf "$TMP_FILE" ||
-     ! mv -f -- "$TMP_FILE" /etc/pacman.conf; then
-    echo "Hata: yeni pacman.conf yerleştirilemedi. Yedeği korundu: $BACKUP_FILE"
-    exit 1
-  fi
-  TMP_FILE=""
+    if grep -Eq '^[[:space:]]*\[blackarch\][[:space:]]*$' "$TMP_FILE"; then
+      echo "Hata: BlackArch bölümü hâlâ mevcut; yapılandırma değiştirilmedi. Yedek: $BACKUP_FILE"
+      exit 1
+    fi
 
-  echo 'BlackArch repository bölümü kaldırıldı.'
-  echo "Pacman yedeği: $BACKUP_FILE"
-  echo 'Not: Bu işlem yalnızca /etc/pacman.conf içindeki [blackarch] bölümünü kaldırır; keyring paketini veya başka dosyalardaki ayarları kaldırmaz.'
-  echo 'Gerekirse: sudo pacman -Syy'
+    # Orijinal sahiplik ve izinleri koru, ardından aynı dosya sisteminde atomik değiştir.
+    if ! chmod --reference=/etc/pacman.conf "$TMP_FILE" ||
+       ! chown --reference=/etc/pacman.conf "$TMP_FILE" ||
+       ! mv -f -- "$TMP_FILE" /etc/pacman.conf; then
+      echo "Hata: yeni pacman.conf yerleştirilemedi. Yedeği korundu: $BACKUP_FILE"
+      exit 1
+    fi
+    TMP_FILE=""
+
+    echo 'BlackArch repository bölümü kaldırıldı.'
+    echo "Pacman yedeği: $BACKUP_FILE"
+    echo 'Not: Bu işlem yalnızca /etc/pacman.conf içindeki [blackarch] bölümünü kaldırır; keyring paketini veya başka dosyalardaki ayarları kaldırmaz.'
+    echo 'Gerekirse: sudo pacman -Syy'
+  else
+    echo 'BlackArch repository kaldırma atlandı.'
+  fi
 else
-  echo 'BlackArch repository kaldırma atlandı.'
+  echo 'Seçenek 1: BlackArch repository yapılandırması korunuyor.'
 fi
 
 echo 'Kaldırma işlemi tamamlandı.'
