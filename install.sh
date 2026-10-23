@@ -211,9 +211,16 @@ blackarch_repo_ekle() {
   fi
 
   if (( strap_status != 0 )); then
-    echo "Hata: strap.sh sıfırdan farklı kodla sonlandı; kurulum burada durduruldu."
-    echo "Depo bölümü veya keyring kısmen oluşmuş olsa bile yapılandırmanın sağlıklı olduğu varsayılmayacak."
-    echo "Hata mesajlarını düzelt; depo yapılandırması tamamlandıysa scripti yeniden çalıştır."
+    echo "Hata: strap.sh sıfırdan farklı kodla sonlandı; araç paketlerinin kurulumu durduruluyor."
+    echo "Resmî strap.sh paket veritabanını pacman -Syy ile yenilemiş olabilir."
+    echo "BlackArch deposu doğrulanabildiğinden, daha önce verdiğin onay kapsamında"
+    echo "kısmi yükseltme durumunu bırakmamak için pacman -Syu deneniyor..."
+    if ! pacman -Syu; then
+      echo "KRİTİK UYARI: pacman -Syu tamamlanamadı."
+      echo "Başka paket işlemi yapmadan önce hatayı çöz ve pacman -Syu komutunu başarıyla tamamla."
+    fi
+    echo "strap.sh başarısız olduğu için toolset paketleri kurulmayacak."
+    echo "Yukarıdaki hata mesajlarını düzelt; depo/keyring durumunu kontrol etmeden tekrar deneme."
     exit 1
   fi
 
