@@ -1,6 +1,96 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
+TOOLS=(
+  aimap
+  airgeddon
+  amass
+  arjun
+  armitage
+  arpon
+  arpspoof-smikims
+  arptools
+  backfuzz
+  bbot
+  beef
+  berate_ap
+  blackarch-mirrorlist
+  burpsuite
+  caido-desktop
+  cariddi
+  chiron
+  clairvoyance
+  cmseek
+  cloudflared
+  commix
+  corsy
+  credsniper
+  crunch
+  crypthook
+  cupp
+  dalfox
+  ddosify
+  dontgo403
+  exiflooter
+  feroxbuster
+  ffuf
+  gau
+  gloom
+  gophish
+  h8mail
+  hakrawler
+  holehe
+  httpx
+  hyde
+  infoga
+  interactsh-client
+  katana-pd
+  kickthemout
+  linkfinder
+  maigret
+  maketh
+  mdbtools
+  mdk3
+  metasploit
+  mitm
+  monocle
+  netdiscover
+  nexfil
+  ngrok
+  nikto
+  nomore403
+  nmap
+  nuclei
+  nuclei-templates
+  omnibus
+  phoneinfoga
+  photon
+  pyinstaller
+  pyinstaller-hooks-contrib
+  python-shodan
+  responder
+  roguehostapd
+  secretfinder
+  secure-delete
+  seeker
+  set
+  sherlock
+  shodan
+  social-mapper
+  socialscan
+  sooty
+  sparrow-wifi
+  spiderfoot
+  spooftooph
+  subfinder
+  theharvester
+  torctl
+  trape
+  websploit
+  wifijammer
+  wifiphisher
+)
+
 STATE_DIR="/var/lib/blackarch-toolset"
 STATE_FILE="$STATE_DIR/installed-by-toolset"
 TMP_FILE=""
@@ -20,6 +110,14 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
+is_tool_package() {
+  local candidate
+  for candidate in "${TOOLS[@]}"; do
+    [[ "$candidate" == "$1" ]] && return 0
+  done
+  return 1
+}
+
 echo '=== BlackArch Toolset Kaldırma ==='
 echo 'Paketler ve BlackArch repository ayrı ayrı sorulacaktır.'
 echo 'Güvenlik: yalnızca install.sh tarafından yeni kurulduğu kaydedilen paketler kaldırılabilir.'
@@ -35,7 +133,11 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
     while IFS= read -r tool; do
       [[ -n "$tool" ]] || continue
       # Durum dosyası bozulmuşsa keyfi paket adlarını pacman'a geçirme.
-      if [[ "$tool" =~ ^[a-zA-Z0-9@._+-]+$ ]] && pacman -Qq "$tool" >/dev/null 2>&1; then
+      if ! is_tool_package "$tool"; then
+        echo "Uyarı: kayıt dosyasındaki toolset dışı/geçersiz paket adı atlandı: $tool" >&2
+        continue
+      fi
+      if pacman -Qq "$tool" >/dev/null 2>&1; then
         installed+=("$tool")
       fi
     done < "$STATE_FILE"
@@ -60,7 +162,7 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
             TMP_FILE=""
           }
           if [[ -n "$TMP_FILE" ]]; then
-            if (("${#remaining[@]}" > 0)) && ! printf '%s\\n' "${remaining[@]}" > "$TMP_FILE"; then
+            if (("${#remaining[@]}" > 0)) && ! printf '%s\n' "${remaining[@]}" > "$TMP_FILE"; then
               echo 'Uyarı: kalan paket listesi yazılamadı; durum kaydı güncellenemedi.'
             elif chmod 600 "$TMP_FILE" && mv -f -- "$TMP_FILE" "$STATE_FILE"; then
               TMP_FILE=""
