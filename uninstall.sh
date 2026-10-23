@@ -55,14 +55,18 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
             [[ -n "$tool" ]] || continue
             pacman -Qq "$tool" >/dev/null 2>&1 && remaining+=("$tool")
           done < "$STATE_FILE"
-          state_tmp="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")" || {
+          TMP_FILE="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")" || {
             echo 'Uyarı: paketler kaldırıldı ancak durum kaydı güncellenemedi.'
-            state_tmp=""
+            TMP_FILE=""
           }
-          if [[ -n "$state_tmp" ]]; then
-            if (("${#remaining[@]}" > 0)); then printf '%s\n' "${remaining[@]}" > "$state_tmp"; fi
-            chmod 600 "$state_tmp"
-            mv -f -- "$state_tmp" "$STATE_FILE"
+          if [[ -n "$TMP_FILE" ]]; then
+            if (("${#remaining[@]}" > 0)) && ! printf '%s\\n' "${remaining[@]}" > "$TMP_FILE"; then
+              echo 'Uyarı: kalan paket listesi yazılamadı; durum kaydı güncellenemedi.'
+            elif chmod 600 "$TMP_FILE" && mv -f -- "$TMP_FILE" "$STATE_FILE"; then
+              TMP_FILE=""
+            else
+              echo 'Uyarı: durum kaydı değiştirilemedi; geçici dosya temizlenecek.'
+            fi
           fi
           echo 'Paket kaldırma komutu başarıyla tamamlandı.'
         else
