@@ -1,0 +1,50 @@
+name: Validate shell scripts
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate Bash syntax
+        run: |
+          bash -n install.sh
+          bash -n uninstall.sh
+
+      - name: Check package-list consistency and safety invariants
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          def tool_array(path):
+              source = Path(path).read_text(encoding="utf-8")
+              match = re.search(r"TOOLS=\((.*?)\n\)", source, re.S)
+              if not match:
+                  raise SystemExit(f"{path}: TOOLS array not found")
+              return [line.strip() for line in match.group(1).splitlines()
+                      if line.strip() and not line.lstrip().startswith("#")]
+
+          expected = re.findall(
+              r"^\[\d+\]\s+(\S+)\s*$",
+              Path("blackarch.txt").read_text(encoding="utf-8"),
+              re.M,
+          )
+          for path in ("install.sh", "uninstall.sh"):
+              actual = tool_array(path)
+              if actual != expected:
+                  raise SystemExit(f"{path}: package list differs from blackarch.txt")
+              source = Path(path).read_text(encoding="utf-8")
+              if re.search(r"\bpacman\s+-Sy(?:\s|$)", source):
+                  raise SystemExit(f"{path}: unsafe standalone pacman -Sy found")
+
+          if Path("check.sh").exists():
+              raise SystemExit("check.sh must not be reintroduced")
+
+          print(f"Validated {len(expected)} matching package entries.")
+          PY
