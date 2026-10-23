@@ -249,6 +249,10 @@ record_new_packages() {
       newly_installed+=("$tool")
     fi
   done
+  if [[ -L "$STATE_FILE" || ( -e "$STATE_FILE" && ! -f "$STATE_FILE" ) ]]; then
+    echo "Hata: durum kayıt dosyası normal bir dosya değil." >&2
+    return 1
+  fi
   if [[ -f "$STATE_FILE" ]]; then
     while IFS= read -r tool; do
       [[ -n "$tool" ]] || continue
@@ -260,7 +264,7 @@ record_new_packages() {
     done < "$STATE_FILE"
   fi
   if [[ -L "$STATE_DIR" ]] || ! mkdir -p -- "$STATE_DIR" ||
-     [[ ! -d "$STATE_DIR" ]] || ! chmod 700 "$STATE_DIR"; then
+     [[ ! -d "$STATE_DIR" ]] || ! chown root:root "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
     echo "Hata: durum kayıt dizini güvenli biçimde hazırlanamadı." >&2
     return 1
   fi
@@ -291,8 +295,18 @@ if [[ -L "$STATE_DIR" ]]; then
   echo "Hata: durum kayıt dizini sembolik bağlantı; paket işlemleri başlatılmadı." >&2
   exit 1
 fi
-if ! mkdir -p -- "$STATE_DIR" || [[ ! -d "$STATE_DIR" ]] || ! chmod 700 "$STATE_DIR"; then
-  echo "Hata: durum kayıt dizini hazırlanamadı; sistem güncellemesi başlatılmadı." >&2
+if ! mkdir -p -- "$STATE_DIR" || [[ ! -d "$STATE_DIR" ]] ||
+   ! chown root:root "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
+  echo "Hata: durum kayıt dizini güvenli biçimde hazırlanamadı; paket güncellemesi başlatılmadı." >&2
+  exit 1
+fi
+if [[ -L "$STATE_FILE" || ( -e "$STATE_FILE" && ! -f "$STATE_FILE" ) ]]; then
+  echo "Hata: durum kayıt dosyası normal bir dosya değil; paket işlemleri başlatılmadı." >&2
+  exit 1
+fi
+if [[ -f "$STATE_FILE" ]] &&
+   { ! chown root:root "$STATE_FILE" || ! chmod 600 "$STATE_FILE"; }; then
+  echo "Hata: durum kayıt dosyası güvenli izinlerle hazırlanamadı; paket işlemleri başlatılmadı." >&2
   exit 1
 fi
 preflight_tmp="$(mktemp "$STATE_DIR/.preflight.XXXXXX")" || {
