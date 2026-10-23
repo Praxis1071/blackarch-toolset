@@ -286,10 +286,12 @@ preflight_tmp="$(mktemp "$STATE_DIR/.preflight.XXXXXX")" || {
   echo "Hata: durum kayıt dizinine yazılamıyor; paket kurulumu başlatılmadı." >&2
   exit 1
 }
+STATE_TMP="$preflight_tmp"
 if ! rm -f -- "$preflight_tmp"; then
   echo "Hata: durum kayıt alanı doğrulandıktan sonra geçici dosya temizlenemedi." >&2
   exit 1
 fi
+STATE_TMP=""
 
 # Paket kurulumundan hemen önceki envanter, yalnızca bu toolset işleminin eklediklerini belirlemek için kullanılır.
 BASELINE_FILE="$(mktemp)"
