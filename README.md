@@ -1,6 +1,6 @@
 # BlackArch Toolset
 
-A Turkish-to-English? No — a curated command reference for learning about, installing, and using selected security tools on BlackArch and Arch Linux.
+A curated command reference for learning about, installing, and using selected security tools on BlackArch and Arch Linux.
 
 ## 📦 Contents
 
