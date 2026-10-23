@@ -125,7 +125,8 @@ echo
 
 read -r -p 'Toolset tarafından yeni kurulduğu kaydedilen paketleri kaldır? [e/H]: ' answer || answer="H"
 if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
-  if [[ -L "$STATE_DIR" || ! -d "$STATE_DIR" || ! -f "$STATE_FILE" || -L "$STATE_FILE" ]]; then
+  if [[ -L "$STATE_DIR" || ! -d "$STATE_DIR" || ! -O "$STATE_DIR" ||
+        ! -f "$STATE_FILE" || -L "$STATE_FILE" || ! -O "$STATE_FILE" ]]; then
     echo 'Paket kaldırma atlandı: kurulum durum kaydı bulunamadı veya normal bir dosya değil.'
     echo "Bu kayıt olmadan paketleri topluca kaldırmak, önceden kurulu paketleri silebileceğinden güvenli değil."
   else
