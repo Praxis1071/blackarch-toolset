@@ -151,7 +151,7 @@ TEMP_DIR=""
 trap 'if [[ -n "${TEMP_DIR:-}" && -d "$TEMP_DIR" ]]; then rm -rf -- "$TEMP_DIR"; fi' EXIT
 
 blackarch_repo_ekle() {
-  local strap_file expected_sha1 actual_sha1 strap_status
+  local strap_file expected_sha1 actual_sha1 strap_status repo_check_status
 
   TEMP_DIR="$(mktemp -d)"
   strap_file="$TEMP_DIR/strap.sh"
@@ -200,7 +200,7 @@ blackarch_repo_ekle() {
   if blackarch_repo_var_mi; then
     :
   else
-    local repo_check_status=$?
+    repo_check_status=$?
     if (( repo_check_status == 2 )); then
       echo "Hata: depo yapılandırmasının durumu doğrulanamadı; kurulum durduruldu."
     else
@@ -259,8 +259,9 @@ record_new_packages() {
       pacman -Qq "$tool" >/dev/null 2>&1 && previous_state+=("$tool")
     done < "$STATE_FILE"
   fi
-  if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
-    echo "Hata: durum kayıt dizini hazırlanamadı." >&2
+  if [[ -L "$STATE_DIR" ]] || ! mkdir -p -- "$STATE_DIR" ||
+     [[ ! -d "$STATE_DIR" ]] || ! chmod 700 "$STATE_DIR"; then
+    echo "Hata: durum kayıt dizini güvenli biçimde hazırlanamadı." >&2
     return 1
   fi
   STATE_TMP="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")" || {
@@ -285,8 +286,12 @@ echo "BlackArch toolset kurulumu başlıyor..."
 echo "Toplam paket: ${#TOOLS[@]}"
 echo
 # Paketleri kurmadan önce durum kaydı için alanın yazılabilir olduğunu doğrula.
-# Böylece kayıt alanı hazırlanamadığı için güncelleme öncesinde kayıt alanının hazır olduğu doğrulanır.
-if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
+# Sembolik bağlantı üzerinden başka bir konuma yazılmasını önle.
+if [[ -L "$STATE_DIR" ]]; then
+  echo "Hata: durum kayıt dizini sembolik bağlantı; paket işlemleri başlatılmadı." >&2
+  exit 1
+fi
+if ! mkdir -p -- "$STATE_DIR" || [[ ! -d "$STATE_DIR" ]] || ! chmod 700 "$STATE_DIR"; then
   echo "Hata: durum kayıt dizini hazırlanamadı; sistem güncellemesi başlatılmadı." >&2
   exit 1
 fi
