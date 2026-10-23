@@ -1,148 +1,144 @@
 # BlackArch Toolset
 
-BlackArch ve Arch Linux için seçilmiş güvenlik araçlarını öğrenmek, kurmak ve kullanmak amacıyla hazırlanmış Türkçe bir komut referansıdır.
+A Turkish-to-English? No — a curated command reference for learning about, installing, and using selected security tools on BlackArch and Arch Linux.
 
-## 📦 İçerik
+## 📦 Contents
 
-| Dosya | Açıklama |
+| File | Description |
 |---|---|
-| `HACKKOMUT.txt` | Araçların kullanım komutları, örnekleri ve önemli notları |
-| `HACKTOOLS.txt` | Araçların kısa açıklamaları ve kategorileri |
-| `blackarch.txt` | Kurulumda kullanılacak paket listesi |
-| `install.sh` | Araç setini otomatik olarak kuran kurulum betiği |
-| `uninstall.sh` | Paketleri ve BlackArch repository yapılandırmasını ayrı ayrı kaldıran betik |
-| `LICENSE` | MIT lisansı |
+| `HACKKOMUT.txt` | Tool usage commands, examples, and important notes |
+| `HACKTOOLS.txt` | Brief descriptions and categories of the tools |
+| `blackarch.txt` | Package list used during installation |
+| `install.sh` | Installation script that installs the toolset automatically |
+| `uninstall.sh` | Script that separately removes packages and the BlackArch repository configuration |
+| `LICENSE` | MIT license |
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-Proje Arch Linux / BlackArch tabanlı sistemler için hazırlanmıştır.
+This project is intended for Arch Linux- and BlackArch-based systems.
 
-### 1. Repoyu klonla
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Praxis1071/blackarch-toolset.git
 cd blackarch-toolset
 ```
 
-### 2. Araçları kur
+### 2. Install the tools
 
 ```bash
 chmod +x install.sh uninstall.sh
 sudo ./install.sh
 ```
 
-`install.sh` şunları yapar:
+The `install.sh` script:
 
-- `pacman` ve gerekli yardımcı komutları kontrol eder.
-- BlackArch deposunun sistemde bulunup bulunmadığını kontrol eder.
-- BlackArch deposu yoksa resmi `strap.sh` betiğini doğrulayarak kurulumu başlatır ve senden onay ister.
-- Paket listesindeki araçları `pacman` ile kurar.
-- Zaten kurulu paketleri gereksiz yere yeniden kurmaz.
+- Checks for `pacman` and the required helper commands.
+- Checks whether the BlackArch repository is already configured on the system.
+- If the BlackArch repository is missing, verifies the official `strap.sh` script before running it and asks for your confirmation.
+- Installs the tools listed in the package list using `pacman`.
+- Avoids unnecessarily reinstalling packages that are already installed.
 
-**Sistem güncellemesi hakkında:** Kurulum betiği, Arch Linux'ta kısmi yükseltmeden kaçınmak için onay aldıktan sonra `pacman -Syu` çalıştırır. Bu komut yalnızca toolset paketlerini değil, sistemdeki diğer güncellenebilir paketleri de yükseltebilir. Devam etmeden önce önemli verilerini yedekle ve pacman'ın göstereceği işlem özetini dikkatle incele. Betik, tek başına `pacman -Sy` kullanmaz; Arch Linux'ta bu şekilde kısmi yükseltme yapılması desteklenmez.
+**About system upgrades:** To avoid a partial upgrade on Arch Linux, the installation script runs `pacman -Syu` after obtaining your consent. This command may upgrade other updatable packages on your system, not just the toolset packages. Back up important data before proceeding, and carefully review the transaction summary shown by pacman. The script does not run `pacman -Sy` on its own; partial upgrades performed this way are unsupported on Arch Linux.
 
-> **Not:** BlackArch deposu eklenmeden önce sistemdeki mevcut paket ve depo yapılandırmalarını kontrol et.
+> **Note:** Before adding the BlackArch repository, review your system's existing packages and repository configuration.
 
-## 🧹 Kaldırma
+## 🧹 Uninstallation
 
-Kurulan toolset'i geri kaldırmak için:
+To remove the installed toolset:
 
 ```bash
 chmod +x uninstall.sh
 sudo ./uninstall.sh
 ```
 
-Script iki işlemi **ayrı ayrı sorar**:
+The script asks about these two actions **separately**:
 
-1. Toolset paketlerinin tamamını kaldırmak.
-2. BlackArch repository yapılandırmasını kaldırmak.
+1. Removing the toolset packages.
+2. Removing the BlackArch repository configuration.
 
-Her iki sorunun varsayılan cevabı **Hayır**'dır. Repository kaldırılmadan önce `/etc/pacman.conf` için zaman damgalı bir yedek oluşturulur.
+The default answer to both prompts is **No**. Before removing the repository configuration, the script creates a timestamped backup of `/etc/pacman.conf`.
 
-> **Uyarı:** Paket kaldırma seçeneği `pacman -Rns` kullanır; artık gerekmeyen bağımlılıkları da kaldırabilir. İşlemden önce gösterilen paket listesini kontrol et.
+> **Warning:** The package-removal option uses `pacman -Rns`, which may also remove dependencies that are no longer required. Review the package list shown before proceeding.
 
-## 🛠️ Nasıl kullanılır?
+## 🛠️ How to use the tools
 
-Bir aracı öğrenmek için önerilen sıra:
+When learning a tool, the recommended order is:
 
-1. **`HACKTOOLS.txt`** dosyasından aracın ne işe yaradığını öğren.
-2. **`HACKKOMUT.txt`** dosyasında aracın kullanım örneklerine bak.
-3. Aracın kendi yardım ekranını kontrol et:
+1. Read **`HACKTOOLS.txt`** to understand what the tool does.
+2. Look for usage examples in **`HACKKOMUT.txt`**.
+3. Check the tool's own help output:
    ```bash
-   arac --help
+   tool --help
    ```
-4. Önce kendi sisteminde veya izole bir laboratuvarda güvenli bir test yap.
+4. Start with a safe test on your own system or in an isolated lab.
 
-Örneğin Nmap için:
+For example, for Nmap:
 
 ```bash
 nmap --help
 ```
 
-Komut seçenekleri araç sürümüne göre değişebileceği için, kurulu sürümün yardım çıktısı her zaman önceliklidir.
+Command-line options can vary between tool versions, so the help output for the installed version should take precedence.
 
-## 🔎 Araç kapsamı
+## 🔎 Tool coverage
 
-Toolset; aşağıdaki alanlardan seçilmiş araçları içerir:
+The toolset includes selected tools from the following areas:
 
-- 🌐 Ağ keşfi ve güvenliği
-- 🕸️ Web uygulama güvenliği
-- 🔍 OSINT ve reconnaissance
-- 📡 Kablosuz ağ güvenliği
-- 🧪 Fuzzing ve güvenlik testleri
-- 🗂️ Metadata ve bilgi toplama
-- 🔐 Kimlik doğrulama ve güvenlik denetimleri
-- 🛠️ Yardımcı ve analiz araçları
+- 🌐 Network discovery and security
+- 🕸️ Web application security
+- 🔍 OSINT and reconnaissance
+- 📡 Wireless network security
+- 🧪 Fuzzing and security testing
+- 🗂️ Metadata analysis and information gathering
+- 🔐 Authentication and security auditing
+- 🛠️ Utility and analysis tools
 
-Bu proje **tam BlackArch araç kataloğu değildir**. Amaç, seçilmiş araçları anlaşılır komut örnekleriyle tek bir yerde toplamaktır.
+This project is **not the complete BlackArch tool catalog**. Its goal is to bring selected tools together in one place, with clear command examples.
 
-## 📚 Dosyaları nasıl kullanmalısın?
+## 📚 How to use the files
 
-**Yeni başlıyorsan:**
+**If you're just getting started:**
 
-`HACKTOOLS.txt` → aracın ne olduğunu öğren  
+`HACKTOOLS.txt` → learn what a tool does  
 ↓  
-`HACKKOMUT.txt` → temel komutları incele  
+`HACKKOMUT.txt` → review basic commands  
 ↓  
-`arac --help` → seçenekleri öğren  
+`tool --help` → learn the available options  
 ↓  
-Kendi laboratuvarında güvenli şekilde çalış
+Practice safely in your own lab
 
-**Kurulum yapmak istiyorsan:**
+**If you want to install the tools:**
 
-`blackarch.txt` → kurulacak paketleri gör  
+`blackarch.txt` → review the packages to be installed  
 ↓  
-`install.sh` → otomatik kurulumu çalıştır
+`install.sh` → run the automated installation
 
-## 🔐 Yetkili kullanım
+## 🔐 Authorized use
 
-Bu projedeki bazı araçlar aktif tarama, trafik manipülasyonu, yük/stres testi, kablosuz saldırı simülasyonu veya kimlik doğrulama testleri yapabilir.
+Some tools in this project can perform active scanning, traffic manipulation, load or stress testing, wireless attack simulation, or authentication testing.
 
-Araçları yalnızca:
+Use these tools only on:
 
-- kendi sistemlerinde,
-- kendi laboratuvarlarında,
-- CTF ve eğitim ortamlarında,
-- veya açıkça izin verilmiş sistemlerde
+- systems you own,
+- your own labs,
+- CTF and training environments, or
+- systems for which you have explicit authorization.
 
-kullan.
+Do not scan, test, or modify traffic on systems or networks without authorization.
 
-Yetkisiz sistemleri veya ağları tarama, test etme ya da trafiğini değiştirme.
+Do not use real passwords, API keys, tokens, cookies, or other secrets in examples.
 
-Örneklerde gerçek parola, API anahtarı, token, cookie veya başka gizli bilgiler kullanma.
+## ⚠️ Keeping information up to date
 
-## ⚠️ Güncellik
-
-BlackArch paketleri ve upstream projeler zaman içinde değişebilir. Bu nedenle bir komut beklediğin gibi çalışmazsa önce:
+BlackArch packages and upstream projects may change over time. If a command does not behave as expected, first check:
 
 ```bash
-arac --help
+tool --help
 ```
 
-çıktısını kontrol et.
+Consulting the tool's current upstream documentation is also one of the most reliable ways to identify version-specific command-line changes.
 
-Ayrıca aracın güncel upstream belgelerine bakmak, sürüme bağlı CLI değişikliklerini tespit etmenin en güvenilir yoludur.
+## 📄 License
 
-## 📄 Lisans
-
-Bu proje MIT License ile lisanslanmıştır. Ayrıntılar için `LICENSE` dosyasına bak.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
