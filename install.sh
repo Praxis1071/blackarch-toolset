@@ -195,6 +195,20 @@ blackarch_repo_ekle() {
     echo "Uyarı: strap.sh çıkış kodu $strap_status ile sonlandı."
   fi
 
+  if (( strap_status != 0 )); then
+    echo "Hata: strap.sh sıfırdan farklı kodla sonlandı; araç paketlerinin kurulumu durduruluyor."
+    echo "Resmî strap.sh paket veritabanını pacman -Syy ile yenilemiş olabilir."
+    echo "Daha önce verdiğin tam sistem güncellemesi onayı kapsamında,"
+    echo "kısmi yükseltme durumunu bırakmamak için pacman -Syu deneniyor..."
+    if ! pacman -Syu; then
+      echo "KRİTİK UYARI: pacman -Syu tamamlanamadı."
+      echo "Başka paket işlemi yapmadan önce hatayı çöz ve pacman -Syu komutunu başarıyla tamamla."
+    fi
+    echo "strap.sh başarısız olduğu için toolset paketleri kurulmayacak."
+    echo "Yukarıdaki hata mesajlarını düzelt; depo/keyring durumunu kontrol etmeden tekrar deneme."
+    exit 1
+  fi
+
   echo
   echo "BlackArch depo yapılandırması doğrulanıyor..."
   if blackarch_repo_var_mi; then
@@ -207,20 +221,6 @@ blackarch_repo_ekle() {
       echo "Hata: strap.sh sonrasında BlackArch deposu etkin görünmüyor."
     fi
     echo "Kurulum güvenlik nedeniyle durduruldu; yukarıdaki strap.sh hata mesajlarını kontrol et."
-    exit 1
-  fi
-
-  if (( strap_status != 0 )); then
-    echo "Hata: strap.sh sıfırdan farklı kodla sonlandı; araç paketlerinin kurulumu durduruluyor."
-    echo "Resmî strap.sh paket veritabanını pacman -Syy ile yenilemiş olabilir."
-    echo "BlackArch deposu doğrulanabildiğinden, daha önce verdiğin onay kapsamında"
-    echo "kısmi yükseltme durumunu bırakmamak için pacman -Syu deneniyor..."
-    if ! pacman -Syu; then
-      echo "KRİTİK UYARI: pacman -Syu tamamlanamadı."
-      echo "Başka paket işlemi yapmadan önce hatayı çöz ve pacman -Syu komutunu başarıyla tamamla."
-    fi
-    echo "strap.sh başarısız olduğu için toolset paketleri kurulmayacak."
-    echo "Yukarıdaki hata mesajlarını düzelt; depo/keyring durumunu kontrol etmeden tekrar deneme."
     exit 1
   fi
 
