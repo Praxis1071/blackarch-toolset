@@ -155,6 +155,11 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
           remaining=()
           while IFS= read -r tool; do
             [[ -n "$tool" ]] || continue
+            # Kalan kaydı yeniden yazarken de yalnızca izin verilen paketleri koru.
+            if ! is_tool_package "$tool"; then
+              echo "Uyarı: durum kaydındaki toolset dışı/geçersiz paket adı temizleniyor: $tool" >&2
+              continue
+            fi
             pacman -Qq "$tool" >/dev/null 2>&1 && remaining+=("$tool")
           done < "$STATE_FILE"
           TMP_FILE="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")" || {
