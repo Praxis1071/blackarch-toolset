@@ -179,6 +179,12 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
               echo 'Uyarı: durum kaydı değiştirilemedi; geçici dosya temizlenecek.'
             fi
           fi
+          # Sonraki adım TMP_FILE değişkenini pacman.conf geçici dosyası için
+          # kullanabilir; başarısız kalan durum dosyasını kaybetmeden temizle.
+          if [[ -n "$TMP_FILE" ]]; then
+            rm -f -- "$TMP_FILE"
+            TMP_FILE=""
+          fi
           if (("${#remaining[@]}" > 0)); then
             echo "Uyarı: pacman komutu hata vermeden tamamlandı ancak hâlâ kurulu toolset paketleri var."
             echo "Bunlar durum kaydında tutuldu; gerekirse kaldırma işlemini yeniden çalıştır."
