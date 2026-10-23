@@ -114,13 +114,37 @@ for komut in curl sha1sum awk grep sort wc; do
   fi
 done
 
+# Dönüş kodları: 0 = depo var, 1 = depo yok, 2 = yapılandırma okunamadı.
 blackarch_repo_var_mi() {
+  local repo_list status
+
   if command -v pacman-conf >/dev/null 2>&1; then
-    pacman-conf --repo-list 2>/dev/null | grep -Fx "blackarch" >/dev/null
-    return
+    if ! repo_list="$(pacman-conf --repo-list 2>/dev/null)"; then
+      echo "Hata: pacman-conf depo yapılandırmasını okuyamadı; güvenli biçimde duruluyor." >&2
+      return 2
+    fi
+
+    if printf '%s\n' "$repo_list" | grep -Fxq "blackarch"; then
+      return 0
+    fi
+    return 1
   fi
 
-  grep -Eq '^[[:space:]]*\[blackarch\][[:space:]]*$' /etc/pacman.conf
+  if [[ ! -r /etc/pacman.conf ]]; then
+    echo "Hata: pacman-conf yok ve /etc/pacman.conf okunamıyor." >&2
+    return 2
+  fi
+
+  if grep -Eq '^[[:space:]]*\[blackarch\][[:space:]]*$' /etc/pacman.conf; then
+    return 0
+  else
+    status=$?
+    if (( status == 1 )); then
+      return 1
+    fi
+    echo "Hata: /etc/pacman.conf kontrol edilemedi." >&2
+    return 2
+  fi
 }
 
 TEMP_DIR=""
@@ -173,8 +197,15 @@ blackarch_repo_ekle() {
 
   echo
   echo "BlackArch depo yapılandırması doğrulanıyor..."
-  if ! blackarch_repo_var_mi; then
-    echo "Hata: strap.sh sonrasında BlackArch deposu etkin görünmüyor."
+  if blackarch_repo_var_mi; then
+    :
+  else
+    local repo_check_status=$?
+    if (( repo_check_status == 2 )); then
+      echo "Hata: depo yapılandırmasının durumu doğrulanamadı; kurulum durduruldu."
+    else
+      echo "Hata: strap.sh sonrasında BlackArch deposu etkin görünmüyor."
+    fi
     echo "Kurulum güvenlik nedeniyle durduruldu; yukarıdaki strap.sh hata mesajlarını kontrol et."
     exit 1
   fi
@@ -253,22 +284,6 @@ record_new_packages() {
 echo "BlackArch toolset kurulumu başlıyor..."
 echo "Toplam paket: ${#TOOLS[@]}"
 echo
-
-if blackarch_repo_var_mi; then
-  echo "BlackArch deposu zaten yapılandırılmış. Depo kurulumu atlanıyor."
-else
-  blackarch_repo_ekle
-fi
-
-echo
-echo "ÖNEMLİ: Arch Linux'ta kısmi yükseltme desteklenmez."
-echo "pacman -Syu, toolset dışındaki sistem paketlerini de güncelleyebilir."
-read -r -p "Paket veritabanlarını yenileyip tüm sistemi güncellemeyi onaylıyor musunuz? [e/H]: " update_answer
-if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
-  echo "Onay verilmedi; güvenli olmayan kısmi yükseltmeden kaçınmak için kurulum durduruldu."
-  exit 1
-fi
-
 # Paketleri kurmadan önce durum kaydı için alanın yazılabilir olduğunu doğrula.
 # Böylece kayıt alanı hazırlanamadığı için güncelleme öncesinde kayıt alanının hazır olduğu doğrulanır.
 if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
@@ -285,6 +300,27 @@ if ! rm -f -- "$preflight_tmp"; then
   exit 1
 fi
 STATE_TMP=""
+
+
+if blackarch_repo_var_mi; then
+  echo "BlackArch deposu zaten yapılandırılmış. Depo kurulumu atlanıyor."
+else
+  repo_check_status=$?
+  if (( repo_check_status == 2 )); then
+    echo "Hata: BlackArch deposunun durumu güvenilir biçimde belirlenemedi; strap.sh çalıştırılmayacak."
+    exit 1
+  fi
+  blackarch_repo_ekle
+fi
+
+echo
+echo "ÖNEMLİ: Arch Linux'ta kısmi yükseltme desteklenmez."
+echo "pacman -Syu, toolset dışındaki sistem paketlerini de güncelleyebilir."
+read -r -p "Paket veritabanlarını yenileyip tüm sistemi güncellemeyi onaylıyor musunuz? [e/H]: " update_answer
+if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
+  echo "Onay verilmedi; güvenli olmayan kısmi yükseltmeden kaçınmak için kurulum durduruldu."
+  exit 1
+fi
 
 echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
 if ! pacman -Syu; then
