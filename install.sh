@@ -106,7 +106,7 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
-for komut in curl sha1sum awk grep; do
+for komut in curl sha1sum awk grep sort wc; do
   if ! command -v "$komut" >/dev/null 2>&1; then
     echo "Hata: Gerekli komut bulunamadı: $komut"
     echo "Eksik bağımlılığı kurduktan sonra scripti tekrar çalıştır."
@@ -193,6 +193,43 @@ blackarch_repo_ekle() {
   return 0
 }
 
+STATE_DIR="/var/lib/blackarch-toolset"
+STATE_FILE="$STATE_DIR/installed-by-toolset"
+BASELINE_FILE=""
+STATE_TMP=""
+cleanup() {
+  [[ -z "${TEMP_DIR:-}" || ! -d "$TEMP_DIR" ]] || rm -rf -- "$TEMP_DIR"
+  [[ -z "${BASELINE_FILE:-}" || ! -f "$BASELINE_FILE" ]] || rm -f -- "$BASELINE_FILE"
+  [[ -z "${STATE_TMP:-}" || ! -f "$STATE_TMP" ]] || rm -f -- "$STATE_TMP"
+}
+trap cleanup EXIT
+
+record_new_packages() {
+  local tool
+  local -a newly_installed=()
+  local -a previous_state=()
+  for tool in "${TOOLS[@]}"; do
+    if ! grep -Fxq -- "$tool" "$BASELINE_FILE" && pacman -Qq "$tool" >/dev/null 2>&1; then
+      newly_installed+=("$tool")
+    fi
+  done
+  if [[ -f "$STATE_FILE" ]]; then
+    while IFS= read -r tool; do
+      [[ -n "$tool" ]] && pacman -Qq "$tool" >/dev/null 2>&1 && previous_state+=("$tool")
+    done < "$STATE_FILE"
+  fi
+  mkdir -p -- "$STATE_DIR"
+  chmod 700 "$STATE_DIR"
+  STATE_TMP="$(mktemp "$STATE_DIR/.installed-by-toolset.XXXXXX")"
+  if (("${#previous_state[@]}" > 0 || "${#newly_installed[@]}" > 0)); then
+    printf '%s\n' "${previous_state[@]}" "${newly_installed[@]}" | sort -u > "$STATE_TMP"
+  fi
+  chmod 600 "$STATE_TMP"
+  mv -f -- "$STATE_TMP" "$STATE_FILE"
+  STATE_TMP=""
+  echo "Toolset tarafından yeni kurulduğu kaydedilen paket sayısı: $(wc -l < "$STATE_FILE")"
+}
+
 echo "BlackArch toolset kurulumu başlıyor..."
 echo "Toplam paket: ${#TOOLS[@]}"
 echo
@@ -204,6 +241,14 @@ else
 fi
 
 echo
+echo "ÖNEMLİ: Arch Linux'ta kısmi yükseltme desteklenmez."
+echo "pacman -Syyu, toolset dışındaki sistem paketlerini de güncelleyebilir."
+read -r -p "Paket veritabanlarını yenileyip tüm sistemi güncellemeyi onaylıyor musunuz? [e/H]: " update_answer
+if [[ ! "${update_answer:-H}" =~ ^[EeYy]$ ]]; then
+  echo "Onay verilmedi; güvenli olmayan kısmi yükseltmeden kaçınmak için kurulum durduruldu."
+  exit 1
+fi
+
 echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
 if ! pacman -Syyu; then
   echo "Hata: pacman -Syyu başarısız oldu veya iptal edildi."
@@ -211,13 +256,31 @@ if ! pacman -Syyu; then
   exit 1
 fi
 
-echo
+# Paket kurulumundan önce kurulu olanları kaydet; bunlar toolset'in sahip olduğu paketler sayılmaz.
+BASELINE_FILE="$(mktemp)"
+for tool in "${TOOLS[@]}"; do
+  if pacman -Qq "$tool" >/dev/null 2>&1; then
+    printf '%s\n' "$tool" >> "$BASELINE_FILE"
+  fi
+done
+
 echo "Araçlar kuruluyor..."
-if ! pacman -S --needed "${TOOLS[@]}"; then
-  echo "Hata: Araç paketlerinin kurulumu tamamlanamadı."
-  echo "Pacman çıktısında bulunamayan paketleri, imza hatalarını veya çakışmaları kontrol et."
-  exit 1
+if pacman -S --needed "${TOOLS[@]}"; then
+  install_status=0
+else
+  install_status=$?
+  echo "Uyarı: paket kurulumu başarısız oldu; kısmen kurulmuş yeni paketler kaydedilecek."
 fi
 
-echo
+if ! record_new_packages; then
+  echo "Hata: kurulum durumu kaydedilemedi. Paketleri otomatik kaldırmadan önce pacman -Q ile kontrol et."
+  exit 1
+fi
+if (( install_status != 0 )); then
+  echo "Hata: Araç paketlerinin kurulumu tamamlanamadı."
+  echo "Pacman çıktısında bulunamayan paketleri, imza hatalarını veya çakışmaları kontrol et."
+  exit "$install_status"
+fi
+
 echo "Kurulum tamamlandı."
+echo "Uninstall scripti yalnızca bu kayıt dosyasındaki paketleri kaldırmayı önerecek."
