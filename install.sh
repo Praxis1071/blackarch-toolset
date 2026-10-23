@@ -106,7 +106,7 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
-for komut in curl sha1sum awk; do
+for komut in curl sha1sum awk grep; do
   if ! command -v "$komut" >/dev/null 2>&1; then
     echo "Hata: Gerekli komut bulunamadı: $komut"
     echo "Eksik bağımlılığı kurduktan sonra scripti tekrar çalıştır."
@@ -123,13 +123,14 @@ blackarch_repo_var_mi() {
   grep -Eq '^[[:space:]]*\[blackarch\][[:space:]]*$' /etc/pacman.conf
 }
 
+TEMP_DIR=""
+trap 'if [[ -n "${TEMP_DIR:-}" && -d "$TEMP_DIR" ]]; then rm -rf -- "$TEMP_DIR"; fi' EXIT
+
 blackarch_repo_ekle() {
-  local temp_dir strap_file expected_sha1 actual_sha1
+  local strap_file expected_sha1 actual_sha1 strap_status
 
-  temp_dir="$(mktemp -d)"
-  trap 'rm -rf "$temp_dir"' RETURN
-
-  strap_file="$temp_dir/strap.sh"
+  TEMP_DIR="$(mktemp -d)"
+  strap_file="$TEMP_DIR/strap.sh"
 
   echo "BlackArch deposu bulunamadı."
   echo "Resmi BlackArch strap.sh betiği indirilecek ve depo yapılandırılacaktır."
@@ -162,18 +163,34 @@ blackarch_repo_ekle() {
   chmod +x "$strap_file"
 
   echo "strap.sh doğrulandı. BlackArch deposu yapılandırılıyor..."
-  "$strap_file"
+  echo "Bu aşamada resmi betik anahtarları ve depo ayarlarını hazırlar."
+  if "$strap_file"; then
+    strap_status=0
+  else
+    strap_status=$?
+    echo "Uyarı: strap.sh çıkış kodu $strap_status ile sonlandı."
+  fi
 
   echo
-  echo "BlackArch deposu yapılandırması doğrulanıyor..."
+  echo "BlackArch depo yapılandırması doğrulanıyor..."
   if ! blackarch_repo_var_mi; then
-    echo "Hata: BlackArch deposu yapılandırılamadı."
+    echo "Hata: strap.sh sonrasında BlackArch deposu etkin görünmüyor."
+    echo "Kurulum güvenlik nedeniyle durduruldu; yukarıdaki strap.sh hata mesajlarını kontrol et."
     exit 1
   fi
 
-  echo "BlackArch deposu başarıyla eklendi."
-  echo "Paket veritabanları senkronize ediliyor..."
-  pacman -Syyu
+  if (( strap_status != 0 )); then
+    if ! pacman -Q blackarch-keyring >/dev/null 2>&1; then
+      echo "Hata: strap.sh başarısız oldu ve blackarch-keyring kurulu görünmüyor."
+      echo "Paket kurulumuna geçilmeyecek. Yukarıdaki hata mesajlarını düzeltip tekrar dene."
+      exit 1
+    fi
+    echo "Uyarı: strap.sh sıfırdan farklı kod döndürdü ancak depo ve blackarch-keyring mevcut."
+    echo "İşleme devam ediliyor; pacman sonraki adımlarda eksik veya bozuk paket durumunu gösterebilir."
+  fi
+
+  echo "BlackArch deposu yapılandırıldı."
+  return 0
 }
 
 echo "BlackArch toolset kurulumu başlıyor..."
@@ -187,8 +204,20 @@ else
 fi
 
 echo
+echo "Paket veritabanları senkronize ediliyor ve sistem güncelleniyor..."
+if ! pacman -Syyu; then
+  echo "Hata: pacman -Syyu başarısız oldu veya iptal edildi."
+  echo "Araçlar kurulmadı. Ağ, anahtar/imza ve paket çakışması mesajlarını kontrol et; ardından scripti tekrar çalıştır."
+  exit 1
+fi
+
+echo
 echo "Araçlar kuruluyor..."
-pacman -S --needed "${TOOLS[@]}"
+if ! pacman -S --needed "${TOOLS[@]}"; then
+  echo "Hata: Araç paketlerinin kurulumu tamamlanamadı."
+  echo "Pacman çıktısında bulunamayan paketleri, imza hatalarını veya çakışmaları kontrol et."
+  exit 1
+fi
 
 echo
 echo "Kurulum tamamlandı."
