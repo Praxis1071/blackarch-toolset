@@ -179,7 +179,12 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
               echo 'Uyarı: durum kaydı değiştirilemedi; geçici dosya temizlenecek.'
             fi
           fi
-          echo 'Paket kaldırma komutu başarıyla tamamlandı.'
+          if (("${#remaining[@]}" > 0)); then
+            echo "Uyarı: pacman komutu hata vermeden tamamlandı ancak hâlâ kurulu toolset paketleri var."
+            echo "Bunlar durum kaydında tutuldu; gerekirse kaldırma işlemini yeniden çalıştır."
+          else
+            echo 'Kayıtlı ve kurulu toolset paketleri kaldırıldı.'
+          fi
         else
           echo 'Hata: paket kaldırma başarısız oldu. Repository kaldırma seçeneği yine de sunulacak.'
         fi
