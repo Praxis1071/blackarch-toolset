@@ -276,7 +276,22 @@ if ! pacman -Syyu; then
   exit 1
 fi
 
-# Paket kurulumundan önce kurulu olanları kaydet; bunlar toolset'in sahip olduğu paketler sayılmaz.
+# Paketleri kurmadan önce durum kaydı için alanın yazılabilir olduğunu doğrula.
+# Böylece kayıt alanı hazırlanamadığı için kurulum sonrası sahiplik bilgisinin kaybolma riski azaltılır.
+if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
+  echo "Hata: durum kayıt dizini hazırlanamadı; paket kurulumu başlatılmadı." >&2
+  exit 1
+fi
+preflight_tmp="$(mktemp "$STATE_DIR/.preflight.XXXXXX")" || {
+  echo "Hata: durum kayıt dizinine yazılamıyor; paket kurulumu başlatılmadı." >&2
+  exit 1
+}
+if ! rm -f -- "$preflight_tmp"; then
+  echo "Hata: durum kayıt alanı doğrulandıktan sonra geçici dosya temizlenemedi." >&2
+  exit 1
+fi
+
+# Paket kurulumundan hemen önceki envanter, yalnızca bu toolset işleminin eklediklerini belirlemek için kullanılır.
 BASELINE_FILE="$(mktemp)"
 for tool in "${TOOLS[@]}"; do
   if pacman -Qq "$tool" >/dev/null 2>&1; then
