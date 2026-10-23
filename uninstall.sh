@@ -215,6 +215,7 @@ fi
 
 
 if [[ "$REMOVE_MODE" == "2" ]]; then
+  repo_answer="Y"
   if [[ "${repo_answer:-H}" =~ ^[EeYy]$ ]]; then
     if [[ -L /etc/pacman.conf || ! -f /etc/pacman.conf ]]; then
       echo 'Hata: /etc/pacman.conf normal bir dosya değil veya sembolik bağlantı; repository yapılandırması değiştirilmedi.'
