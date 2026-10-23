@@ -201,6 +201,14 @@ cleanup() {
 }
 trap cleanup EXIT
 
+is_tool_package() {
+  local candidate
+  for candidate in "${TOOLS[@]}"; do
+    [[ "$candidate" == "$1" ]] && return 0
+  done
+  return 1
+}
+
 record_new_packages() {
   local tool
   local -a newly_installed=()
@@ -212,7 +220,12 @@ record_new_packages() {
   done
   if [[ -f "$STATE_FILE" ]]; then
     while IFS= read -r tool; do
-      [[ -n "$tool" ]] && pacman -Qq "$tool" >/dev/null 2>&1 && previous_state+=("$tool")
+      [[ -n "$tool" ]] || continue
+      if ! is_tool_package "$tool"; then
+        echo "Uyarı: durum kaydında toolset dışı/geçersiz paket adı atlandı: $tool" >&2
+        continue
+      fi
+      pacman -Qq "$tool" >/dev/null 2>&1 && previous_state+=("$tool")
     done < "$STATE_FILE"
   fi
   if ! mkdir -p -- "$STATE_DIR" || ! chmod 700 "$STATE_DIR"; then
