@@ -133,7 +133,7 @@ echo
 echo 'Güvenlik: yalnızca install.sh tarafından yeni kurulduğu kaydedilen paketler kaldırılabilir.'
 echo
 
-read -r -p 'Toolset tarafından yeni kurulduğu kaydedilen paketleri kaldır? [e/H]: ' answer || answer="H"
+answer="Y" # Seçilen kaldırma modu araç kaldırmayı zaten talep eder.
 if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
   if [[ -L "$STATE_DIR" || ! -d "$STATE_DIR" || ! -O "$STATE_DIR" ||
         "$(stat -c '%u:%g:%a' -- "$STATE_DIR" 2>/dev/null)" != "0:0:700" ||
