@@ -8,95 +8,144 @@ Kurulum:
 
 Kurulum scripti yalnızca aşağıdaki paketleri pacman ile kurmayı dener.
 
-[01] aimap
-[02] airgeddon
-[03] amass
-[04] arjun
-[05] armitage
-[06] arpon
-[07] arpspoof-smikims
-[08] arptools
-[09] backfuzz
-[10] bbot
-[11] beef
-[12] berate_ap
-[13] blackarch-mirrorlist
-[14] burpsuite
-[15] caido-desktop
-[16] cariddi
-[17] chiron
-[18] clairvoyance
-[19] cmseek
-[20] cloudflared
-[21] commix
-[22] corsy
-[23] credsniper
-[24] crunch
-[25] crypthook
-[26] cupp
-[27] dalfox
-[28] ddosify
-[29] dontgo403
-[30] exiflooter
-[31] feroxbuster
-[32] ffuf
-[33] gau
-[34] gloom
-[35] gophish
-[36] h8mail
-[37] hakrawler
-[38] holehe
-[39] httpx
-[40] hyde
-[41] infoga
-[42] interactsh-client
-[43] katana-pd
-[44] kickthemout
-[45] linkfinder
-[46] maigret
-[47] maketh
-[48] mdbtools
-[49] mdk3
-[50] metasploit
-[51] mitm
-[52] monocle
-[53] netdiscover
-[54] nexfil
-[55] ngrok
-[56] nikto
-[57] nomore403
-[58] nmap
-[59] nuclei
-[60] nuclei-templates
-[61] omnibus
-[62] phoneinfoga
-[63] photon
-[64] pyinstaller
-[65] pyinstaller-hooks-contrib
-[66] python-shodan
-[67] responder
-[68] roguehostapd
-[69] secretfinder
-[70] secure-delete
-[71] seeker
-[72] set
-[73] sherlock
-[74] shodan
-[75] social-mapper
-[76] socialscan
-[77] sooty
-[78] sparrow-wifi
-[79] spiderfoot
-[80] spooftooph
-[81] subfinder
-[82] theharvester
-[83] torctl
-[84] trape
-[85] websploit
-[86] wifijammer
-[87] wifiphisher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Not:
 - Bu liste, repository'deki mevcut toolset'in paket adlarını düzenler.
 - install.sh bu listedeki paketleri topluca kurar.
 - Paketlerin kullanılabilirliği ve isimleri, sistemdeki BlackArch repository durumuna ve paket güncellemelerine bağlıdır.
+
+[01] amass
+[02] arjun
+[03] backfuzz
+[04] bbot
+[05] blackarch-mirrorlist
+[06] burpsuite
+[07] caido-desktop
+[08] cariddi
+[09] clairvoyance
+[10] cmseek
+[11] cloudflared
+[12] commix
+[13] corsy
+[14] crypthook
+[15] dalfox
+[16] dontgo403
+[17] exiflooter
+[18] feroxbuster
+[19] ffuf
+[20] gau
+[21] gloom
+[22] h8mail
+[23] hakrawler
+[24] holehe
+[25] httpx
+[26] hyde
+[27] infoga
+[28] interactsh-client
+[29] katana-pd
+[30] linkfinder
+[31] maketh
+[32] mdbtools
+[33] mitm
+[34] monocle
+[35] ngrok
+[36] nikto
+[37] nomore403
+[38] nmap
+[39] nuclei
+[40] nuclei-templates
+[41] omnibus
+[42] photon
+[43] python-shodan
+[44] secretfinder
+[45] shodan
+[46] sooty
+[47] spiderfoot
+[48] subfinder
+[49] theharvester
