@@ -85,16 +85,13 @@ Command-line options can vary between tool versions, so the help output for the 
 
 The toolset includes selected tools from the following areas:
 
-- 🌐 Network discovery and security
-- 🕸️ Web application security
-- 🔍 OSINT and reconnaissance
-- 📡 Wireless network security
-- 🧪 Fuzzing and security testing
-- 🗂️ Metadata analysis and information gathering
-- 🔐 Authentication and security auditing
-- 🛠️ Utility and analysis tools
+- 🕸️ Web application security testing and proxy workflows
+- 🔎 Domain, subdomain, URL, and endpoint reconnaissance
+- 🧪 HTTP parameter discovery, fuzzing, and vulnerability scanning
+- 🔐 XSS, CORS, GraphQL, and command-injection testing
+- 🌐 Supporting network discovery and OSINT for authorized bug bounty scope
 
-This project is **not the complete BlackArch tool catalog**. Its goal is to bring selected tools together in one place, with clear command examples.
+This project is a **bug-bounty-focused selection**, not the complete BlackArch tool catalog. It prioritizes web application testing, scoped reconnaissance, endpoint discovery, fuzzing, and vulnerability validation. Wireless attack, phishing, password-list generation, and general exploitation frameworks are intentionally excluded from the installation package list.
 
 ## 📚 How to use the files
 
