@@ -1,10 +1,10 @@
 # BlackArch Toolset — HACKTOOLS
 
-Bu dosya, repository'deki **mevcut 87 paket** için kısa açıklama ve kullanım amacı referansıdır.
+Bu dosya, repository'deki **mevcut 49 paket** için kısa açıklama ve kullanım amacı referansıdır.
 
 Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **ne işe yaradığını ve hangi çalışma alanına ait olduğunu** hızlıca anlamayı sağlamaktır.
 
-> Bu liste seçilmiş bir kişisel toolset'tir. BlackArch'ın tamamını temsil etmez ve yeni araç ekleme listesi değildir.
+> Bu liste seçilmiş bir kişisel toolset'tir. Kurulum kapsamı bug bounty ve web uygulama güvenliği odaklı 49 pakettir. Aşağıdaki geniş açıklama bölümleri eski/yardımcı referansları da içerebilir; bir aracın burada anlatılması onun kurulum listesinde olduğu anlamına gelmez.
 
 ================================================================================
 1. OSINT / KİMLİK VE İSTİHBARAT
@@ -316,7 +316,7 @@ Amaç, `HACKKOMUT.txt` içindeki komutları tekrar etmek değil; her aracın **n
 ================================================================================
 
 Toolset kapsamı:
-- 87 paket
+- 49 paket
 - Arch Linux / BlackArch odaklı
 - Komut referansı: HACKKOMUT.txt
 - Paket listesi: blackarch.txt
