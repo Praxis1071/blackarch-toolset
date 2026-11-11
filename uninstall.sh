@@ -2,41 +2,36 @@
 set -uo pipefail
 
 TOOLS=(
-  aimap
-  airgeddon
+
   amass
   arjun
-  armitage
-  arpon
-  arpspoof-smikims
-  arptools
+
   backfuzz
   bbot
-  beef
+
   berate_ap
   blackarch-mirrorlist
   burpsuite
   caido-desktop
   cariddi
-  chiron
+
   clairvoyance
   cmseek
   cloudflared
   commix
   corsy
-  credsniper
-  crunch
+
   crypthook
-  cupp
+
   dalfox
-  ddosify
+
   dontgo403
   exiflooter
   feroxbuster
   ffuf
   gau
   gloom
-  gophish
+
   h8mail
   hakrawler
   holehe
@@ -45,17 +40,15 @@ TOOLS=(
   infoga
   interactsh-client
   katana-pd
-  kickthemout
+
   linkfinder
-  maigret
+
   maketh
   mdbtools
-  mdk3
-  metasploit
+
   mitm
   monocle
-  netdiscover
-  nexfil
+
   ngrok
   nikto
   nomore403
@@ -63,32 +56,22 @@ TOOLS=(
   nuclei
   nuclei-templates
   omnibus
-  phoneinfoga
+
   photon
-  pyinstaller
-  pyinstaller-hooks-contrib
+
   python-shodan
-  responder
-  roguehostapd
+
   secretfinder
-  secure-delete
-  seeker
-  set
-  sherlock
+
   shodan
-  social-mapper
-  socialscan
+
   sooty
-  sparrow-wifi
+
   spiderfoot
-  spooftooph
+
   subfinder
   theharvester
-  torctl
-  trape
-  websploit
-  wifijammer
-  wifiphisher
+
 )
 
 STATE_DIR="/var/lib/blackarch-toolset"
@@ -212,7 +195,6 @@ if [[ "${answer:-H}" =~ ^[EeYy]$ ]]; then
 else
   echo 'Paket kaldırma atlandı.'
 fi
-
 
 if [[ "$REMOVE_MODE" == "2" ]]; then
   repo_answer="Y"
