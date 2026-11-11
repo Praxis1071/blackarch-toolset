@@ -7,36 +7,27 @@
 set -euo pipefail
 
 TOOLS=(
-
   amass
   arjun
-
   backfuzz
   bbot
-
-  berate_ap
   blackarch-mirrorlist
   burpsuite
   caido-desktop
   cariddi
-
   clairvoyance
   cmseek
   cloudflared
   commix
   corsy
-
   crypthook
-
   dalfox
-
   dontgo403
   exiflooter
   feroxbuster
   ffuf
   gau
   gloom
-
   h8mail
   hakrawler
   holehe
@@ -45,15 +36,11 @@ TOOLS=(
   infoga
   interactsh-client
   katana-pd
-
   linkfinder
-
   maketh
   mdbtools
-
   mitm
   monocle
-
   ngrok
   nikto
   nomore403
@@ -61,22 +48,14 @@ TOOLS=(
   nuclei
   nuclei-templates
   omnibus
-
   photon
-
   python-shodan
-
   secretfinder
-
   shodan
-
   sooty
-
   spiderfoot
-
   subfinder
   theharvester
-
 )
 if [[ $EUID -ne 0 ]]; then
   echo "Hata: Bu script pacman ve depo yapılandırması için root yetkisi gerektirir."
