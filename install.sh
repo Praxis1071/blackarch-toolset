@@ -7,41 +7,36 @@
 set -euo pipefail
 
 TOOLS=(
-  aimap
-  airgeddon
+
   amass
   arjun
-  armitage
-  arpon
-  arpspoof-smikims
-  arptools
+
   backfuzz
   bbot
-  beef
+
   berate_ap
   blackarch-mirrorlist
   burpsuite
   caido-desktop
   cariddi
-  chiron
+
   clairvoyance
   cmseek
   cloudflared
   commix
   corsy
-  credsniper
-  crunch
+
   crypthook
-  cupp
+
   dalfox
-  ddosify
+
   dontgo403
   exiflooter
   feroxbuster
   ffuf
   gau
   gloom
-  gophish
+
   h8mail
   hakrawler
   holehe
@@ -50,17 +45,15 @@ TOOLS=(
   infoga
   interactsh-client
   katana-pd
-  kickthemout
+
   linkfinder
-  maigret
+
   maketh
   mdbtools
-  mdk3
-  metasploit
+
   mitm
   monocle
-  netdiscover
-  nexfil
+
   ngrok
   nikto
   nomore403
@@ -68,32 +61,22 @@ TOOLS=(
   nuclei
   nuclei-templates
   omnibus
-  phoneinfoga
+
   photon
-  pyinstaller
-  pyinstaller-hooks-contrib
+
   python-shodan
-  responder
-  roguehostapd
+
   secretfinder
-  secure-delete
-  seeker
-  set
-  sherlock
+
   shodan
-  social-mapper
-  socialscan
+
   sooty
-  sparrow-wifi
+
   spiderfoot
-  spooftooph
+
   subfinder
   theharvester
-  torctl
-  trape
-  websploit
-  wifijammer
-  wifiphisher
+
 )
 if [[ $EUID -ne 0 ]]; then
   echo "Hata: Bu script pacman ve depo yapılandırması için root yetkisi gerektirir."
@@ -326,7 +309,6 @@ if ! rm -f -- "$preflight_tmp"; then
   exit 1
 fi
 STATE_TMP=""
-
 
 # Önce tüm sistem güncellemesi için onay al. Resmî strap.sh, bu onaydan
 # sonra keyring/depo işlemleri yapar ve kendi içinde ayrıca pacman -Su sorabilir.
